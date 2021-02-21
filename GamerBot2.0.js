@@ -1,0 +1,55 @@
+const Discord = require("discord.js");
+const client = new Discord.Client();
+
+function doNothing() {
+	
+}
+
+client.on("ready", () => {
+	console.log("I am ready!");
+});
+
+client.on("message", (message) => {
+	if (message.author.bot) {
+		return;
+	}
+	if (message.channel.id == "809393742637170708") {
+		message.react("✅");
+		message.react("❌");
+	}
+	else if (message.content.toLowerCase().replace(/\s/g, "").includes("gaming")) {
+		if (message.channel.id == "809483972282810390" || message.channel.id == "780765093343395880") {
+			if (Math.floor(Math.random() * 100) > 86) {
+					message.channel.send("**GAMING! 🎮**");
+			}/* else {
+				const random = Math.floor(Math.random() * 100);
+				if (random > 79) message.channel.send("Ingen gaming här inte. Prova **INTE** en gång till!");
+				else if (random > 69) message.channel.send("Jag är ledsen att säga det, men du är inte en riktig gamer!");
+				else if (random > 59) message.channel.send("Ingen gaming här inte!");
+				else if (random > 39) message.channel.send("Nej tyvärr, Ingen gaming den här gången.");
+				else if (random > 19) message.channel.send("Gå och lägg dig istället.");
+				else message.channel.send("Nej du, ingen gaming!");
+			}*/
+		}
+	}
+	else if (message.content.toLowerCase().includes("christerpog") || message.content.toLowerCase().includes("cristerpog")) {
+		if (message.channel.id == "809483972282810390" || message.channel.id == "780765093343395880") {
+			message.react("810255466952917052")
+			message.channel.send("<:ChristerPOG:810255466952917052>")
+		}
+	}
+	else if (message.mentions.has(client.user)) {
+		message.channel.send("Hej, jag är en bot som gamear på min fritid!")
+	}
+	else if (message.content.toLowerCase().includes("hur mycket är klockan")) {
+		var currentdate = new Date(); 
+		var datetime =  
+			("0" + currentdate.getHours()).slice(-2) + ":"  
+			+ ("0" + currentdate.getMinutes()).slice(-2) + ":" 
+			+ ("0" + currentdate.getSeconds()).slice(-2)
+		;
+		message.channel.send(`Klockan är ${datetime}`);
+	}
+});
+
+client.login("ODEyODMzMDc3MTA5NDU2OTU2.YDGfyw.j7cRhcoaUVwnAGPFez_c8j3XHMU");
