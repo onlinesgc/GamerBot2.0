@@ -4,7 +4,8 @@ require('dotenv').config();
 const client = new Discord.Client();
 
 const token = process.env.token;
-var prefix = ".";
+
+client.commands = new Discord.Collection();
 
 ["command_handler", "event_handler"].forEach(handler => {
 	require(`./${handler}.js`)(client, Discord);
