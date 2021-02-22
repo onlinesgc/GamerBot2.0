@@ -7,7 +7,8 @@ module.exports = {
 			.setTitle(`Serverinfo - ${message.guild.name}`)
 			.setImage(message.guild.iconURL())
 			.addFields(
-				{ name: "id", value: message.guild.id }
+				{ name: "id", value: message.guild.id },
+				{ name: "Medlemmar", value: message.guild.memberCount }
 			)
 		message.channel.send(embed);
 	}
