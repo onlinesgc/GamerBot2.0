@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const mongoose = require("mongoose");
 require('dotenv').config();
 
 const client = new Discord.Client();
@@ -53,5 +54,16 @@ client.on("message", (message) => {
 		message.channel.send(`Klockan är ${datetime}`);
 	}
 });
+
+mongoose.connect(process.env.mongodb_srv, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useFindAndModify: false
+}).then(() => {
+	console.log("Connected to the database!");
+}).catch((err) => {
+	console.log(process.env.mongodb_srv);
+	console.log(err);
+})
 
 client.login(token);
