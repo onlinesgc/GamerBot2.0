@@ -1,15 +1,13 @@
 const Discord = require("discord.js");
+require('dotenv').config();
+
 const client = new Discord.Client();
 
-require('dotenv').config();
-var token = process.env.token;
+const token = process.env.token;
+var prefix = ".";
 
-function doNothing() {
-	
-}
-
-client.on("ready", () => {
-	console.log("I am ready!");
+["command_handler", "event_handler"].forEach(handler => {
+	require(`./${handler}.js`)(client, Discord);
 });
 
 client.on("message", (message) => {
