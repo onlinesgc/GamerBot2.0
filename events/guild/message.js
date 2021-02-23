@@ -13,6 +13,9 @@ module.exports = async(Discord, client, message) => {
 				xp: 0
 			});
 			profile.save();
+		} else {
+			profileData.xp += 1;
+			profileData.save();
 		}
 	} catch (err) {
 		console.log(err);
