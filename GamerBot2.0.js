@@ -53,6 +53,15 @@ client.on("message", (message) => {
 		;
 		message.channel.send(`Klockan är ${datetime}`);
 	}
+	else if (message.content.toLowerCase().includes("vad är klockan")) {
+		var currentdate = new Date(); 
+		var datetime =  
+			("0" + currentdate.getHours()).slice(-2) + ":"  
+			+ ("0" + currentdate.getMinutes()).slice(-2) + ":" 
+			+ ("0" + currentdate.getSeconds()).slice(-2)
+		;
+		message.channel.send(`Klockan är ${datetime}`);
+	}
 });
 
 mongoose.connect(process.env.mongodb_srv, {
