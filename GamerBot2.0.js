@@ -6,10 +6,6 @@ const messageHandler = require("./src/message_handler");
 require('dotenv').config();
 var token = process.env.token;
 
-function doNothing() {
-
-}
-
 client.on("ready", () => {
   console.log("I am ready!");
 });
