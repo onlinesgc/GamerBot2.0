@@ -1,6 +1,7 @@
 module.exports = {
 	name: "ping",
 	description: "Ping the bot!",
+	perms: [],
 	async do(client, message, args, Discord) {
 		const pinging_embed = new Discord.MessageEmbed()
 			.setColor("#f54242")

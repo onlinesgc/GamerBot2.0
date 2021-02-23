@@ -1,6 +1,7 @@
 module.exports = {
 	name: "serverinfo",
 	description: "Print server information!",
+	perms: [],
 	async do(client, message, args, Discord) {
 		const embed = new Discord.MessageEmbed()
 			.setColor("#0099ff")

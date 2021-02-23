@@ -26,6 +26,14 @@ module.exports = async(Discord, client, message) => {
 
 	const command = client.commands.get(cmd);
 	if (command) {
-		command.do(client, message, args, Discord, profileData);
+		if (command.perms.includes("adminCmd")) {
+			if (message.member.hasPermission("ADMINISTRATOR")) {
+				command.do(client, message, args, Discord, profileData);
+			} else {
+				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
+			}
+		} else {
+			command.do(client, message, args, Discord, profileData);
+		}
 	}
 }
