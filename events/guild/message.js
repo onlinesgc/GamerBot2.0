@@ -34,7 +34,7 @@ module.exports = {
       )
         return;
       try {
-        client.commands.get(cmd).do(message, args);
+        command.do(message, args);
       } catch (err) {
         client.emit("error", err);
         message.reply("There was an error trying to execute that command!");
