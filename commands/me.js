@@ -1,15 +1,23 @@
+const Discord = require("discord.js");
+const { fetchProfileFromMessage } = require("../models/profileSchema");
+
 module.exports = {
-	name: "me",
-	description: "Print information about user!",
-    perms: [],
-	async do(client, message, args, Discord, profileData) {
-		const embed = new Discord.MessageEmbed()
-			.setColor("#f54242")
-			.setTitle(`User info`)
-			.setDescription(`${message.member}'s user information.`)
-            .addFields(
-				{ name: "XP", value: profileData.xp }
-			)
-		message.channel.send(embed);
-	}
-}
+  name: "me",
+  description: "Print information about user!",
+  perms: [],
+  /**
+   *
+   * @param {Discord.Message} message
+   * @param {String[]} args
+   */
+  async do(message, args) {
+    let profile_data = await fetchProfileFromMessage(message);
+
+    const embed = new Discord.MessageEmbed()
+      .setColor("#f54242")
+      .setTitle(`User info`)
+      .setDescription(`${message.member}'s user information.`)
+      .addFields({ name: "XP", value: profile_data.xp });
+    message.channel.send(embed);
+  },
+};
