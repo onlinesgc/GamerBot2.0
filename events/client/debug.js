@@ -1,3 +1,10 @@
-module.exports = (e) => {
-	//console.info(e)
-}
+module.exports = {
+  name: "debug",
+  /**
+   * @param {String} message
+   * @param {Client} client
+   */
+  do(message, client) {
+    console.log(message);
+  },
+};
