@@ -1,5 +1,12 @@
+const { MessageReaction, Client } = require("discord.js");
+
 module.exports = {
   name: "messageReactionAdd",
 
-  async do(message, client) {},
+  /**
+   *
+   * @param {MessageReaction} messageReaction
+   * @param {Client} client
+   */
+  async do(messageReaction, client) {},
 };
