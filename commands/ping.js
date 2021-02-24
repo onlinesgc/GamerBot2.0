@@ -1,5 +1,6 @@
 module.exports = {
 	name: "ping",
+	aliases: [],
 	description: "Ping the bot!",
 	perms: [],
 	async do(client, message, args, Discord) {

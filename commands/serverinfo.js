@@ -1,5 +1,6 @@
 module.exports = {
 	name: "serverinfo",
+	aliases: [],
 	description: "Print server information!",
 	perms: [],
 	async do(client, message, args, Discord) {

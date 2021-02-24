@@ -2,6 +2,7 @@ const profileModel = require("../models/profileSchema");
 
 module.exports = {
 	name: "setxp",
+	aliases: [],
 	description: "Set xp for specified user!",
 	perms: ["adminCmd"],
 	async do(client, message, args, Discord) {

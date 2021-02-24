@@ -2,6 +2,7 @@ const profileModel = require("../models/profileSchema");
 
 module.exports = {
 	name: "memberinfo",
+	aliases: [],
 	description: "Get member information for specified user!",
 	perms: [],
 	async do(client, message, args, Discord) {
