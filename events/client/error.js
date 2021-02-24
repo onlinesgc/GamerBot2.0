@@ -1,10 +1,10 @@
 module.exports = {
   name: "error",
   /**
-   * @param {String} message
+   * @param {Error} error
    * @param {Client} client
    */
-  do(message, client) {
+  do(error, client) {
     console.error(message);
   },
 };
