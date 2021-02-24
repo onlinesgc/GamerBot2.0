@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = {
   name: "serverinfo",
+  aliases: [],
   description: "Print server information!",
   perms: [],
   async do(message, args) {

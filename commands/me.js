@@ -3,6 +3,7 @@ const { fetchProfileFromMessage } = require("../models/profileSchema");
 
 module.exports = {
   name: "me",
+  aliases: ["myinfo"],
   description: "Print information about user!",
   perms: [],
   /**

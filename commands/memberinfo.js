@@ -3,6 +3,7 @@ const { MessageEmbed, Message } = require("discord.js");
 
 module.exports = {
   name: "memberinfo",
+  aliases: [],
   description: "Get member information for specified user!",
   perms: [],
   /**

@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 
 module.exports = {
   name: "setxp",
+  aliases: [],
   description: "Set xp for specified user!",
   perms: ["adminCmd"],
   /**
