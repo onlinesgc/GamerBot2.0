@@ -26,6 +26,7 @@ module.exports = {
 			.setColor("#f54242")
 			.setTitle(`Information om medlem`)
 			.setDescription(`${message.mentions.members.first()}'s information.`)
+			.setImage(message.mentions.users.first().avatarURL())
 			.addFields(
 				{ name: "XP", value: profile_data.xp },
 				{ name: "id", value: profile_data.userID }

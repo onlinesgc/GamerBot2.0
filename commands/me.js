@@ -16,6 +16,7 @@ module.exports = {
 			.setColor("#f54242")
 			.setTitle(`User info`)
 			.setDescription(`${message.member}'s user information.`)
+			.setImage(message.author.avatarURL())
 			.addFields(
 				fields
 			)
