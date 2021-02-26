@@ -1,3 +1,4 @@
+const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
 
 module.exports = async(Discord, client, message) => {
@@ -40,6 +41,8 @@ module.exports = async(Discord, client, message) => {
 		}
 		profileData.save();
 	}
+
+	let botMentioned = functions.checkIfMentioned(message);
 
 	if (message.channel.id == "809393742637170708") {
 		message.react("✅");

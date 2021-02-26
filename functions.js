@@ -29,5 +29,13 @@ module.exports = {
 			time = time.replace("seconds", "second");
 		}
 		return time;
+	},
+	checkIfMentioned(message) {
+		if (message.mentions.members.first()) {
+			if (message.mentions.members.first() === message.guild.me) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
