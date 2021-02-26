@@ -22,7 +22,8 @@ module.exports = {
 				userID: message.mentions.members.first().id,
 				serverID: message.guild.id,
 				xp: 0,
-				lastMessageTimestamp: null
+				lastMessageTimestamp: null,
+				xpTimeoutUntil: null
 			});
 			profile.save();
 		}

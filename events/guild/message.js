@@ -14,12 +14,14 @@ module.exports = async(Discord, client, message) => {
 				userID: message.author.id,
 				serverID: message.guild.id,
 				xp: 0,
-				lastMessageTimestamp: message.createdTimestamp
+				lastMessageTimestamp: message.createdTimestamp,
+				xpTimeoutUntil: message.createdTimestamp + 300000
 			});
 			profile.save();
 		} else {
 			profileData.xp += 1;
 			profileData.lastMessageTimestamp = message.createdTimestamp;
+			profileData.xpTimeoutUntil = message.createdTimestamp + 300000;
 			profileData.save();
 		}
 	} catch (err) {

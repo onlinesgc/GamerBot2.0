@@ -5,7 +5,8 @@ module.exports = async(client, Discord, member) => {
 		userID: member.id,
 		serverID: member.guild.id,
 		xp: 0,
-		lastMessageTimestamp: null
+		lastMessageTimestamp: null,
+		xpTimeoutUntil: null
 	});
 	profile.save();
 }
