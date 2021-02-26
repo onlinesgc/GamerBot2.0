@@ -9,7 +9,7 @@ const token = process.env.token;
 client.commands = new Discord.Collection();
 
 ["command_handler", "event_handler"].forEach(handler => {
-	require(`./${handler}.js`)(client, Discord);
+	require(`./handlers/${handler}.js`)(client, Discord);
 });
 
 mongoose.connect(process.env.mongodb_srv, {
