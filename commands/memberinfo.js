@@ -15,7 +15,8 @@ module.exports = {
 			let profile = await profileModel.create({
 				userID: message.mentions.members.first().id,
 				serverID: message.guild.id,
-				xp: 0
+				xp: 0,
+				lastMessageTimestamp: null
 			});
 			profile.save();
 		}

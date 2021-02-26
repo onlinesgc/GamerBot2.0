@@ -1,4 +1,5 @@
 const profileModel = require("../../models/profileSchema");
+const functions = require("../../functions")
 
 module.exports = async(Discord, client, message) => {
 	if (message.author.bot) return;
@@ -12,11 +13,13 @@ module.exports = async(Discord, client, message) => {
 			let profile = await profileModel.create({
 				userID: message.author.id,
 				serverID: message.guild.id,
-				xp: 0
+				xp: 0,
+				lastMessageTimestamp: message.createdTimestamp
 			});
 			profile.save();
 		} else {
 			profileData.xp += 1;
+			profileData.lastMessageTimestamp = message.createdTimestamp;
 			profileData.save();
 		}
 	} catch (err) {
