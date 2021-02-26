@@ -1,37 +1,27 @@
 const profileModel = require("../../models/profileSchema");
-const functions = require("../../functions")
 
 module.exports = async(Discord, client, message) => {
 	if (message.author.bot) return;
 	
 	var prefix = ".";
 
-	let profileData;
-	try {
-		profileData = await profileModel.findOne({ userID: message.author.id })
-		if (!profileData) {
-			let profile = await profileModel.create({
-				userID: message.author.id,
-				serverID: message.guild.id,
-				xp: 0,
-				lastMessageTimestamp: message.createdTimestamp,
-				xpTimeoutUntil: message.createdTimestamp + 300000
-			});
-			profile.save();
-		} else {
-			profileData.xp += 1;
-			profileData.lastMessageTimestamp = message.createdTimestamp;
-			profileData.xpTimeoutUntil = message.createdTimestamp + 300000;
-			profileData.save();
-		}
-	} catch (err) {
-		console.log(err);
-	}
-
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const cmd = args.shift().toLowerCase();
 
 	const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
+
+	let profileData = await profileModel.findOne({ userID: message.author.id })
+	if (!profileData) {
+		let profile = await profileModel.create({
+			userID: message.author.id,
+			serverID: message.guild.id,
+			xp: 0,
+			lastMessageTimestamp: message.createdTimestamp,
+			xpTimeoutUntil: message.createdTimestamp + 300000
+		});
+		profile.save();
+	}
+
 	if (command) {
 		if (command.perms.includes("adminCmd")) {
 			if (message.member.hasPermission("ADMINISTRATOR")) {
@@ -42,8 +32,14 @@ module.exports = async(Discord, client, message) => {
 		} else {
 			command.do(client, message, args, Discord, profileData);
 		}
+	} else {
+		profileData.lastMessageTimestamp = message.createdTimestamp;
+		if (profileData.xpTimeoutUntil - message.createdTimestamp < 0) {
+			profileData.xp += 1;
+			profileData.xpTimeoutUntil = message.createdTimestamp + 300000;
+		}
+		profileData.save();
 	}
-
 
 	if (message.channel.id == "809393742637170708") {
 		message.react("✅");

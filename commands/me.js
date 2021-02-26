@@ -1,3 +1,5 @@
+const functions = require("../functions")
+
 module.exports = {
 	name: "me",
 	aliases: ["myinfo"],
@@ -9,7 +11,8 @@ module.exports = {
 			.setTitle(`User info`)
 			.setDescription(`${message.member}'s user information.`)
 			.addFields(
-				{ name: "XP", value: profileData.xp }
+				{ name: "XP", value: profileData.xp },
+				{ name: "XP Timeout", value: functions.msToString(profileData.xpTimeoutUntil - message.createdTimestamp) }
 			)
 		message.channel.send(embed);
 	}
