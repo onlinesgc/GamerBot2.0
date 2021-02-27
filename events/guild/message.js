@@ -12,7 +12,7 @@ module.exports = async(Discord, client, message) => {
 
 	//Retreive options
 	let configData = await configModel.fetchConfig(0);		//Retreive options
-	if (configData.debug) {
+	if (configData.debug && (client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd)))) {
 		try {
 			delete require.cache[require.resolve(`../../commands/${cmd}.js`)];
 			client.commands.delete(cmd);
