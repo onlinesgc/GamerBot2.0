@@ -4,6 +4,10 @@ module.exports = {
 	name: "setxp",
 	aliases: [],
 	description: "Set xp for specified user!",
+	usage: [
+		"setxp <mentionedUser> -x <xpAmount>",
+		"setxp <mentionedUser> -t <xpTimeout>"
+	],
 	perms: ["adminCmd"],
 	async do(client, message, args, Discord) {
 		if (!message.mentions.members.first()) {

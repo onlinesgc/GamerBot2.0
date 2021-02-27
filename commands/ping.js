@@ -2,6 +2,7 @@ module.exports = {
 	name: "ping",
 	aliases: [],
 	description: "Ping the bot!",
+	usage: [],
 	perms: [],
 	async do(client, message, args, Discord) {
 		const pinging_embed = new Discord.MessageEmbed()

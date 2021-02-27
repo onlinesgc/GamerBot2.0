@@ -2,6 +2,7 @@ module.exports = {
 	name: "help",
 	aliases: [],
 	description: "Get help with bot commands!",
+	usage: [],
 	perms: [],
 	async do(client, message, args, Discord, profileData) {
 		if (args[0]) {
@@ -33,13 +34,18 @@ function getSpecificCmd(client, Discord, input) {
 		if (!aliases) {
 			aliases = "Det finns inga alias för det här kommandot.";
 		}
+		let usages = cmd.usage.join("\n");
+		if (!usages) {
+			usages = "Användningsområdet är inte definierat för det här kommandot.";
+		}
 		const embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
 			.setTitle(`${cmd.name} - Help`)
 			.setDescription(`Visar information om kommandot *${cmd.name}*.`)
 			.addFields(
 				{ name: "Beskrivning", value: cmd.description },
-				{ name: "Alias", value: aliases }
+				{ name: "Alias", value: aliases },
+				{ name: "Användning", value: usages}
 			)
 		return embed;
 	}

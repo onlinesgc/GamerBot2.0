@@ -4,6 +4,7 @@ module.exports = {
 	name: "me",
 	aliases: ["myinfo"],
 	description: "Print information about user!",
+	usage: [],
 	perms: [],
 	async do(client, message, args, Discord, profileData) {
 		let fields = [

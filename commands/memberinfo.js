@@ -4,6 +4,7 @@ module.exports = {
 	name: "memberinfo",
 	aliases: [],
 	description: "Get member information for specified user!",
+	usage: [],
 	perms: [],
 	async do(client, message, args, Discord) {
 		if (!message.mentions.members.first()) {
