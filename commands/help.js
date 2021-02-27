@@ -8,18 +8,24 @@ module.exports = {
 		if (args[0]) {
 			return message.channel.send(getSpecificCmd(client, Discord, args[0]));
 		} else {
-			return message.channel.send(getAllCmds(client, Discord));
+			return message.channel.send(getAllCmds(client, Discord, message));
 		}
 	}
 }
 
-function getAllCmds(client, Discord) {
+function getAllCmds(client, Discord, message) {
+	let fields = [
+		{ name: "Medlem", value: client.commands.filter(element => !element.perms.includes("adminCmd")).map(cmd => cmd.name) }
+	]
+	if (message.member.hasPermission("ADMINISTRATOR")) {
+		fields.push({ name: "Moderator", value: client.commands.filter(element => element.perms.includes("adminCmd")).map(cmd => cmd.name) });
+	}
 	const embed = new Discord.MessageEmbed()
 		.setColor("#f54242")
 		.setTitle(`Help`)
 		.setDescription(`Visar lista med kommandon.`)
 		.addFields(
-			{ name: "Kommandon", value: client.commands.map(cmd => cmd.name) }
+			fields
 		)
 	return embed;
 }
