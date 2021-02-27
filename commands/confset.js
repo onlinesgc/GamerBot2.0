@@ -15,7 +15,8 @@ module.exports = {
 		if (!configData) {
 			let config = await configModel.create({
 				prefix: ".",
-				id: 0
+				id: 0,
+				debug: false
 			});
 			config.save();
 		}
