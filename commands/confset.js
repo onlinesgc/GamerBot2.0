@@ -21,6 +21,7 @@ module.exports = {
 		}
 
 		configData[args[0]] = args[1];
+		configData.save();
 		message.channel.send(`Set "${args[0]}" value to "${args[1]}"`);
 	}
 }
