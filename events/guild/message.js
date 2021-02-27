@@ -20,7 +20,7 @@ module.exports = async(Discord, client, message) => {
 			serverID: message.guild.id,
 			xp: 0,
 			lastMessageTimestamp: message.createdTimestamp,
-			xpTimeoutUntil: message.createdTimestamp + 300000
+			xpTimeoutUntil: message.createdTimestamp
 		});
 		profile.save();
 	}
@@ -58,8 +58,9 @@ module.exports = async(Discord, client, message) => {
 	} else {
 		profileData.lastMessageTimestamp = message.createdTimestamp;
 		if (profileData.xpTimeoutUntil - message.createdTimestamp < 0) {
-			profileData.xp += 1;
-			profileData.xpTimeoutUntil = message.createdTimestamp + 300000;
+			const xpAmount = Math.floor(Math.random() * 3) + 1;
+			profileData.xp += xpAmount;
+			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);
 		}
 		profileData.save();
 	}
