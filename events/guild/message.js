@@ -27,17 +27,7 @@ module.exports = async(Discord, client, message) => {
 	const mention_command = client.mention_commands.find(object => message.content && object.permittedMessages.some(element => message.content.toLowerCase().includes(element)));
 	const question_command = client.question_commands.find(object => message.content && object.permittedMessages.some(element => message.content.toLowerCase().replace(/\s/g, "").includes(element)));
 	
-	let profileData = await profileModel.findOne({ userID: message.author.id })
-	if (!profileData) {
-		let profile = await profileModel.create({
-			userID: message.author.id,
-			serverID: message.guild.id,
-			xp: 0,
-			lastMessageTimestamp: message.createdTimestamp,
-			xpTimeoutUntil: message.createdTimestamp
-		});
-		profile.save();
-	}
+	let profileData = await profileModel.fetchProfileFromMessage(message);		//Fetch profile
 
 	if (command) {
 		if (command.perms.includes("adminCmd")) {

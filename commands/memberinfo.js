@@ -12,17 +12,7 @@ module.exports = {
 			return message.channel.send("Du måste ange vilken användare du vill veta mer information om!")
 		}
 
-		profile_data = await profileModel.findOne({ userID: message.mentions.members.first().id })
-		if (!profile_data) {
-			let profile = await profileModel.create({
-				userID: message.mentions.members.first().id,
-				serverID: message.guild.id,
-				xp: 0,
-				lastMessageTimestamp: null,
-				xpTimeoutUntil: null
-			});
-			profile.save();
-		}
+		let profile_data = await profileModel.fetchProfileFromMessage(message);		//Fetch profile
 
 		let fields = [
 			{ name: "XP", value: profile_data.xp, inline: true }

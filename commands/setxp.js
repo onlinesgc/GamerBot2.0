@@ -20,17 +20,7 @@ module.exports = {
 		if (!args[1]) {
 			return message.channel.send("Du måste ange vilken operation du vill utföra!")
 		} else {
-			profile_data = await profileModel.findOne({ userID: message.mentions.members.first().id })
-			if (!profile_data) {
-				let profile = await profileModel.create({
-					userID: message.mentions.members.first().id,
-					serverID: message.guild.id,
-					xp: 0,
-					lastMessageTimestamp: null,
-					xpTimeoutUntil: null
-				});
-				profile.save();
-			}
+			let profile_data = await profileModel.fetchProfileFromMessage(message);		//Fetch profile
 
 			if (args[1] === "-x") {
 				if (isNaN(args[2])) {
