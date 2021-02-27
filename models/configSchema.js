@@ -8,4 +8,17 @@ const configSchema = new mongoose.Schema({
 
 const model = mongoose.model("ConfigModel", configSchema);
 
-module.exports = model;
+const fetchConfig = async (id) => {
+	configData = await model.findOne({ id: id });
+	if (!configData) {
+		let configData = await model.create({
+			prefix: ".",
+			id: id,
+			debug: false
+		});
+		configData.save();
+	}
+	return configData;
+};
+
+module.exports = { configModel: model, fetchConfig };

@@ -11,15 +11,7 @@ module.exports = async(Discord, client, message) => {
 	const cmd = args.shift().toLowerCase();
 
 	//Retreive options
-	configData = await configModel.findOne({ id: 0 });
-	if (!configData) {
-		let config = await configModel.create({
-			prefix: ".",
-			id: 0,
-			debug: false
-		});
-		config.save();
-	}
+	let configData = await configModel.fetchConfig(0);		//Retreive options
 	if (configData.debug) {
 		try {
 			delete require.cache[require.resolve(`../../commands/${cmd}.js`)];

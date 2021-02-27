@@ -10,16 +10,7 @@ module.exports = {
 		if (!args[0]) return message.channel.send("Du måste ange vilken key du vill ändra.")
 		if (!args[1]) return message.channel.send("Du måste ange vilket värde key'n ska sättas till!")
 
-		//Retreive options
-		configData = await configModel.findOne({ id: 0 });
-		if (!configData) {
-			let config = await configModel.create({
-				prefix: ".",
-				id: 0,
-				debug: false
-			});
-			config.save();
-		}
+		let configData = await configModel.fetchConfig(0);		//Retreive options
 
 		configData[args[0]] = args[1];
 		configData.save();

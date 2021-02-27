@@ -23,15 +23,7 @@ mongoose.connect(process.env.mongodb_srv, {
 	console.log("Connected to the database!");
 
 	//Retreive options
-	var configData = await configModel.findOne({ id: 0 });
-	if (!configData) {
-		let config = await configModel.create({
-			prefix: ".",
-			id: 0,
-			debug: false
-		});
-		config.save();
-	}
+	let configData = await configModel.fetchConfig(0);		//Retreive options
 	console.log("Options retrieved!");
 }).catch((err) => {
 	console.log(process.env.mongodb_srv);
