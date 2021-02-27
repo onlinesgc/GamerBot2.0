@@ -38,14 +38,24 @@ function getSpecificCmd(client, Discord, input) {
 		if (!usages) {
 			usages = "Användningsområdet är inte definierat för det här kommandot.";
 		}
+		
+		let fields = [
+			{ name: "Beskrivning", value: cmd.description },
+			{ name: "Alias", value: aliases },
+			{ name: "Användning", value: usages }
+		]
+		if (cmd.notes) {
+			let notes = cmd.notes.join("\n");
+			if (notes) {
+				fields.push({ name: "Notera!", value: notes });
+			}
+		}
 		const embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
 			.setTitle(`${cmd.name} - Help`)
 			.setDescription(`Visar information om kommandot *${cmd.name}*.`)
 			.addFields(
-				{ name: "Beskrivning", value: cmd.description },
-				{ name: "Alias", value: aliases },
-				{ name: "Användning", value: usages}
+				fields
 			)
 		return embed;
 	}

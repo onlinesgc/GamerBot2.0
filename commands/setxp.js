@@ -8,6 +8,9 @@ module.exports = {
 		"setxp <mentionedUser> -x <xpAmount>",
 		"setxp <mentionedUser> -t <xpTimeout>"
 	],
+	notes: [
+		"*xpTimeout* mäts i millisekunder från att du skickar detta kommando."
+	],
 	perms: ["adminCmd"],
 	async do(client, message, args, Discord) {
 		if (!message.mentions.members.first()) {
