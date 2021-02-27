@@ -9,31 +9,53 @@ module.exports = {
 		if (!message.mentions.members.first()) {
 			return message.channel.send("Du måste ange vilken användare du vill sätta xp'n för.")
 		}
+		let fields = [];
 		if (!args[1]) {
-			return message.channel.send("Du måste ange hur mycket xp du vill sätta för användaren!")
-		}
-		if (isNaN(args[1])) {
-			return message.channel.send("Xp-värdet måste vara ett nummer!");
+			return message.channel.send("Du måste ange vilken operation du vill utföra!")
+		} else {
+			profile_data = await profileModel.findOne({ userID: message.mentions.members.first().id })
+			if (!profile_data) {
+				let profile = await profileModel.create({
+					userID: message.mentions.members.first().id,
+					serverID: message.guild.id,
+					xp: 0,
+					lastMessageTimestamp: null,
+					xpTimeoutUntil: null
+				});
+				profile.save();
+			}
+
+			if (args[1] === "-x") {
+				if (isNaN(args[2])) {
+					return message.channel.send("Xp-värdet måste vara ett nummer!");
+				} else {
+					profile_data.xp = args[2];
+					profile_data.save();
+					fields.push({
+						name: "XP",
+						value: `Sätt ${message.mentions.members.first()}'s xp till ${profile_data.xp}!`
+					});
+				}
+			} else if (args[1] === "-t") {
+				if (isNaN(args[2])) {
+					return message.channel.send("Xp-timeouten måste vara en timestamp!");
+				} else {
+					profile_data.xpTimeoutUntil = message.createdTimestamp + parseInt(args[2]);
+					profile_data.save();
+					fields.push({
+						name: "XP Timeout",
+						value: `Sätt ${message.mentions.members.first()}'s xp timeout till ${profile_data.xpTimeoutUntil}!`
+					});
+				}
+			}
 		}
 		
-		profile_data = await profileModel.findOne({ userID: message.mentions.members.first().id })
-		if (!profile_data) {
-			let profile = await profileModel.create({
-				userID: message.mentions.members.first().id,
-				serverID: message.guild.id,
-				xp: 0,
-				lastMessageTimestamp: null,
-				xpTimeoutUntil: null
-			});
-			profile.save();
-		}
-		
-		profile_data.xp = args[1];
-		profile_data.save();
 		const embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
 			.setTitle(`Set xp`)
-			.setDescription(`Set ${message.mentions.members.first()}'s xp to ${profile_data.xp}!`)
+			.addFields(
+				fields
+			)
 		message.channel.send(embed);
 	}
 }
