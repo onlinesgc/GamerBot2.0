@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
+const configModel = require("./models/configSchema");
 require('dotenv').config();
 
 const client = new Discord.Client();
@@ -18,8 +19,19 @@ mongoose.connect(process.env.mongodb_srv, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useFindAndModify: false
-}).then(() => {
+}).then(async() => {
 	console.log("Connected to the database!");
+
+	//Retreive options
+	var configData = await configModel.findOne({ id: 0 });
+	if (!configData) {
+		let config = await configModel.create({
+			prefix: ".",
+			id: 0
+		});
+		config.save();
+	}
+	console.log("Options retrieved!");
 }).catch((err) => {
 	console.log(process.env.mongodb_srv);
 	console.log(err);
