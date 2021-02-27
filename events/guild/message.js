@@ -1,5 +1,6 @@
 const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
+const configModel = require("../../models/configSchema");
 
 module.exports = async(Discord, client, message) => {
 	if (message.author.bot) return;
@@ -8,6 +9,27 @@ module.exports = async(Discord, client, message) => {
 
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const cmd = args.shift().toLowerCase();
+
+	//Retreive options
+	configData = await configModel.findOne({ id: 0 });
+	if (!configData) {
+		let config = await configModel.create({
+			prefix: ".",
+			id: 0,
+			debug: false
+		});
+		config.save();
+	}
+	if (configData.debug) {
+		try {
+			delete require.cache[require.resolve(`../../commands/${cmd}.js`)];
+			client.commands.delete(cmd);
+			const pull = require(`../../commands/${cmd}.js`);
+			client.commands.set(cmd, pull);
+		} catch (err) {
+			console.log(err);
+		}
+	}
 
 	const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
 	const mention_command = client.mention_commands.find(object => message.content && object.permittedMessages.some(element => message.content.toLowerCase().includes(element)));

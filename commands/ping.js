@@ -7,7 +7,7 @@ module.exports = {
 	async do(client, message, args, Discord) {
 		const pinging_embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
-			.setTitle(`:ping_pong: Ping`)
+			.setTitle(`:ping_pong:  Ping`)
 			.setDescription(`Pingar...`)
 		let botMessage = await message.channel.send(pinging_embed);
 		const pong_embed = new Discord.MessageEmbed()
