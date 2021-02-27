@@ -11,6 +11,7 @@ module.exports = async(Discord, client, message) => {
 
 	const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
 	const mention_command = client.mention_commands.find(object => message.content && object.permittedMessages.some(element => message.content.toLowerCase().includes(element)));
+	const question_command = client.question_commands.find(object => message.content && object.permittedMessages.some(element => message.content.toLowerCase().replace(/\s/g, "").includes(element)));
 	
 	let profileData = await profileModel.findOne({ userID: message.author.id })
 	if (!profileData) {
@@ -44,6 +45,16 @@ module.exports = async(Discord, client, message) => {
 		} else {
 			mention_command.do(client, message, args, Discord, profileData);
 		}
+	} else if (question_command) {
+		if (question_command.perms.includes("adminCmd")) {
+			if (message.member.hasPermission("ADMINISTRATOR")) {
+				question_command.do(client, message, args, Discord, profileData);
+			} else {
+				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
+			}
+		} else {
+			question_command.do(client, message, args, Discord, profileData);
+		}
 	} else {
 		profileData.lastMessageTimestamp = message.createdTimestamp;
 		if (profileData.xpTimeoutUntil - message.createdTimestamp < 0) {
@@ -57,31 +68,11 @@ module.exports = async(Discord, client, message) => {
 		message.react("✅");
 		message.react("❌");
 	}
-
-	if (message.content.toLowerCase().replace(/\s/g, "").includes("gaming")) {
-		if (message.channel.id == "809483972282810390" || message.channel.id == "780765093343395880") {
-			if (Math.floor(Math.random() * 100) > 86) {
-				message.channel.send("**GAMING! 🎮**");
-			}
-		}
-	}
+	
 	if (message.content.toLowerCase().includes("christerpog") || message.content.toLowerCase().includes("cristerpog")) {
 		if (message.channel.id == "809483972282810390" || message.channel.id == "780765093343395880") {
 			message.react("810255466952917052")
 			message.channel.send("<:mello_ChristerPOG:810255466952917052>")
 		}
 	}
-	// if (message.content.toLowerCase().includes("hur mycket är klockan") || message.content.toLowerCase().includes("vad är klockan")) {
-	// 	if (Math.floor(Math.random() * 100) > 91) {
-	// 		message.channel.send("**KLOCKAN TOLV!**")
-	// 	} else {
-	// 		var currentdate = new Date();
-	// 		var datetime =
-	// 			("0" + currentdate.getHours()).slice(-2) + ":" 
-	// 			+ ("0" + currentdate.getMinutes()).slice(-2) + ":" 
-	// 			+ ("0" + currentdate.getSeconds()).slice(-2)
-	// 		;
-	// 		message.channel.send(`Klockan är ${datetime}`);
-	// 	}
-	// }
 }
