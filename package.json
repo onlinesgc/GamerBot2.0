@@ -8,7 +8,9 @@
     "dotenv": "^8.2.0",
     "mongoose": "^5.11.17"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
