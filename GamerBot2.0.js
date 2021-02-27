@@ -10,8 +10,9 @@ const token = process.env.token;
 client.commands = new Discord.Collection();
 client.mention_commands = new Discord.Collection();
 client.question_commands = new Discord.Collection();
+client.channel_actions = new Discord.Collection();
 
-["command_handler", "event_handler", "mention_handler", "question_handler"].forEach(handler => {
+["command_handler", "event_handler", "mention_handler", "question_handler", "channel_handler"].forEach(handler => {
 	require(`./handlers/${handler}.js`)(client, Discord);
 });
 

@@ -26,6 +26,7 @@ module.exports = async(Discord, client, message) => {
 	const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
 	const mention_command = client.mention_commands.find(object => message.content && object.permittedMessages.some(element => message.content.toLowerCase().includes(element)));
 	const question_command = client.question_commands.find(object => message.content && object.permittedMessages.some(element => message.content.toLowerCase().replace(/\s/g, "").includes(element)));
+	const channel_action = client.channel_actions.find(object => object.channels.includes(message.channel.id));
 	
 	let profileData = await profileModel.fetchProfileFromMessage(message);		//Fetch profile
 
@@ -69,9 +70,8 @@ module.exports = async(Discord, client, message) => {
 		profileData.save();
 	}
 
-	if (message.channel.id == "809393742637170708") {
-		message.react("✅");
-		message.react("❌");
+	if (channel_action) {
+		channel_action.do(client, message, Discord, profileData);
 	}
 	
 	if (message.content.toLowerCase().includes("christerpog") || message.content.toLowerCase().includes("cristerpog")) {
