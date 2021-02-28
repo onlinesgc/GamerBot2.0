@@ -5,6 +5,6 @@ module.exports = {
 	usage: [],
 	perms: ["adminCmd"],
 	async do(client, message, args, Discord) {
-		client.emit("guildMemberAdd", member);
+		client.emit("guildMemberAdd", message.member);
 	}
 }
