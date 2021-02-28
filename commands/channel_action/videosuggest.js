@@ -23,7 +23,7 @@ module.exports = {
 		
 		let n = 1;
 		for (const item of similarMessages) {
-			fields.push({ name: `Förekomst ${n}`, value: `Meddelande: *${item.messageContent}*`})
+			fields.push({ name: `Förekomst ${n}`, value: `Meddelande: *${item.messageContent}*\nAnvändare: ${message.guild.members.cache.get(item.userID)}`})
 			n++;
 		}
 		
