@@ -54,6 +54,8 @@ module.exports = {
 						value: `Sätt ${member}'s xp timeout till ${profile_data.xpTimeoutUntil}!`
 					});
 				}
+			} else {
+				return message.channel.send("Operationen du specificerade finns inte. Använd help-kommandot för att se användningen av det här kommandot.");
 			}
 		}
 		
