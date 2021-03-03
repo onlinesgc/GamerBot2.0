@@ -13,14 +13,24 @@ module.exports = {
 	],
 	perms: ["adminCmd"],
 	async do(client, message, args, Discord) {
-		if (!message.mentions.members.first()) {
-			return message.channel.send("Du måste ange vilken användare du vill sätta xp'n för.")
+		let member;
+		let user;
+		if (!args[0]) {
+			return message.channel.send("Du måste ange vilken användare du vill sätta xp'n för.");
+		} else {
+			if (message.mentions.members.first()) {
+				member = message.mentions.members.first();
+				user = message.mentions.users.first();
+			} else {
+				member = await message.guild.members.fetch(args[0]);
+				user = await client.users.fetch(args[0]);
+			}
 		}
 		let fields = [];
 		if (!args[1]) {
 			return message.channel.send("Du måste ange vilken operation du vill utföra!")
 		} else {
-			let profile_data = await profileModel.fetchProfileFromMessage(message);		//Fetch profile
+			let profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
 
 			if (args[1] === "-x") {
 				if (isNaN(args[2])) {
@@ -30,7 +40,7 @@ module.exports = {
 					profile_data.save();
 					fields.push({
 						name: "XP",
-						value: `Sätt ${message.mentions.members.first()}'s xp till ${profile_data.xp}!`
+						value: `Sätt ${member}'s xp till ${profile_data.xp}!`
 					});
 				}
 			} else if (args[1] === "-t") {
@@ -41,7 +51,7 @@ module.exports = {
 					profile_data.save();
 					fields.push({
 						name: "XP Timeout",
-						value: `Sätt ${message.mentions.members.first()}'s xp timeout till ${profile_data.xpTimeoutUntil}!`
+						value: `Sätt ${member}'s xp timeout till ${profile_data.xpTimeoutUntil}!`
 					});
 				}
 			}
