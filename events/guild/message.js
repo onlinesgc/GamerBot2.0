@@ -7,6 +7,8 @@ module.exports = async(Discord, client, message) => {
 	
 	var prefix = ".";
 
+	if (!message.content.startsWith(prefix)) return;
+
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const cmd = args.shift().toLowerCase();
 
