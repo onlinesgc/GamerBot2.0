@@ -4,5 +4,5 @@ module.exports = {
 	async do(client, message, Discord, profileData) {
 		message.react("👍");
 		message.react("👎");
-    }
+	}
 }

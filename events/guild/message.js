@@ -2,12 +2,12 @@ const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
 const configModel = require("../../models/configSchema");
 
-module.exports = async(Discord, client, message) => {
+module.exports = async (Discord, client, message) => {
 	if (message.author.bot) return;
 	
 	var prefix = ".";
 
-	if (!message.content.startsWith(prefix)) return;
+	// if (!message.content.startsWith(prefix)) return;
 
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const cmd = args.shift().toLowerCase();
