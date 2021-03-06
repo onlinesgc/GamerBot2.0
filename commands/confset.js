@@ -13,9 +13,9 @@ module.exports = {
 
 		let configData = await configModel.fetchConfig(0);		//Retreive options
 
-		configData[args[0]] = args[1];
+		configData[args[0]] = args.slice(1, args.length).join(" ");
 		configData.save();
-		message.channel.send(`Set "${args[0]}" value to "${args[1]}"`);
+		message.channel.send(`Set "${args[0]}" value to "${configData[args[0]]}"`);
 
 		functions.applyOptions(client, configData);
 	}
