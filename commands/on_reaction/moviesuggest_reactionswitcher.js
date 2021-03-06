@@ -7,12 +7,14 @@ module.exports = {
 		if (reaction.emoji.name == "👍") {
 			for (const reaction3 of userReactions.values()) {
 				if (reaction3.emoji.name == "👎") {
+					await reaction3.users.fetch();
 					await reaction3.users.remove(user.id);
 				}
 			}
 		} else if (reaction.emoji.name == "👎") {
 			for (const reaction3 of userReactions.values()) {
 				if (reaction3.emoji.name == "👍") {
+					await reaction3.users.fetch();
 					await reaction3.users.remove(user.id);
 				}
 			}

@@ -4,7 +4,7 @@ const functions = require("./functions");
 const configModel = require("./models/configSchema");
 require('dotenv').config();
 
-const client = new Discord.Client();
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
 const token = process.env.token;
 
