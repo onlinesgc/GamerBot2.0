@@ -26,7 +26,7 @@ mongoose.connect(process.env.mongodb_srv, {
 	console.log("Connected to the database!");
 
 	//Retreive options
-	let configData = await configModel.fetchConfig(0);		//Retreive options
+	let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
 	console.log("Options retrieved!");
 
 	//Apply options

@@ -9,7 +9,7 @@ module.exports = {
 	async do(client, message, args, Discord) {
 		
 		//Retreive options
-		let configData = await configModel.fetchConfig(0);		//Retreive options
+		let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
 		
 		let configData2 = JSON.parse(JSON.stringify(configData));
 		configData2.id = undefined;
