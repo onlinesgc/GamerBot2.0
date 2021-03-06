@@ -1,4 +1,5 @@
 const configModel = require("../models/configSchema");
+const functions = require("../functions");
 
 module.exports = {
 	name: "confset",
@@ -15,5 +16,7 @@ module.exports = {
 		configData[args[0]] = args[1];
 		configData.save();
 		message.channel.send(`Set "${args[0]}" value to "${args[1]}"`);
+
+		functions.applyOptions(client, configData);
 	}
 }

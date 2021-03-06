@@ -3,18 +3,20 @@ const mongoose = require("mongoose");
 const configSchema = new mongoose.Schema({
 	prefix: { type: String, require: true},
 	id: { type: Number, default: 0 },
-	debug: { type: Boolean, default: false}
+	debug: { type: Boolean, default: false},
+	username: { type: String }
 });
 
 const model = mongoose.model("ConfigModel", configSchema);
 
 const fetchConfig = async (id) => {
-	configData = await model.findOne({ id: id });
+	let configData = await model.findOne({ id: id });
 	if (!configData) {
-		let configData = await model.create({
+		configData = await model.create({
 			prefix: ".",
 			id: id,
-			debug: false
+			debug: false,
+			username: "GamerBot2.0"
 		});
 		configData.save();
 	}

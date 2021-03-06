@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
+const functions = require("./functions");
 const configModel = require("./models/configSchema");
 require('dotenv').config();
 
@@ -27,6 +28,10 @@ mongoose.connect(process.env.mongodb_srv, {
 	//Retreive options
 	let configData = await configModel.fetchConfig(0);		//Retreive options
 	console.log("Options retrieved!");
+
+	//Apply options
+	functions.applyOptions(client, configData);
+	console.log("Options applied!");
 }).catch((err) => {
 	console.log(process.env.mongodb_srv);
 	console.log(err);
