@@ -6,7 +6,7 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.11.17"
+    "mongoose": "^5.11.19"
   },
   "devDependencies": {
     "jest": "^26.6.3"
