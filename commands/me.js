@@ -15,11 +15,12 @@ module.exports = {
 		}
 		const embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
-			.setTitle(`User info`)
-			.setDescription(`${message.member}'s user information.`)
+			.setTitle(`Användarinfo`)
+			.setDescription(`${message.member}'s information.`)
 			.setImage(message.author.avatarURL())
 			.addFields(
-				fields
+				fields,
+				{ name: "id", value: message.author.id }
 			)
 		message.channel.send(embed);
 	}
