@@ -45,5 +45,6 @@ module.exports = {
 	},
 	applyOptions(client, configData) {
 		client.user.setUsername(configData.username);
+		client.user.setActivity(configData.activity, { type: configData.activityType.toUpperCase() });
 	}
 }

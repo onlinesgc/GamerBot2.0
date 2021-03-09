@@ -4,7 +4,9 @@ const configSchema = new mongoose.Schema({
 	prefix: { type: String, require: true},
 	id: { type: Number, default: 0 },
 	debug: { type: Boolean, default: false},
-	username: { type: String }
+	username: { type: String },
+	activity: { type: String },
+	activityType: { type: String }
 });
 
 const model = mongoose.model("ConfigModel", configSchema);
@@ -16,7 +18,9 @@ const fetchConfig = async (id) => {
 			prefix: ".",
 			id: id,
 			debug: false,
-			username: "GamerBot2.0"
+			username: "GamerBot2.0",
+			activity: "Testspel",
+			activityType: "playing"
 		});
 		configData.save();
 	}
