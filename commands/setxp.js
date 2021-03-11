@@ -4,13 +4,13 @@ const ms = require("ms");
 module.exports = {
 	name: "setxp",
 	aliases: [],
-	description: "Set xp for specified user!",
+	description: "Sätt xp eller xp timeout för en användare!",
 	usage: [
-		"setxp <mentionedUser> -x <xpAmount>",
-		"setxp <mentionedUser> -t <xpTimeout>"
+		"setxp {<mentionedUser>|<userID>} -x <xpAmount>",
+		"setxp {<mentionedUser>|<userID>} -t <xpTimeout>"
 	],
 	notes: [
-		"*xpTimeout* mäts i millisekunder från att du skickar detta kommando."
+		"*xpTimeout* mäts som standard i millisekunder från att du skickar detta kommando. Du kan också specificera värdet genom att sätta \`h\`, \`s\`, \`m\` etc. bakom. Exempel:\n\`60s\`, \`8h\` och \`2w\`"
 	],
 	perms: ["adminCmd"],
 	async do(client, message, args, Discord) {
