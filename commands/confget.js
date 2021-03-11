@@ -34,7 +34,8 @@ module.exports = {
 				.setTitle(`Config`)
 				.setDescription(`Konfigurationen för boten ser just nu ut såhär!`)
 				.addFields(
-					{ name: "Konfiguration:", value: `${JSON.stringify(configData2, null, 4)}` }
+					{ name: "Konfiguration:", value: `${JSON.stringify(configData2, null, 4)}` },
+					{ name: "ID:", value: `Den här boten använder konfigurationsdokumentet med id \`${configData.id}\`.` }
 				)
 			return message.channel.send(embed);
 		}
