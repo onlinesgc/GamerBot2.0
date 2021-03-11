@@ -8,11 +8,13 @@
     "dotenv": "^8.2.0",
     "google-auth-library": "^7.0.2",
     "googleapis": "^67.1.1",
-    "mongoose": "^5.11.17"
+    "mongoose": "^5.11.19"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
