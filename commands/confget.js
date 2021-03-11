@@ -26,9 +26,9 @@ module.exports = {
 			const embed = new Discord.MessageEmbed()
 				.setColor("#f54242")
 				.setTitle(`${args[0]} - Config`)
-				.setDescription(`Visar värdet av config-variabeln "${args[0]}".`)
+				.setDescription(`Visar värdet av config-variabeln *${args[0]}*.`)
 				.addFields(
-					{ name: "Värde:", value: `${JSON.stringify(configData2[args[0]], null, 4)}` }
+					{ name: "Värde:", value: `\`\`\`json\n${JSON.stringify(configData2[args[0]], null, 4)}\`\`\`` }
 				)
 			return message.channel.send(embed);
 		} else {
