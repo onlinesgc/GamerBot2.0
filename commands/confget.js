@@ -2,9 +2,12 @@ const configModel = require("../models/configSchema");
 
 module.exports = {
 	name: "confget",
-	aliases: [],
-	description: "Get config options!",
-	usage: [],
+	aliases: ["configget"],
+	description: "Skicka värdet av config-variabler.",
+	usage: [
+		"confget",
+		"confget <variable>"
+	],
 	perms: ["adminCmd"],
 	async do(client, message, args, Discord) {
 		
