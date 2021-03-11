@@ -3,9 +3,11 @@ const functions = require("../functions");
 
 module.exports = {
 	name: "confset",
-	aliases: [],
-	description: "Change config options!",
-	usage: [],
+	aliases: ["configset"],
+	description: "Ändra config-variablers värde.",
+	usage: [
+		"confset <variable> <value>"
+	],
 	perms: ["adminCmd"],
 	async do(client, message, args, Discord) {
 		if (!args[0]) return message.channel.send("Du måste ange vilken key du vill ändra.")
