@@ -1,4 +1,5 @@
 const profileModel = require("../models/profileSchema");
+const ms = require("ms");
 
 module.exports = {
 	name: "setxp",
@@ -44,10 +45,10 @@ module.exports = {
 					});
 				}
 			} else if (args[1] === "-t") {
-				if (isNaN(args[2])) {
-					return message.channel.send("Xp-timeouten måste vara en timestamp!");
+				if (ms(args[2]) == undefined) {
+					return message.channel.send("Xp-timeouten måste kunna omvandlas till millisekunder!");
 				} else {
-					profile_data.xpTimeoutUntil = message.createdTimestamp + parseInt(args[2]);
+					profile_data.xpTimeoutUntil = message.createdTimestamp + ms(args[2]);
 					profile_data.save();
 					fields.push({
 						name: "XP Timeout",
