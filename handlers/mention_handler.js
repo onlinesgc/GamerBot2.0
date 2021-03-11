@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports = (client, Discord) => {
+module.exports = (client) => {
 	const mention_files = fs.readdirSync(`./commands/on_mention/`).filter(file => file.endsWith(".js"));
 	for (const file of mention_files) {
 		const mention_command = require(`../commands/on_mention/${file}`);
