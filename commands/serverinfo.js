@@ -2,6 +2,7 @@ module.exports = {
 	name: "serverinfo",
 	aliases: [],
 	description: "Print server information!",
+	usage: [],
 	perms: [],
 	async do(client, message, args, Discord) {
 		const embed = new Discord.MessageEmbed()
