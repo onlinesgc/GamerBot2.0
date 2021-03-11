@@ -42,8 +42,8 @@ function getSpecificCmd(client, Discord, input, message) {
 		if (!aliases) {
 			aliases = "Det finns inga alias för det här kommandot.";
 		}
-		let usages = cmd.usage.join("\n");
-		if (!usages) {
+		let usages = `\`\`\`` + cmd.usage.join("\n") + `\`\`\``;
+		if (!cmd.usage.join("\n")) {
 			usages = "Användningsområdet är inte definierat för det här kommandot.";
 		}
 		
