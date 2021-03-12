@@ -1,8 +1,9 @@
 const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
 const configModel = require("../../models/configSchema");
+const Discord = require('discord.js');
 
-module.exports = async (Discord, client, message) => {
+module.exports = async (message, client) => {
 	if (message.author.bot) return;
 
 	//Retreive options
@@ -33,32 +34,32 @@ module.exports = async (Discord, client, message) => {
 	if (command && message.content.startsWith(prefix)) {
 		if (command.perms.includes("adminCmd")) {
 			if (message.member.hasPermission("ADMINISTRATOR")) {
-				command.do(client, message, args, Discord, profileData);
+				command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
 		} else {
-			command.do(client, message, args, Discord, profileData);
+			command.do(message, args, profileData);
 		}
 	} else if (mention_command && functions.checkIfMentioned(message)) {
 		if (mention_command.perms.includes("adminCmd")) {
 			if (message.member.hasPermission("ADMINISTRATOR")) {
-				mention_command.do(client, message, args, Discord, profileData);
+				mention_command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
 		} else {
-			mention_command.do(client, message, args, Discord, profileData);
+			mention_command.do(message, args, profileData);
 		}
 	} else if (question_command) {
 		if (question_command.perms.includes("adminCmd")) {
 			if (message.member.hasPermission("ADMINISTRATOR")) {
-				question_command.do(client, message, args, Discord, profileData);
+				question_command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
 		} else {
-			question_command.do(client, message, args, Discord, profileData);
+			question_command.do(message, args, profileData);
 		}
 	} else {
 		profileData.lastMessageTimestamp = message.createdTimestamp;
@@ -74,7 +75,7 @@ module.exports = async (Discord, client, message) => {
 	}
 
 	if (channel_action) {
-		channel_action.do(client, message, Discord, profileData);
+		channel_action.do(message, profileData);
 	}
 	
 	if (message.content.toLowerCase().includes("christerpog") || message.content.toLowerCase().includes("cristerpog")) {

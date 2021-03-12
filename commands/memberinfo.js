@@ -1,5 +1,6 @@
 const profileModel = require("../models/profileSchema");
-const functions = require("../functions")
+const functions = require("../functions");
+const Discord = require('discord.js');
 
 module.exports = {
 	name: "memberinfo",
@@ -7,7 +8,7 @@ module.exports = {
 	description: "Get member information for specified user!",
 	usage: [],
 	perms: [],
-	async do(client, message, args, Discord) {
+	async do(message, args, profileData) {
 		let member;
 		let user;
 		if (!args[0]) {
@@ -18,7 +19,7 @@ module.exports = {
 				user = message.mentions.users.first();
 			} else {
 				member = await message.guild.members.fetch(args[0]);
-				user = await client.users.fetch(args[0]);
+				user = await message.client.users.fetch(args[0]);
 			}
 		}
 

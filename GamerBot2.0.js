@@ -15,7 +15,7 @@ client.channel_actions = new Discord.Collection();
 client.reaction_actions = new Discord.Collection();
 
 ["command_handler", "event_handler", "mention_handler", "question_handler", "channel_handler", "reaction_handler"].forEach(handler => {
-	require(`./handlers/${handler}.js`)(client, Discord);
+	require(`./handlers/${handler}.js`)(client);
 });
 
 mongoose.connect(process.env.mongodb_srv, {

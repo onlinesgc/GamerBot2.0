@@ -1,10 +1,12 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	name: "serverinfo",
 	aliases: [],
 	description: "Print server information!",
 	usage: [],
 	perms: [],
-	async do(client, message, args, Discord) {
+	async do(message, args, profileData) {
 		const embed = new Discord.MessageEmbed()
 			.setColor("#0099ff")
 			.setTitle(`Serverinfo - ${message.guild.name}`)

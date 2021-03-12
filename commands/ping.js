@@ -1,10 +1,12 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	name: "ping",
 	aliases: [],
 	description: "Ping the bot!",
 	usage: [],
 	perms: [],
-	async do(client, message, args, Discord) {
+	async do(message, args, profileData) {
 		const pinging_embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
 			.setTitle(`:ping_pong:  Ping`)

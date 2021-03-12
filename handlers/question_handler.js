@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports = (client, Discord) => {
+module.exports = (client) => {
 	const question_files = fs.readdirSync(`./commands/on_question/`).filter(file => file.endsWith(".js"));
 	for (const file of question_files) {
 		const question_command = require(`../commands/on_question/${file}`);
