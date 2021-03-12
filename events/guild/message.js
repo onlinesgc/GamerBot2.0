@@ -62,7 +62,7 @@ module.exports = async (Discord, client, message) => {
 		}
 	} else {
 		profileData.lastMessageTimestamp = message.createdTimestamp;
-		if (profileData.xpTimeoutUntil - message.createdTimestamp < 0) {
+		if ((profileData.xpTimeoutUntil - message.createdTimestamp < 0) || (!configData.xp.timeoutsEnabled)) {
 			const xpAmount = Math.floor(Math.random() * 3) + 1;
 			profileData.xp += xpAmount;
 			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);

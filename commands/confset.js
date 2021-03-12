@@ -15,7 +15,7 @@ module.exports = {
 
 		let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
 
-		configData[args[0]] = args.slice(1, args.length).join(" ");
+		configData[args[0]] = JSON.parse(args.slice(1, args.length).join(" "));
 		configData.save();
 		message.channel.send(`Set "${args[0]}" value to "${configData[args[0]]}"`);
 
