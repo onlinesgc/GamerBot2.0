@@ -18,6 +18,7 @@ client.reaction_actions = new Discord.Collection();
 	require(`./handlers/${handler}.js`)(client, Discord);
 });
 
+mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.mongodb_srv, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
