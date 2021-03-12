@@ -9,7 +9,7 @@ module.exports = {
 		"confset <variable> <value>"
 	],
 	perms: ["adminCmd"],
-	async do(client, message, args, Discord) {
+	async do(message, args, profileData) {
 		if (!args[0]) return message.channel.send("Du måste ange vilken key du vill ändra.")
 		if (!args[1]) return message.channel.send("Du måste ange vilket värde key'n ska sättas till!")
 
@@ -19,6 +19,6 @@ module.exports = {
 		configData.save();
 		message.channel.send(`Set "${args[0]}" value to "${configData[args[0]]}"`);
 
-		functions.applyOptions(client, configData);
+		functions.applyOptions(message.client, configData);
 	}
 }

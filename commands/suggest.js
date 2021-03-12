@@ -4,7 +4,7 @@ module.exports = {
 	description: "Suggest a feature!",
 	usage: [],
 	perms: [],
-	async do(client, message, args, Discord) {
+	async do(message, args, profileData) {
 		
 	}
 }

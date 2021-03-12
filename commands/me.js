@@ -1,4 +1,5 @@
-const functions = require("../functions")
+const functions = require("../functions");
+const Discord = require('discord.js');
 
 module.exports = {
 	name: "me",
@@ -6,7 +7,7 @@ module.exports = {
 	description: "Print information about user!",
 	usage: [],
 	perms: [],
-	async do(client, message, args, Discord, profileData) {
+	async do(message, args, profileData) {
 		let fields = [
 			{ name: "XP", value: profileData.xp, inline: true }
 		];
