@@ -6,7 +6,10 @@ const configSchema = new mongoose.Schema({
 	debug: { type: Boolean, default: false},
 	username: { type: String },
 	activity: { type: String },
-	activityType: { type: String }
+	activityType: { type: String },
+	xp: { type: Object, default: {
+		timeoutsEnabled: true
+	}}
 });
 
 const model = mongoose.model("ConfigModel", configSchema);
