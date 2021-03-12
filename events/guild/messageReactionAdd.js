@@ -1,4 +1,4 @@
-module.exports = async (Discord, client, reaction, user) => {
+module.exports = async (reaction, user, client) => {
 	if (user.bot) return;
 	
 	if (reaction.partial) {
@@ -18,6 +18,6 @@ module.exports = async (Discord, client, reaction, user) => {
 	const reaction_action = client.reaction_actions.find(object => object.channels.includes(reaction.message.channel.id));
 
 	if (reaction_action) {
-		reaction_action.do(client, Discord, reaction, user);
+		reaction_action.do(reaction, user, client);
 	}
 }
