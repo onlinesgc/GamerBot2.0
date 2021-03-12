@@ -44,5 +44,13 @@ module.exports = {
 	applyOptions(client, configData) {
 		client.user.setUsername(configData.username);
 		client.user.setActivity(configData.activity, { type: configData.activityType.toUpperCase() });
+	},
+	initWebserver() {
+		const express = require('express');
+		const app = express();
+		const port = 3000;
+
+		app.get('/', (req, res) => res.send('Hello World!'));
+		app.listen(port, () => console.log(`Webserver listening at http://localhost:${port}`));
 	}
 }

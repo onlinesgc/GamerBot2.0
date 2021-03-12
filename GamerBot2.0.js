@@ -4,8 +4,9 @@ const functions = require("./functions");
 const configModel = require("./models/configSchema");
 require('dotenv').config();
 
-const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+functions.initWebserver()		//Start a web server
 
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 const token = process.env.token;
 
 client.commands = new Discord.Collection();
