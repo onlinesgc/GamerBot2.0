@@ -31,10 +31,8 @@ module.exports = {
 		return time;
 	},
 	checkIfMentioned(message) {
-		if (message.mentions.members.first()) {
-			if (message.mentions.members.first() === message.guild.me) {
-				return true;
-			}
+		if (message.mentions.has(message.client.user)) {
+			return true;
 		}
 		return false;
 	},
