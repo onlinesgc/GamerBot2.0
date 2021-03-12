@@ -20,6 +20,7 @@ module.exports = {
 			.setImage(message.author.avatarURL())
 			.addFields(
 				fields,
+				{ name: "Level", value: profileData.level - 1, inline: true },
 				{ name: "id", value: message.author.id }
 			)
 		message.channel.send(embed);
