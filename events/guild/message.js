@@ -4,16 +4,14 @@ const configModel = require("../../models/configSchema");
 
 module.exports = async (Discord, client, message) => {
 	if (message.author.bot) return;
-	
-	var prefix = ".";
-
-	// if (!message.content.startsWith(prefix)) return;
-
-	const args = message.content.slice(prefix.length).split(/ +/);
-	const cmd = args.shift().toLowerCase();
 
 	//Retreive options
 	let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
+
+	const prefix = configData.prefix;
+	const args = message.content.slice(prefix.length).split(/ +/);
+	const cmd = args.shift().toLowerCase();
+
 	if (configData.debug && (client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd)))) {
 		try {
 			delete require.cache[require.resolve(`../../commands/${cmd}.js`)];
@@ -32,7 +30,7 @@ module.exports = async (Discord, client, message) => {
 	
 	let profileData = await profileModel.fetchProfileFromMessage(message);		//Fetch profile
 
-	if (command) {
+	if (command && message.content.startsWith(prefix)) {
 		if (command.perms.includes("adminCmd")) {
 			if (message.member.hasPermission("ADMINISTRATOR")) {
 				command.do(client, message, args, Discord, profileData);
@@ -68,6 +66,9 @@ module.exports = async (Discord, client, message) => {
 			const xpAmount = Math.floor(Math.random() * 3) + 1;
 			profileData.xp += xpAmount;
 			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);
+			if (profileData.xp > profileData.level * 10) {
+				profileData.level++;
+			}
 		}
 		profileData.save();
 	}
