@@ -1,5 +1,6 @@
 const profileModel = require("../models/profileSchema");
 const ms = require("ms");
+const Discord = require('discord.js');
 
 module.exports = {
 	name: "setxp",
@@ -13,7 +14,7 @@ module.exports = {
 		"*xpTimeout* mäts som standard i millisekunder från att du skickar detta kommando. Du kan också specificera värdet genom att sätta \`h\`, \`s\`, \`m\` etc. bakom. Exempel:\n\`60s\`, \`8h\` och \`2w\`"
 	],
 	perms: ["adminCmd"],
-	async do(client, message, args, Discord) {
+	async do(message, args, profileData) {
 		let member;
 		let user;
 		if (!args[0]) {

@@ -3,7 +3,7 @@ module.exports = {
 	permittedMessages: ["hur mycket är klockan", "vad är klockan"],
 	description: "Gets the current time!",
 	perms: [],
-	async do(client, message, args, Discord) {
+	async do(message, args, profileData) {
 		if (Math.floor(Math.random() * 100) > 91) {
 			message.channel.send("**KLOCKAN TOLV!**")
 		} else {

@@ -3,7 +3,7 @@ module.exports = {
 	permittedMessages: ["hur mår klockan"],
 	description: "Gets the clocks emotions!",
 	perms: [],
-	async do(client, message, args, Discord) {
+	async do(message, args, profileData) {
 		message.channel.send("Klockan känner sig stressad för att så många frågar hur mycket den är! :disappointed_relieved:");
 	}
 }

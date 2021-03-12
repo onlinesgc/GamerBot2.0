@@ -1,19 +1,21 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	name: "help",
 	aliases: [],
 	description: "Get help with bot commands!",
 	usage: [],
 	perms: [],
-	async do(client, message, args, Discord, profileData) {
+	async do(message, args, profileData) {
 		if (args[0]) {
-			return message.channel.send(getSpecificCmd(client, Discord, args[0], message));
+			return message.channel.send(getSpecificCmd(message.client, args[0], message));
 		} else {
-			return message.channel.send(getAllCmds(client, Discord, message));
+			return message.channel.send(getAllCmds(message.client, message));
 		}
 	}
 }
 
-function getAllCmds(client, Discord, message) {
+function getAllCmds(client, message) {
 	let fields = [
 		{ name: "Medlem", value: client.commands.filter(element => !element.perms.includes("adminCmd")).map(cmd => cmd.name) }
 	]
@@ -30,7 +32,7 @@ function getAllCmds(client, Discord, message) {
 	return embed;
 }
 
-function getSpecificCmd(client, Discord, input, message) {
+function getSpecificCmd(client, input, message) {
 	const cmd = client.commands.get(input.toLowerCase()) || client.commands.find(a => a.aliases && a.aliases.includes(input.toLowerCase()));
 
 	if (!cmd) {
