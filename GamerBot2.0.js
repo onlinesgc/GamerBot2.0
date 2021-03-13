@@ -4,10 +4,10 @@ const functions = require("./functions");
 const configModel = require("./models/configSchema");
 require('dotenv').config();
 
-functions.initWebserver()		//Start a web server
-
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 const token = process.env.token;
+
+functions.initWebserver(client)		//Start a web server
 
 client.commands = new Discord.Collection();
 client.mention_commands = new Discord.Collection();
