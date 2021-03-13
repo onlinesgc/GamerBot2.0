@@ -34,12 +34,20 @@ module.exports = async (message, client) => {
 	if (command && message.content.startsWith(prefix)) {
 		if (command.perms.includes("adminCmd")) {
 			if (message.member.hasPermission("ADMINISTRATOR")) {
-				command.do(message, args, profileData);
+				try {
+					await command.do(message, args, profileData);
+				} catch (err) {
+					message.channel.send("Det har inträffat ett fel med det här kommandot. Se konsolen för mer information!")
+				}
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
 		} else {
-			command.do(message, args, profileData);
+			try {
+				await command.do(message, args, profileData);
+			} catch (err) {
+				message.channel.send("Det har inträffat ett fel med det här kommandot. Se konsolen för mer information!")
+			}
 		}
 	} else if (mention_command && functions.checkIfMentioned(message)) {
 		if (mention_command.perms.includes("adminCmd")) {
