@@ -28,11 +28,10 @@ GamerBot2.0 requires node.js, npm and MongoDB to run.
 
 
 ### Commands:
-
 `.` is the standard prefix, this can be changed with `.confset`
 
 
-**Member commands:**
+#### Member commands:
 All members of the server can see and use these commands.
 
 `.help` - help displays the available commands; help $COMMAND explains the command
@@ -50,19 +49,18 @@ All members of the server can see and use these commands.
 `.uptime` - displays uptime of the bot.
 
 
-**Admin commands:**
+#### Admin commands:
 The owner of the server and all users with the role `Administrator` can use these commands.
 
 `.confget` - displays the current configuration of the bot.
 
 `.confset $KEY` - allows the Administrator to set the configuration the keys are the following:
-
-  `debug` - auto-reloads commands, handy while testing
-  `xp` - settings regarding xp
-   `timeoutsEnabled` - Administrators are allowed to timeout the gain of xp for user, or not
-  `prefix` - sets the global command-prefix for the bot
-  `activity` - displays the activity message under the bot name in the members list
-  `activityType` - for example "playing" or "listening to"
+	  `debug` - auto-reloads commands, handy while testing
+	  `xp` - settings regarding xp
+	       `timeoutsEnabled` - Administrators are allowed to timeout the gain of xp for user, or not
+	  `prefix` - sets the global command-prefix for the bot
+	  `activity` - displays the activity message under the bot name in the members list
+	  `activityType` - for example "playing" or "listening to"
   
 `.emujoin` - emulates someone joining the guild, handy for development and bot testing.
 
