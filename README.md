@@ -1,15 +1,15 @@
-#GamerBot2.0
+# GamerBot2.0
 
-##What is Gamerbot2.0?
+## What is Gamerbot2.0?
 Gamerbot2.0 is a discord-bot developed by-and-for the STAMSITE discord community. The intended purpose is to facilitate levelup-bonuses and fun interactions for the discord community, and to potentially be expanded to include a few small minigames in the future :D
 
 
 
 STAMSITE is not involved in the development of this bot, do NOT ask him about issues with it. Contact @Sake100#1952 or @Little_Fox#2194 on discord with issues or leave an issue under [Issues](https://github.com/stamdiscord/GamerBot2.0/issues) here on GitHub if you have discovered a bug.
 
-##Running your own GamerBot2.0!
+## Running your own GamerBot2.0!
 
-###Installation
+### Installation
 GamerBot2.0 requires node.js, npm and MongoDB to run.
 
 1. Clone this repository into the directory you want to run the bot in.
@@ -23,7 +23,7 @@ GamerBot2.0 requires node.js, npm and MongoDB to run.
         config_id = normally 1 but can be changed for debugging purposes or running several bots on the same database.
 6. To run the bot type `node GamerBot2.0.js` and if you have invited the bot to your server you should see it coming online!
 
-###Commands:
+### Commands:
 TODO
 
 
