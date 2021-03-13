@@ -1,5 +1,7 @@
 # GamerBot2.0
 
+---
+
 ## What is Gamerbot2.0?
 Gamerbot2.0 is a discord-bot developed by-and-for the STAMSITE discord community. The intended purpose is to facilitate levelup-bonuses and fun interactions for the discord community, and to potentially be expanded to include a few small minigames in the future :D
 
@@ -55,12 +57,13 @@ The owner of the server and all users with the role `Administrator` can use thes
 `.confget` - displays the current configuration of the bot.
 
 `.confset $KEY` - allows the Administrator to set the configuration the keys are the following:
-	  `debug` - auto-reloads commands, handy while testing
-	  `xp` - settings regarding xp
-	       `timeoutsEnabled` - Administrators are allowed to timeout the gain of xp for user, or not
-	  `prefix` - sets the global command-prefix for the bot
-	  `activity` - displays the activity message under the bot name in the members list
-	  `activityType` - for example "playing" or "listening to"
+
+	  >`debug` - auto-reloads commands, handy while testing
+	  >`xp` - settings regarding xp
+	  >     `timeoutsEnabled` - Administrators are allowed to timeout the gain of xp for user, or not
+	  >`prefix` - sets the global command-prefix for the bot
+	  >`activity` - displays the activity message under the bot name in the members list
+	  >`activityType` - for example "playing" or "listening to"
   
 `.emujoin` - emulates someone joining the guild, handy for development and bot testing.
 
