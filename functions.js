@@ -31,7 +31,7 @@ module.exports = {
 		return time;
 	},
 	checkIfMentioned(message) {
-		if (message.mentions.has(message.client.user)) {
+		if (message.mentions.users.first() === message.client.user) {
 			return true;
 		}
 		return false;
