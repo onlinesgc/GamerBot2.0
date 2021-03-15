@@ -37,6 +37,7 @@ module.exports = async (message, client) => {
 				try {
 					await command.do(message, args, profileData);
 				} catch (err) {
+					console.log(err);
 					message.channel.send("Det har inträffat ett fel med det här kommandot. Se konsolen för mer information!")
 				}
 			} else {
@@ -46,6 +47,7 @@ module.exports = async (message, client) => {
 			try {
 				await command.do(message, args, profileData);
 			} catch (err) {
+				console.log(err);
 				message.channel.send("Det har inträffat ett fel med det här kommandot. Se konsolen för mer information!")
 			}
 		}
