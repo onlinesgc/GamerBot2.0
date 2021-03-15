@@ -75,13 +75,13 @@ module.exports = async (message, client) => {
 			const xpAmount = Math.floor(Math.random() * 3) + 1;
 			profileData.xp += xpAmount;
 			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);
+
 			let levelTotal = x*math.log(xp); //allow chance of x variable in config for tweaking
-			
-			if (profileData.level < parseInt(levelTotal) {
-			    
-			}
-			if (profileData.xp > profileData.level * 10) {
-				profileData.level++;
+			let level = parseInteger(levelTotal);
+			let currentLevelPercentage = levelTotal - level; // can be used for potential progressbar.
+
+			if (profileData.level < level) {
+				profileData.level = level;
 			}
 		}
 		profileData.save();
