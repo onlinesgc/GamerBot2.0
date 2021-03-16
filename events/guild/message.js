@@ -2,6 +2,7 @@ const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
 const configModel = require("../../models/configSchema");
 const Discord = require('discord.js');
+const ms = require('ms');
 
 module.exports = async (message, client) => {
 	if (message.author.bot) return;
@@ -72,6 +73,10 @@ module.exports = async (message, client) => {
 			question_command.do(message, args, profileData);
 		}
 	} else {
+		if (message.createdTimestamp - profileData.lastMessageTimestamp > ms("1w")) {
+			let days = Math.floor((message.createdTimestamp - profileData.lastMessageTimestamp) / 1000 / 86400);
+			profileData.xp -= days * 2;
+		}
 		profileData.lastMessageTimestamp = message.createdTimestamp;
 		if ((profileData.xpTimeoutUntil - message.createdTimestamp < 0) || (!configData.xp.timeoutsEnabled)) {
 			const xpAmount = Math.floor(Math.random() * 3) + 1;
