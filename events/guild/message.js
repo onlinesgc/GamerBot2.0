@@ -84,6 +84,7 @@ module.exports = async (message, client) => {
 			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);
 			if (profileData.xp > profileData.level * 10) {
 				profileData.level++;
+				message.author.send(`Du gick upp till level ${profileData.level - 1}. Grattis!`);
 			}
 		}
 		profileData.save();
