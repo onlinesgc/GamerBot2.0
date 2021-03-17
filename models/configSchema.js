@@ -8,7 +8,8 @@ const configSchema = new mongoose.Schema({
 	activity: { type: String },
 	activityType: { type: String },
 	xp: { type: Object, default: {
-		timeoutsEnabled: true
+		timeoutsEnabled: true,
+		xpHidden: false
 	}}
 });
 
