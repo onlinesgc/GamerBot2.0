@@ -1,5 +1,6 @@
 const functions = require("../functions");
 const Discord = require('discord.js');
+const configModel = require("../models/configSchema");
 
 module.exports = {
 	name: "me",
@@ -8,10 +9,13 @@ module.exports = {
 	usage: [],
 	perms: [],
 	async do(message, args, profileData) {
-		let fields = [
-			{ name: "XP", value: profileData.xp, inline: true }
-		];
-		if (profileData.xpTimeoutUntil - message.createdTimestamp > 0) {
+		const configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
+
+		let fields = [];
+		if (!configData.xp.xpHidden) {
+			fields.push({ name: "XP", value: profileData.xp, inline: true });
+		}
+		if ((profileData.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) {
 			fields.push({ name: "XP Timeout", value: functions.msToString(profileData.xpTimeoutUntil - message.createdTimestamp), inline: true });
 		}
 		const embed = new Discord.MessageEmbed()
