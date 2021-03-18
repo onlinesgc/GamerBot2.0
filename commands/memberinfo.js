@@ -1,6 +1,7 @@
 const profileModel = require("../models/profileSchema");
 const functions = require("../functions");
 const Discord = require('discord.js');
+const configModel = require("../models/configSchema");
 
 module.exports = {
 	name: "memberinfo",
@@ -23,12 +24,14 @@ module.exports = {
 			}
 		}
 
-		let profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
+		const profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
+		const configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
 
-		let fields = [
-			{ name: "XP", value: profile_data.xp, inline: true }
-		];
-		if (profile_data.xpTimeoutUntil - message.createdTimestamp > 0) {
+		let fields = [];
+		if (!configData.xp.xpHidden) {
+			fields.push({ name: "XP", value: profile_data.xp, inline: true });
+		}
+		if ((profile_data.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) {
 			fields.push({ name: "XP Timeout", value: functions.msToString(profile_data.xpTimeoutUntil - message.createdTimestamp), inline: true });
 		}
 
