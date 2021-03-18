@@ -23,15 +23,22 @@ module.exports = {
 				user = await message.client.users.fetch(args[0]);
 			}
 		}
+		
+		let override = false;
+		if (args[1]) {
+			if ((args[1] === "-o") && (message.member.hasPermission("ADMINISTRATOR"))) {
+				override = true;
+			}
+		}
 
 		const profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
 		const configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
 
 		let fields = [];
-		if (!configData.xp.xpHidden) {
+		if ((!configData.xp.xpHidden) || (override)) {
 			fields.push({ name: "XP", value: profile_data.xp, inline: true });
 		}
-		if ((profile_data.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) {
+		if (((profile_data.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) || (override)) {
 			fields.push({ name: "XP Timeout", value: functions.msToString(profile_data.xpTimeoutUntil - message.createdTimestamp), inline: true });
 		}
 

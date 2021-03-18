@@ -11,11 +11,18 @@ module.exports = {
 	async do(message, args, profileData) {
 		const configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
 
+		let override = false;
+		if (args[0]) {
+			if ((args[0] === "-o") && (message.member.hasPermission("ADMINISTRATOR"))) {
+				override = true;
+			}
+		}
+
 		let fields = [];
-		if (!configData.xp.xpHidden) {
+		if ((!configData.xp.xpHidden) || (override)) {
 			fields.push({ name: "XP", value: profileData.xp, inline: true });
 		}
-		if ((profileData.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) {
+		if (((profileData.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) || (override)) {
 			fields.push({ name: "XP Timeout", value: functions.msToString(profileData.xpTimeoutUntil - message.createdTimestamp), inline: true });
 		}
 		const embed = new Discord.MessageEmbed()
