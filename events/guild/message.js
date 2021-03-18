@@ -84,6 +84,10 @@ module.exports = async (message, client) => {
 			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);
 			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent)) {
 				profileData.level++;
+				message.member.roles.add(message.guild.roles.cache.get(configData.xp.levels[profileData.level - 2])).catch((err) => {
+					console.log(`Failed to add level role to user: ${message.author.tag}. He/She advanced to level ${profileData.level - 1}`);
+					console.log(`Errormessage: ${err}`);
+				});
 				profileData.xp = 0;
 				message.author.send(`Du gick upp till level \`${profileData.level - 1}\`. Grattis!`);
 			}
