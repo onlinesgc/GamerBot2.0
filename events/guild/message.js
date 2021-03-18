@@ -82,7 +82,7 @@ module.exports = async (message, client) => {
 			const xpAmount = Math.floor(Math.random() * 3) + 1;
 			profileData.xp += xpAmount;
 			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);
-			if (profileData.xp >= Math.pow(profileData.level, 2)) {
+			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent)) {
 				profileData.level++;
 				profileData.xp = 0;
 				message.author.send(`Du gick upp till level \`${profileData.level - 1}\`. Grattis!`);

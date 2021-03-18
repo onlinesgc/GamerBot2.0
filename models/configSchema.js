@@ -10,7 +10,9 @@ const configSchema = new mongoose.Schema({
 	xp: { type: Object, default: {
 		timeoutsEnabled: true,
 		xpHidden: false,
-		xpTimeoutHidden: false
+		xpTimeoutHidden: false,
+		levelExponent: 2,
+		levelBaseOffset: 0
 	}}
 });
 
