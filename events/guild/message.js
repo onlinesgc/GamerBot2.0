@@ -96,7 +96,7 @@ module.exports = async (message, client) => {
 				}
 				
 				profileData.xp = 0;
-				message.author.send(`Du gick upp till level \`${profileData.level - 1}\`. Grattis!`);
+				message.author.send(`Du levlade som faan till level \`${profileData.level - 1}\` i Stamsites Discord. Grattis!`);
 			}
 		}
 		profileData.save();
