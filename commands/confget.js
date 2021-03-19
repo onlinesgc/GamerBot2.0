@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 
 module.exports = {
 	name: "confget",
-	aliases: ["configget"],
+	aliases: ["configget", "getconf"],
 	description: "Skicka värdet av config-variabler.",
 	usage: [
 		"confget",
