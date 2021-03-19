@@ -7,6 +7,7 @@ const configSchema = new mongoose.Schema({
 	username: { type: String },
 	activity: { type: String },
 	activityType: { type: String },
+	removeLinks: false,
 	xp: { type: Object, default: {
 		timeoutsEnabled: true,
 		xpHidden: true,
