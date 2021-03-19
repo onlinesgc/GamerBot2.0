@@ -82,6 +82,8 @@ module.exports = {
 					return message.channel.send("Leveln måste vara ett nummer!");
 				} else {
 					profile_data.level = parseInt(args[index + 1]) + 1;
+					
+					//Update level
 					configData.xp.levels.forEach(element => {		//Remove all level roles
 						member.roles.remove(message.guild.roles.cache.get(element));
 					});
@@ -91,6 +93,11 @@ module.exports = {
 							member.roles.add(message.guild.roles.cache.get(element));
 						}
 					}
+					// member.roles.add(message.guild.roles.cache.get(configData.xp.levels[profile_data.level - 2])).catch((err) => {
+					// 	console.log(`Failed to add level role to user: ${member.user.tag}. He/She is at level ${profile_data.level - 1}`);
+					// 	console.log(`Errormessage: ${err}`);
+					// });
+					
 					profile_data.xp = 0;
 					fields.push({
 						name: "Level",
