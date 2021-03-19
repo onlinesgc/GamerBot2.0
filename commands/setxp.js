@@ -86,12 +86,12 @@ module.exports = {
 					
 					//Update level
 					configData.xp.levels.forEach(element => {		//Remove all level roles
-						member.roles.remove(message.guild.roles.cache.get(element));
+						member.roles.remove(message.guild.roles.cache.get(element.id));
 					});
 					for (let index = 0; index < configData.xp.levels.length; index++) {
 						const element = configData.xp.levels[index];
-						if (profile_data.level - 2 === index) {
-							member.roles.add(message.guild.roles.cache.get(element));
+						if (profile_data.level === element.level) {
+							member.roles.add(message.guild.roles.cache.get(element.id));
 						}
 					}
 					// member.roles.add(message.guild.roles.cache.get(configData.xp.levels[profile_data.level - 2])).catch((err) => {
