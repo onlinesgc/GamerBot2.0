@@ -6,10 +6,11 @@ const configModel = require("../models/configSchema");
 module.exports = {
 	name: "setxp",
 	aliases: [],
-	description: "Sätt xp eller xp timeout för en användare!",
+	description: "Sätt xp, xp timeout eller level för en användare!",
 	usage: [
 		"setxp {<mentionedUser>|<userID>} -x <xpAmount>",
-		"setxp {<mentionedUser>|<userID>} -t <xpTimeout>"
+		"setxp {<mentionedUser>|<userID>} -t <xpTimeout>",
+		"setxp {<mentionedUser>|<userID>} -l <level>"
 	],
 	notes: [
 		"*xpTimeout* mäts som standard i millisekunder från att du skickar detta kommando. Du kan också specificera värdet genom att sätta \`h\`, \`s\`, \`m\` etc. bakom. Exempel:\n\`60s\`, \`8h\` och \`2w\`"
@@ -97,7 +98,7 @@ module.exports = {
 					// 	console.log(`Failed to add level role to user: ${member.user.tag}. He/She is at level ${profile_data.level - 1}`);
 					// 	console.log(`Errormessage: ${err}`);
 					// });
-					
+
 					profile_data.xp = 0;
 					fields.push({
 						name: "Level",
