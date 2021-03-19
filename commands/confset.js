@@ -3,7 +3,7 @@ const functions = require("../functions");
 
 module.exports = {
 	name: "confset",
-	aliases: ["configset"],
+	aliases: ["configset", "setconf"],
 	description: "Ändra config-variablers värde.",
 	usage: [
 		"confset <variable> <value>"
