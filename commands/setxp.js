@@ -1,6 +1,7 @@
 const profileModel = require("../models/profileSchema");
 const ms = require("ms");
 const Discord = require('discord.js');
+const configModel = require("../models/configSchema");
 
 module.exports = {
 	name: "setxp",
@@ -15,6 +16,10 @@ module.exports = {
 	],
 	perms: ["adminCmd"],
 	async do(message, args, profileData) {
+
+		//Retreive options
+		let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
+
 		let member;
 		let user;
 		if (!args[0]) {
@@ -67,12 +72,39 @@ module.exports = {
 				}
 				completedOperations.push("-t")
 				index++;
+			} else if (args[index] === "-l") {
+				if (completedOperations.includes("-l")) {
+					index++;
+					continue;
+				}
+				if (!args[index + 1]) return message.channel.send("Ett värde för leveln måste tillhandahållas.");
+				if (isNaN(args[index + 1])) {
+					return message.channel.send("Leveln måste vara ett nummer!");
+				} else {
+					profile_data.level = parseInt(args[index + 1]) + 1;
+					configData.xp.levels.forEach(element => {		//Remove all level roles
+						member.roles.remove(message.guild.roles.cache.get(element));
+					});
+					for (let index = 0; index < configData.xp.levels.length; index++) {
+						const element = configData.xp.levels[index];
+						if (profile_data.level - 2 === index) {
+							member.roles.add(message.guild.roles.cache.get(element));
+						}
+					}
+					profile_data.xp = 0;
+					fields.push({
+						name: "Level",
+						value: `Sätt ${member}'s level till ${profile_data.level - 1}!`
+					});
+				}
+				completedOperations.push("-l")
+				index++;
 			} else if (!completedOperations.includes(args[index])) {
 				completedOperations.push(args[index]);
 			}
 		}
 		for (let operation of completedOperations) {
-			if ((operation !== "-x") && (operation !== "-t")) {
+			if ((operation !== "-x") && (operation !== "-t") && (operation !== "-l")) {
 				return message.channel.send(`Du specificerade operationen ${operation} som inte finns. Använd help-kommandot för att se användningen av det här kommandot samt de tillgängliga operationerna.`);
 			}
 		}
