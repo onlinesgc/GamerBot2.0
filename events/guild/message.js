@@ -1,7 +1,6 @@
 const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
 const configModel = require("../../models/configSchema");
-const Discord = require('discord.js');
 const ms = require('ms');
 
 module.exports = async (message, client) => {
