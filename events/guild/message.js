@@ -1,19 +1,18 @@
 const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
 const configModel = require("../../models/configSchema");
+const ms = require('ms');
 
-module.exports = async (Discord, client, message) => {
+module.exports = async (message, client) => {
 	if (message.author.bot) return;
-	
-	var prefix = ".";
-
-	// if (!message.content.startsWith(prefix)) return;
-
-	const args = message.content.slice(prefix.length).split(/ +/);
-	const cmd = args.shift().toLowerCase();
 
 	//Retreive options
 	let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
+
+	const prefix = configData.prefix;
+	const args = message.content.slice(prefix.length).split(/ +/);
+	const cmd = args.shift().toLowerCase();
+
 	if (configData.debug && (client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd)))) {
 		try {
 			delete require.cache[require.resolve(`../../commands/${cmd}.js`)];
@@ -32,48 +31,79 @@ module.exports = async (Discord, client, message) => {
 	
 	let profileData = await profileModel.fetchProfileFromMessage(message);		//Fetch profile
 
-	if (command) {
+	if (command && message.content.startsWith(prefix)) {
 		if (command.perms.includes("adminCmd")) {
 			if (message.member.hasPermission("ADMINISTRATOR")) {
-				command.do(client, message, args, Discord, profileData);
+				try {
+					await command.do(message, args, profileData);
+				} catch (err) {
+					console.log(err);
+					message.channel.send("Det har inträffat ett fel med det här kommandot. Se konsolen för mer information!")
+				}
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
 		} else {
-			command.do(client, message, args, Discord, profileData);
+			try {
+				await command.do(message, args, profileData);
+			} catch (err) {
+				console.log(err);
+				message.channel.send("Det har inträffat ett fel med det här kommandot. Se konsolen för mer information!")
+			}
 		}
 	} else if (mention_command && functions.checkIfMentioned(message)) {
 		if (mention_command.perms.includes("adminCmd")) {
 			if (message.member.hasPermission("ADMINISTRATOR")) {
-				mention_command.do(client, message, args, Discord, profileData);
+				mention_command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
 		} else {
-			mention_command.do(client, message, args, Discord, profileData);
+			mention_command.do(message, args, profileData);
 		}
 	} else if (question_command) {
 		if (question_command.perms.includes("adminCmd")) {
 			if (message.member.hasPermission("ADMINISTRATOR")) {
-				question_command.do(client, message, args, Discord, profileData);
+				question_command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
 		} else {
-			question_command.do(client, message, args, Discord, profileData);
+			question_command.do(message, args, profileData);
 		}
 	} else {
+		if (message.createdTimestamp - profileData.lastMessageTimestamp > ms("1w")) {
+			let days = Math.floor((message.createdTimestamp - profileData.lastMessageTimestamp) / 1000 / 86400);
+			profileData.xp -= days * 2;
+		}
 		profileData.lastMessageTimestamp = message.createdTimestamp;
-		if (profileData.xpTimeoutUntil - message.createdTimestamp < 0) {
+		if ((profileData.xpTimeoutUntil - message.createdTimestamp < 0) || (!configData.xp.timeoutsEnabled)) {
 			const xpAmount = Math.floor(Math.random() * 3) + 1;
 			profileData.xp += xpAmount;
 			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);
+			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent)) {
+				profileData.level++;
+
+				//Update level
+				configData.xp.levels.forEach(element => {		//Remove all level roles
+					message.member.roles.remove(message.guild.roles.cache.get(element.id));
+				});
+				for (let index = 0; index < configData.xp.levels.length; index++) {
+					const element = configData.xp.levels[index];
+					if (profileData.level === element.level) {
+						message.member.roles.add(message.guild.roles.cache.get(element.id));
+					}
+				}
+				
+				profileData.xp = 0;
+				message.author.send(`Du levlade som faan till level \`${profileData.level - 1}\` i Stamsites Discord. Grattis!`);
+			}
 		}
 		profileData.save();
 	}
 
 	if (channel_action) {
-		channel_action.do(client, message, Discord, profileData);
+		channel_action.do(message, profileData);
 	}
 	
 	if (message.content.toLowerCase().includes("christerpog") || message.content.toLowerCase().includes("cristerpog")) {

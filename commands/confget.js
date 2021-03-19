@@ -1,15 +1,16 @@
 const configModel = require("../models/configSchema");
+const Discord = require('discord.js');
 
 module.exports = {
 	name: "confget",
-	aliases: ["configget"],
+	aliases: ["configget", "getconf"],
 	description: "Skicka värdet av config-variabler.",
 	usage: [
 		"confget",
 		"confget <variable>"
 	],
 	perms: ["adminCmd"],
-	async do(client, message, args, Discord) {
+	async do(message, args, profileData) {
 		
 		//Retreive options
 		let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options

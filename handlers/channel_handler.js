@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports = (client, Discord) => {
+module.exports = (client) => {
 	const channel_files = fs.readdirSync(`./commands/channel_action/`).filter(file => file.endsWith(".js"));
 	for (const file of channel_files) {
 		const channel_action = require(`../commands/channel_action/${file}`);

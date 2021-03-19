@@ -5,8 +5,9 @@ const configModel = require("./models/configSchema");
 require('dotenv').config();
 
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
-
 const token = process.env.token;
+
+functions.initWebserver(client)		//Start a web server
 
 client.commands = new Discord.Collection();
 client.mention_commands = new Discord.Collection();
@@ -15,9 +16,10 @@ client.channel_actions = new Discord.Collection();
 client.reaction_actions = new Discord.Collection();
 
 ["command_handler", "event_handler", "mention_handler", "question_handler", "channel_handler", "reaction_handler"].forEach(handler => {
-	require(`./handlers/${handler}.js`)(client, Discord);
+	require(`./handlers/${handler}.js`)(client);
 });
 
+mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.mongodb_srv, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,

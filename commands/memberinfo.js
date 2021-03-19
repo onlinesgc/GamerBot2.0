@@ -1,5 +1,7 @@
 const profileModel = require("../models/profileSchema");
-const functions = require("../functions")
+const functions = require("../functions");
+const Discord = require('discord.js');
+const configModel = require("../models/configSchema");
 
 module.exports = {
 	name: "memberinfo",
@@ -7,7 +9,7 @@ module.exports = {
 	description: "Get member information for specified user!",
 	usage: [],
 	perms: [],
-	async do(client, message, args, Discord) {
+	async do(message, args, profileData) {
 		let member;
 		let user;
 		if (!args[0]) {
@@ -18,16 +20,25 @@ module.exports = {
 				user = message.mentions.users.first();
 			} else {
 				member = await message.guild.members.fetch(args[0]);
-				user = await client.users.fetch(args[0]);
+				user = await message.client.users.fetch(args[0]);
+			}
+		}
+		
+		let override = false;
+		if (args[1]) {
+			if ((args[1] === "-o") && (message.member.hasPermission("ADMINISTRATOR"))) {
+				override = true;
 			}
 		}
 
-		let profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
+		const profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
+		const configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
 
-		let fields = [
-			{ name: "XP", value: profile_data.xp, inline: true }
-		];
-		if (profile_data.xpTimeoutUntil - message.createdTimestamp > 0) {
+		let fields = [];
+		if ((!configData.xp.xpHidden) || (override)) {
+			fields.push({ name: "XP", value: profile_data.xp, inline: true });
+		}
+		if (((profile_data.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) || (override)) {
 			fields.push({ name: "XP Timeout", value: functions.msToString(profile_data.xpTimeoutUntil - message.createdTimestamp), inline: true });
 		}
 
@@ -38,6 +49,7 @@ module.exports = {
 			.setImage(user.avatarURL())
 			.addFields(
 				fields,
+				{ name: "Level", value: profile_data.level - 1, inline: true },
 				{ name: "id", value: profile_data.userID }
 			)
 		message.channel.send(embed);

@@ -31,10 +31,8 @@ module.exports = {
 		return time;
 	},
 	checkIfMentioned(message) {
-		if (message.mentions.members.first()) {
-			if (message.mentions.members.first() === message.guild.me) {
-				return true;
-			}
+		if (message.mentions.users.first() === message.client.user) {
+			return true;
 		}
 		return false;
 	},
@@ -46,5 +44,18 @@ module.exports = {
 	applyOptions(client, configData) {
 		client.user.setUsername(configData.username);
 		client.user.setActivity(configData.activity, { type: configData.activityType.toUpperCase() });
+	},
+	initWebserver(client) {
+		const express = require('express');
+		const app = express();
+		const port = 3000;
+
+		app.get('/', (req, res) => {
+			res.send(`
+				<img src=${client.user.avatarURL()}>
+				This webpage is served as a test page to see if the bot is up and running!
+			`);
+		});
+		app.listen(port, () => console.log(`Webserver listening at http://localhost:${port}`));
 	}
 }

@@ -6,7 +6,16 @@ const configSchema = new mongoose.Schema({
 	debug: { type: Boolean, default: false},
 	username: { type: String },
 	activity: { type: String },
-	activityType: { type: String }
+	activityType: { type: String },
+	removeLinks: false,
+	xp: { type: Object, default: {
+		timeoutsEnabled: true,
+		xpHidden: true,
+		xpTimeoutHidden: true,
+		levelExponent: 2,
+		levelBaseOffset: 0,
+		levels: []
+	}}
 });
 
 const model = mongoose.model("ConfigModel", configSchema);

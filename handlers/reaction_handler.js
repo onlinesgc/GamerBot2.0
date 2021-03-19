@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports = (client, Discord) => {
+module.exports = (client) => {
 	const reaction_files = fs.readdirSync(`./commands/on_reaction/`).filter(file => file.endsWith(".js"));
 	for (const file of reaction_files) {
 		const reaction_command = require(`../commands/on_reaction/${file}`);
