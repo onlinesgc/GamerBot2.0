@@ -78,7 +78,7 @@ The owner of the server and all users with the role `Administrator` can use thes
 #### Examples:
 `.me`
 
-`.userinfo @McPerson#1337`
+`.memberinfo @McPerson#1337`
 
 `.setxp @McPerson#1337 -x 0`
 
