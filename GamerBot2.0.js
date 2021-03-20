@@ -7,7 +7,7 @@ require('dotenv').config();
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 const token = process.env.token;
 
-functions.initWebserver(client)		//Start a web server
+//functions.initWebserver(client)		//Start a web server
 
 client.commands = new Discord.Collection();
 client.mention_commands = new Discord.Collection();

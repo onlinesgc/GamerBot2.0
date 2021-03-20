@@ -1,10 +1,12 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	name: "play",
 	aliases: [],
 	description: "Play minigames!",
 	usage: [],
 	perms: [],
-	async do(client, message, args, Discord) {
+	async do(message, args) {
 		function updateScreen(array) {
 			let arrayString = "";
 			array.forEach(element => {
