@@ -107,7 +107,7 @@ module.exports = async (message, client) => {
 	}
 	
 	if (message.content.toLowerCase().includes("christerpog") || message.content.toLowerCase().includes("cristerpog")) {
-		if (message.channel.id == "809483972282810390" || message.channel.id == "780765093343395880") {
+		if (message.channel.id == "809483972282810390" || message.channel.id == "780765093343395880" || message.channel.id == "810221092878680124")  {
 			message.react("810255466952917052")
 			message.channel.send("<:mello_ChristerPOG:810255466952917052>")
 		}
