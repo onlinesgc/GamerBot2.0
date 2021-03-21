@@ -17,7 +17,7 @@ GamerBot2.0 requires node.js, npm and MongoDB to run.
 1. Clone this repository into the directory you want to run the bot in.
 2. Run `npm install` in order to install all the required node.js packages.
 3. Create a new bot under [Discord developers portal](https://discord.com/developers)
-4. Set up a MongoDB database (the free tier will do fine).
+4. Set up a [MongoDB database](https://www.mongodb.com/) (the free tier will do fine).
 5. in the `.env` file in the GamerBot2.0 directory add the following:
 
 ```
