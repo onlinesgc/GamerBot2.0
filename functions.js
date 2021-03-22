@@ -56,6 +56,8 @@ module.exports = {
 				This webpage is served as a test page to see if the bot is up and running!
 			`);
 		});
-		app.listen(port, () => console.log(`Webserver listening at http://localhost:${port}`));
+		app.listen(port, () => console.log(`Webserver listening at http://localhost:${port}`)).on("error", (err) => {
+			console.log(`Failed to open web server with code: "${err.code}"`);
+		});
 	}
 }
