@@ -1,3 +1,4 @@
+const dayjs = require("dayjs");
 const profileModel = require("../models/profileSchema");
 const functions = require("../functions");
 const Discord = require('discord.js');
@@ -31,24 +32,28 @@ module.exports = {
 		const profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
 		const configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
 
-		let fields = [];
-		if ((!configData.xp.xpHidden) || (override)) {
-			fields.push({ name: "XP", value: profile_data.xp, inline: true });
-		}
+		let fields = [
+			{ name: "ID", value: profile_data.userID, inline: true },
+			{ name: "Smeknamn", value: member.nickname ? member.nickname : "None", inline: true },
+			{ name: "Level", value: profile_data.level - 1, inline: true },
+			{ name: "Gick med", value: dayjs(member.joinedTimestamp).format("dddd, MMMM D YYYY, H:mm:ss"), inline: false }
+		];
+
 		if (((profile_data.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) || (override)) {
 			fields.push({ name: "XP Timeout", value: functions.msToString(profile_data.xpTimeoutUntil - message.createdTimestamp), inline: true });
+		}
+
+		if ((!configData.xp.xpHidden) || (override)) {
+			fields.push({ name: "XP", value: profile_data.xp, inline: true });
 		}
 
 		const embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
 			.setTitle(`Information om medlem`)
 			.setDescription(`${member}'s information.`)
-			.setImage(member.user.displayAvatarURL())
-			.addFields(
-				fields,
-				{ name: "Level", value: profile_data.level - 1, inline: true },
-				{ name: "id", value: profile_data.userID }
-			)
+			.setThumbnail(member.user.displayAvatarURL())
+			.addFields(fields)
+
 		message.channel.send(embed);
 	}
 }
