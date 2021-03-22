@@ -11,24 +11,21 @@ module.exports = {
 	perms: [],
 	async do(message, args, profileData) {
 		let member;
-		let user;
-		if (!args[0]) {
-			return message.channel.send("Du måste ange vilken användare du vill veta mer information om!")
+
+		let override = false;
+
+		if (!args[0] || args[0] === "-o") {
+			member = message.member;
 		} else {
 			if (message.mentions.members.first()) {
 				member = message.mentions.members.first();
-				user = message.mentions.users.first();
 			} else {
 				member = await message.guild.members.fetch(args[0]);
-				user = await message.client.users.fetch(args[0]);
 			}
 		}
 
-		let override = false;
-		if (args[1]) {
-			if ((args[1] === "-o") && (message.member.hasPermission("ADMINISTRATOR"))) {
-				override = true;
-			}
+		if ((args[0] === "-o" || args[1] === "-o") && (message.member.hasPermission("ADMINISTRATOR"))) {
+			override = true;
 		}
 
 		const profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
@@ -46,7 +43,7 @@ module.exports = {
 			.setColor("#f54242")
 			.setTitle(`Information om medlem`)
 			.setDescription(`${member}'s information.`)
-			.setImage(user.avatarURL())
+			.setImage(member.user.displayAvatarURL())
 			.addFields(
 				fields,
 				{ name: "Level", value: profile_data.level - 1, inline: true },
