@@ -37,4 +37,4 @@ const fetchAll = async (filter) => {
 	return profiles;
 };
 
-module.exports = { profileModel: model, fetchProfile, fetchProfileFromMessage };
+module.exports = { profileModel: model, fetchProfile, fetchProfileFromMessage, fetchAll };

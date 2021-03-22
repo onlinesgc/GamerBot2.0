@@ -9,7 +9,7 @@ module.exports = {
 	perms: [],
 	async do(message, args, profileData) {
 		const embed = new Discord.MessageEmbed()
-	  		.setColor("#0099ff")
+			.setColor("#0099ff")
 			.setTitle("Uptime")
 			.setDescription("Här kommer upptiden för botten!")
 			.setThumbnail(message.client.user.avatarURL())
