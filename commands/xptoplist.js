@@ -8,11 +8,6 @@ module.exports = {
 	usage: [],
 	perms: [],
 	async do(message, args, profileData) {
-		const profiles = await profileModel.fetchAll();
-		profiles.sort((a, b) => {
-			return b.level - a.level;
-		});
-
 		let userCount = 10;
 		if (args[0]) {
 			if (isNaN(args[0])) {
@@ -21,6 +16,11 @@ module.exports = {
 				userCount = args[0];
 			}
 		}
+
+		const profiles = await profileModel.fetchAll();
+		profiles.sort((a, b) => {
+			return b.level - a.level;
+		});
 
 		let fields = [];
 		let n = 1;
