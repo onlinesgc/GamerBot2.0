@@ -34,7 +34,7 @@ module.exports = {
 
 		let fields = [
 			{ name: "ID", value: profile_data.userID, inline: true },
-			{ name: "Smeknamn", value: member.nickname ? member.nickname : "None", inline: true },
+			{ name: "Smeknamn", value: member.nickname ? member.nickname : "(Inget)", inline: true },
 			{ name: "Level", value: profile_data.level - 1, inline: true },
 			{ name: "Gick med", value: dayjs(member.joinedTimestamp).format("dddd, MMMM D YYYY, H:mm:ss"), inline: false }
 		];
