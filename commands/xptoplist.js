@@ -5,7 +5,10 @@ module.exports = {
 	name: "xptoplist",
 	aliases: [],
 	description: "Se XP-topplistan",
-	usage: [],
+	usage: [
+		"xptoplist <userCount>",
+		"xptoplist"
+	],
 	perms: [],
 	async do(message, args, profileData) {
 		let userCount = 10;
