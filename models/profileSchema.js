@@ -22,7 +22,7 @@ const fetchProfile = async (userID, serverID, lastMessageTimestamp = null, xpTim
 			xpTimeoutUntil: xpTimeoutUntil,
 			level: 1
 		});
-		profileData.save();
+		await profileData.save();
 	}
 	return profileData;
 };

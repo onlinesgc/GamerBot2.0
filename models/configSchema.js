@@ -31,7 +31,7 @@ const fetchConfig = async (id) => {
 			activity: "Testspel",
 			activityType: "playing"
 		});
-		configData.save();
+		await configData.save();
 	}
 	return configData;
 };

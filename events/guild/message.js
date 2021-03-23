@@ -99,7 +99,7 @@ module.exports = async (message, client) => {
 				message.author.send(`Du levlade som faan till level \`${profileData.level - 1}\` i Stamsites Discord. Grattis!`);
 			}
 		}
-		profileData.save();
+		await profileData.save();
 	}
 
 	if (channel_action) {

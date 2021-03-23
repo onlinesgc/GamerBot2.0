@@ -116,7 +116,7 @@ module.exports = {
 				return message.channel.send(`Du specificerade operationen ${operation} som inte finns. Använd help-kommandot för att se användningen av det här kommandot samt de tillgängliga operationerna.`);
 			}
 		}
-		profile_data.save()
+		await profile_data.save()
 		
 		const embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
