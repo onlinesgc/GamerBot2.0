@@ -31,7 +31,7 @@ module.exports = {
 			const user = await message.client.users.fetch(profile.userID);
 			fields.push({ name: n, value: `
 				Användare: ${user}
-				Level: \`${profile.level}\`
+				Level: \`${profile.level - 1}\`
 			`} );
 			n++;
 		}
