@@ -20,7 +20,7 @@ module.exports = {
 			}
 		}
 
-		const profiles = await profileModel.fetchAll();
+		const profiles = await profileModel.fetchAll({ serverID: message.guild.id });
 		profiles.sort((a, b) => {
 			return b.level - a.level;
 		});
