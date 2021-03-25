@@ -20,7 +20,7 @@ const addVideoSuggest = async (message) => {
 			messageID: message.id,
             messageContent: message.content
 		});
-		videoSuggestData.save();
+		await videoSuggestData.save();
 	}
 	return videoSuggestData;
 };

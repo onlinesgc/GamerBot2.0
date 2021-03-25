@@ -5,7 +5,7 @@ const configModel = require("../models/configSchema");
 
 module.exports = {
 	name: "memberinfo",
-	aliases: [],
+	aliases: ["userinfo"],
 	description: "Get member information for specified user!",
 	usage: [],
 	perms: [],
@@ -23,7 +23,7 @@ module.exports = {
 				user = await message.client.users.fetch(args[0]);
 			}
 		}
-		
+
 		let override = false;
 		if (args[1]) {
 			if ((args[1] === "-o") && (message.member.hasPermission("ADMINISTRATOR"))) {

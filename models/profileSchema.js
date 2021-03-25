@@ -22,7 +22,7 @@ const fetchProfile = async (userID, serverID, lastMessageTimestamp = null, xpTim
 			xpTimeoutUntil: xpTimeoutUntil,
 			level: 1
 		});
-		profileData.save();
+		await profileData.save();
 	}
 	return profileData;
 };
@@ -31,4 +31,10 @@ const fetchProfileFromMessage = async (message) => {
 	return fetchProfile(message.author.id, message.guild.id, message.createdTimestamp, message.createdTimestamp);
 };
 
-module.exports = { profileModel: model, fetchProfile, fetchProfileFromMessage };
+const fetchAll = async (filter) => {
+	filter = filter || {};
+	let profiles = model.find(filter);
+	return profiles;
+};
+
+module.exports = { profileModel: model, fetchProfile, fetchProfileFromMessage, fetchAll };

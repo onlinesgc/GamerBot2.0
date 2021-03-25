@@ -8,6 +8,7 @@ module.exports = {
 		await message.react("✅");
 
 		const channel = await message.guild.channels.create(`ticket - ${message.author.tag}`);
+		channel.setParent("822548929052409896");
 		channel.setParent("821139274589274143");
 
 		channel.updateOverwrite(message.guild.id, {
@@ -19,7 +20,7 @@ module.exports = {
 			VIEW_CHANNEL: true
 		});
 
-		const welcomeMessage = await channel.send(`Tack för att du öppnade en biljett!`);
+		const welcomeMessage = await channel.send(`Tack för att du öppnade en biljett! <@&812348382810210314>`);
 		await welcomeMessage.react("🔒");
 		await welcomeMessage.react("🔓");
 		await welcomeMessage.react("⛔");
