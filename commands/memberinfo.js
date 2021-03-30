@@ -41,7 +41,8 @@ module.exports = {
 		if (((profile_data.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) || (override)) {
 			fields.push({ name: "XP Timeout", value: functions.msToString(profile_data.xpTimeoutUntil - message.createdTimestamp), inline: true });
 		}
-
+		let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
+		let progressBar = "█".repeat(Math.round(xpPercentage / 10)) + "░".repeat(Math.round((100 - xpPercentage) / 10));
 		const embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
 			.setTitle(`Information om medlem`)
@@ -50,6 +51,7 @@ module.exports = {
 			.addFields(
 				fields,
 				{ name: "Level", value: profile_data.level - 1, inline: true },
+				{ name: "Progress", value: `${progressBar} ${xpPercentage}%` },
 				{ name: "id", value: profile_data.userID }
 			)
 		message.channel.send(embed);
