@@ -38,7 +38,7 @@ module.exports = {
 		}
 
 		//Sort profiles in the right order
-		const profiles = await profileModel.fetchAll({ /*serverID: message.guild.id*/ });
+		const profiles = await profileModel.fetchAll({ serverID: message.guild.id });
 		profiles.sort((a, b) => {
 			return b.xp - a.xp;
 		});
