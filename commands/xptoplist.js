@@ -33,7 +33,7 @@ module.exports = {
 			if (isNaN(args[0])) {
 				return message.channel.send("Du måste specificera ANTALET användare du vill se på topplistan.");
 			} else {
-				userCount = args[0];
+				userCount = parseInt(args[0]);
 			}
 		}
 
