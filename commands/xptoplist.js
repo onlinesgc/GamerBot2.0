@@ -33,7 +33,7 @@ module.exports = {
 			if (isNaN(args[0])) {
 				return message.channel.send("Du måste specificera ANTALET användare du vill se på topplistan.");
 			} else {
-				userCount = args[0];
+				userCount = parseInt(args[0]);
 			}
 		}
 
@@ -67,7 +67,7 @@ module.exports = {
 
 		//Collector reaction event
 		collector.on("collect", async (reaction, user) => {
-			reaction.users.remove(message.author.id);		//Remove reaction
+			reaction.users.remove(user.id);		//Remove reaction
 			switch (reaction.emoji.name) {
 				case "⬅️":
 					if (startPointer > 0) {
