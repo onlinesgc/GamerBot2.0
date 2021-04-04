@@ -17,7 +17,7 @@ class Log {
 				.setTitle(`Error`)
 				.setDescription(`Error occured!`)
 				.addFields(
-					{ name: "Error message:", value: body }
+					{ name: "Error message:", value: `\`\`\`${body}\`\`\`` }
 				)
 		return channel.send(embed);
 	}
