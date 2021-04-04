@@ -1,6 +1,7 @@
 const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
 const configModel = require("../../models/configSchema");
+const { Log } = require("../../logSystem");
 const ms = require('ms');
 
 module.exports = async (message, client) => {
@@ -20,7 +21,7 @@ module.exports = async (message, client) => {
 			const pull = require(`../../commands/${cmd}.js`);
 			client.commands.set(cmd, pull);
 		} catch (err) {
-			console.log(err);
+			Log.error(err);
 		}
 	}
 
@@ -37,7 +38,7 @@ module.exports = async (message, client) => {
 				try {
 					await command.do(message, args, profileData);
 				} catch (err) {
-					console.log(err);
+					Log.error(err);
 					message.channel.send("Det har inträffat ett fel med det här kommandot. Se konsolen för mer information!")
 				}
 			} else {
@@ -47,7 +48,7 @@ module.exports = async (message, client) => {
 			try {
 				await command.do(message, args, profileData);
 			} catch (err) {
-				console.log(err);
+				Log.error(err);
 				message.channel.send("Det har inträffat ett fel med det här kommandot. Se konsolen för mer information!")
 			}
 		}
