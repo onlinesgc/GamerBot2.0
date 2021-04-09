@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
 	name: "ping",
-	aliases: [],
+	aliases: ["pingis"],
 	description: "Ping the bot!",
 	usage: [],
 	perms: [],
