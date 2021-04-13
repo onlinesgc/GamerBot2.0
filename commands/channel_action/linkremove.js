@@ -29,6 +29,6 @@ module.exports = {
 	}
 }
 function urlfind(text) {
-	var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+	var urlRegex = /((https?:\/\/)|(www\.)|(discord\.((com\/invite\/)|(gg\/)))[^\s]+)/g;
 	return text.match(urlRegex);
 }
