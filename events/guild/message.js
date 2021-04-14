@@ -74,7 +74,12 @@ module.exports = async (message, client) => {
 	} else {
 		if (message.createdTimestamp - profileData.lastMessageTimestamp > ms("1w")) {
 			let days = Math.floor((message.createdTimestamp - profileData.lastMessageTimestamp) / 1000 / 86400);
-			profileData.xp -= days * 2;
+			let penalty = days * 2;
+			if (penalty > profileData.xp){
+				profileData.xp = 0;
+			} else {
+			profileData.xp -= penalty;
+			}
 		}
 		profileData.lastMessageTimestamp = message.createdTimestamp;
 		if ((profileData.xpTimeoutUntil - message.createdTimestamp < 0) || (!configData.xp.timeoutsEnabled)) {
