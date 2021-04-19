@@ -14,7 +14,7 @@ STAMSITE is not involved in the development of this bot, do NOT ask him about is
 ### Installation
 GamerBot2.0 requires node.js, npm and MongoDB to run.
 
-1. Clone this repository into the directory you want to run the bot in.
+1. Clone this repository (using https) into the directory you want to run the bot in.
 2. Run `npm install` in order to install all the required node.js packages.
 3. Create a new bot under [Discord developers portal](https://discord.com/developers)
 4. Set up a [MongoDB database](https://www.mongodb.com/) (the free tier will do fine).
@@ -26,7 +26,8 @@ mongodb_srv = ADDRESS_TO_MONGODB_SERVICE
 config_id = normally 1 but can be changed for debugging purposes or running several bots on the same database.
 ```
 
-6. To run the bot type `node GamerBot2.0.js` and if you have invited the bot to your server you should see it coming online!
+6. If you want automatic updates run `./CRONSET.sh` in your terminal, to set your bot to automatically update when new changes are made in the repo.
+7. To run the bot type `./STARTME.sh` and if you have invited the bot to your server you should see it coming online!
 
 
 
