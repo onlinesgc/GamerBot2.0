@@ -59,5 +59,21 @@ module.exports = {
 		app.listen(port, () => console.log(`Webserver listening at http://localhost:${port}`)).on("error", (err) => {
 			console.log(`Failed to open web server with code: "${err.code}"`);
 		});
+	},
+	async userSearch(client, guild, keywordOrID) {
+		let user;
+		let member;
+		
+		try {													//First try finding user with ID
+			user = await client.users.fetch(keywordOrID);
+		} catch(err) {											//If it fails, search for a user by username
+			user = client.users.cache.find(user => user.username.toLowerCase().includes(keywordOrID.toLowerCase()) || keywordOrID.toLowerCase().includes(user.username.toLowerCase()));
+			if (!user) {
+				return false;		//User not found
+			}
+		}
+		member = await guild.members.fetch(user.id);			//Get member object
+
+		return [ user, member ];
 	}
 }

@@ -19,8 +19,7 @@ module.exports = {
 				member = message.mentions.members.first();
 				user = message.mentions.users.first();
 			} else {
-				member = await message.guild.members.fetch(args[0]);
-				user = await message.client.users.fetch(args[0]);
+				[ user, member ] = await functions.userSearch(message.client, message.guild, args[0]);
 			}
 		}
 
