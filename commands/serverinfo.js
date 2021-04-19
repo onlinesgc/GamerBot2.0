@@ -12,7 +12,10 @@ module.exports = {
 			.setTitle(`Serverinfo - ${message.guild.name}`)
 			.setImage(message.guild.iconURL())
 			.addFields(
-				{ name: "Medlemmar", value: message.guild.memberCount }
+				{ name: "Medlemmar", value: message.guild.memberCount },
+				{ name: "Status", value: `
+					${message.guild.members.cache.filter(m => m.presence.status === "online").size} medlemmar är online!
+				`}
 			)
 		message.channel.send(embed);
 	}
