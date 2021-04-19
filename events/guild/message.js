@@ -90,7 +90,7 @@ module.exports = async (message, client) => {
 				});
 				for (let index = 0; index < configData.xp.levels.length; index++) {
 					const element = configData.xp.levels[index];
-					if (profileData.level === element.level) {
+					if (profileData.level === element.level+1) { //This is the "early leveling" hotfix, we really need to fix this jungle up
 						message.member.roles.add(message.guild.roles.cache.get(element.id));
 					}
 				}
