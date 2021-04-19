@@ -2,6 +2,7 @@ const profileModel = require("../models/profileSchema");
 const ms = require("ms");
 const Discord = require('discord.js');
 const configModel = require("../models/configSchema");
+const functions = require("../functions");
 
 module.exports = {
 	name: "setxp",
@@ -30,8 +31,7 @@ module.exports = {
 				member = message.mentions.members.first();
 				user = message.mentions.users.first();
 			} else {
-				member = await message.guild.members.fetch(args[0]);
-				user = await message.client.users.fetch(args[0]);
+				[ user, member ] = await functions.userSearch(message.client, message.guild, args[0]);
 			}
 		}
 		if (!args[1]) return message.channel.send("Du måste ange minst en operation du vill utföra!");
