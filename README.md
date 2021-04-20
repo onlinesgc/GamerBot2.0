@@ -46,7 +46,7 @@ All members of the server can see and use these commands.
 
 `.ping` - displays ping-time between the bot and discord
 
-`.servernfo` - currently shows the number of members on the server
+`.serverinfo` - currently shows the number of members on the server
 
 `.suggest` - only meant for the official instance of GamerBot2.0, adds a feature suggestion in the database.
 
