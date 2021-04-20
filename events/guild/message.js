@@ -89,14 +89,25 @@ module.exports = async (message, client) => {
 			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent)) {
 				profileData.level++;
 
-				//Update level
+				//Adding new roles if required
+				//Removing old roles
 				configData.xp.levels.forEach(element => {		//Remove all level roles
 					message.member.roles.remove(message.guild.roles.cache.get(element.id));
 				});
+				//Adding find correct role
 				for (let index = 0; index < configData.xp.levels.length; index++) {
-					const element = configData.xp.levels[index];
-					if (profileData.level === element.level+1) { //This is the "early leveling" hotfix, we really need to fix this jungle up
-						message.member.roles.add(message.guild.roles.cache.get(element.id));
+					const role = configData.xp.levels[index];
+
+					//nextRoleLevel allows for testing within span, and if statement helps in end of list.
+					let nextRoleLevel = 0;
+					if (index === configData.xp.levels.length-1) {
+						nextRoleLevel = 10000000;
+					} else {
+						nextRoleLevel = configData.xp.levels[index+1].level;
+					}
+					//Actually adding roles
+					if (profileData.level >= role.level+1 && profileData.level < nextRoleLevel+1) {
+						message.member.roles.add(message.guild.roles.cache.get(role.id));
 					}
 				}
 				
