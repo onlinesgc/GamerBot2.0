@@ -7,7 +7,7 @@ module.exports = {
 	aliases: ["updateroles", "update-server-roles"],
 	description: "Uppdatera servermedlemmars rollinnehav, baserat på deras nuvarande level.",
 	usage: [
-		"updateroles",
+		".roleupdate",
 	],
 	perms: ["adminCmd"],
 	async do(message, args) {
@@ -45,7 +45,7 @@ module.exports = {
 						nextRoleLevel = configData.xp.levels[index+1].level;
 					}
 					//Actually testing level and adding roles.
-					if (profileData[profileIndex].level >= role.level+1 && profileData[profileIndex].level < nextRoleLevel) {
+					if (profileData[profileIndex].level >= role.level+1 && profileData[profileIndex].level < nextRoleLevel+1) {
 						member.roles.add(message.guild.roles.cache.get(role.id));
 					}
 				}
