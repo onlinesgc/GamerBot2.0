@@ -32,7 +32,7 @@ module.exports = {
 		}
 
 		const profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
-		const configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
+		const configData = await configModel.fetchConfig(process.env.config_id);				//Retreive options
 
 		let fields = [];
 		if ((!configData.xp.xpHidden) || (override)) {
@@ -42,7 +42,7 @@ module.exports = {
 			fields.push({ name: "XP Timeout", value: functions.msToString(profile_data.xpTimeoutUntil - message.createdTimestamp), inline: true });
 		}
 		
-		let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
+		let xpPercentage = Math.round(profile_data.xp / Math.pow(profile_data.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
 		let progressBar = "█".repeat(Math.round(xpPercentage / 10)) + "░".repeat(Math.round((100 - xpPercentage) / 10));
 		
 		const embed = new Discord.MessageEmbed()
