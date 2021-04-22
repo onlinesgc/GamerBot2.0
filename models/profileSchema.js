@@ -6,7 +6,8 @@ const profileSchema = new mongoose.Schema({
 	xp: { type: Number, default: 0 },
 	lastMessageTimestamp: { type: Number },
 	xpTimeoutUntil: { type: Number },
-	level: { type: Number }
+	level: { type: Number },
+	reminders: { type: Array }
 });
 
 const model = mongoose.model("ProfileModels", profileSchema);
@@ -20,7 +21,8 @@ const fetchProfile = async (userID, serverID, lastMessageTimestamp = null, xpTim
 			xp: 0,
 			lastMessageTimestamp: lastMessageTimestamp,
 			xpTimeoutUntil: xpTimeoutUntil,
-			level: 1
+			level: 1,
+			reminders: []
 		});
 		await profileData.save();
 	}
