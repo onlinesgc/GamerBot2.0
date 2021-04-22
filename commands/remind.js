@@ -13,28 +13,38 @@ module.exports = {
 	async do(message, args, profileData) {
 		if (!args[0]) return message.channel.send("Du måste sätta en tid för påminnelsen!");
 
-		let time = 0;
+		let timeout = 0;
 		let array = args[0].split("-");
 		array.forEach(element => {
 			if (ms(element) == undefined) return message.channel.send("Tiden måste kunna omvandlas till millisekunder!");
-			time += ms(element);
+			timeout += ms(element);
 		});
 
-		message.channel.send(`Jag påminner dig om ${ms(time)}`);
+		//Determine if user specified a message or not
+		let msg;
+		if (args[1]) {
+			msg = args[1];
+		} else {
+			msg = "Inget meddelande angivet."
+		}
 
+		//Add reminder to database
+		let remindTimestamp = Date.now() + timeout;
+		let remindTime = new Date(remindTimestamp);
+		profileData.reminders.push({
+			remindTimestamp: remindTimestamp,
+			message: msg
+		});
+		await profileData.save();
+
+		message.channel.send(`Jag påminner dig om \`${ms(timeout)}\` eller \`${remindTime}\``);
 
 		setTimeout(() => {
-			let msg;
-			if (args[1]) {
-				msg = args[1];
-			} else {
-				msg = "Inget meddelande angivet."
-			}
 			const embed = new Discord.MessageEmbed()
 				.setColor("#f54242")
 				.setTitle(`Påminnelse`)
 				.setDescription(msg)
 			message.author.send(embed)
-		}, time)
+		}, timeout)
 	}
 }
