@@ -21,7 +21,7 @@ module.exports = {
 		let member;
 		let user;
 		if (!args[0]) {
-			return message.channel.send("Du måste ange vilken användare du vill sätta xp'n för.");
+			return message.channel.send("Du måste ange vilken användare du vill uppdatera roller för.");
 		} else {
 			if (message.mentions.members.first()) {
 				member = message.mentions.members.first();
