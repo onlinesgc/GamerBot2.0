@@ -6,9 +6,6 @@ module.exports = {
 	aliases: ["remindme"],
 	description: "Ställ in en påminnelse!",
 	usage: ["remind <time> <message>"],
-	notes: [
-		"Det är inte rekommenderat att sätta en hög tid då påminnelsen tas bort efter bot-omstart."
-	],
 	perms: [],
 	async do(message, args, profileData) {
 		if (!args[0]) return message.channel.send("Du måste sätta en tid för påminnelsen!");
