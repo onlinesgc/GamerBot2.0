@@ -1,3 +1,5 @@
+const configModel = require("./models/configSchema");
+
 module.exports = {
 	msToString(input) {
 		let totalSeconds = (input / 1000);
@@ -59,5 +61,32 @@ module.exports = {
 		app.listen(port, () => console.log(`Webserver listening at http://localhost:${port}`)).on("error", (err) => {
 			console.log(`Failed to open web server with code: "${err.code}"`);
 		});
+	},
+	async checkForLinks(message) {
+		let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
+		if (!configData.removeLinks) return;
+		
+		const roles = [];
+		const channels = ["816724723739656222"];
+		if (channels.find(c => c == message.channel.id)) return;
+		
+		let haveRole;
+		roles.forEach(element => {
+			if (message.member.roles.cache.get(element) == element) {
+				haveRole = true;
+				return;
+			}
+		});
+		if (haveRole) return;
+		
+		if (urlfind(message.content) != null) {
+			message.delete()
+			message.reply("Skicka inte länkar, tack!").then(msg => msg.delete({ timeout: 1000 * 5 }))
+		}
+		
+		function urlfind(text) {
+			const urlRegex = /((https?:\/\/)|(www\.)|(discord\.((com\/invite\/)|(gg\/)))[^\s]+)/g;
+			return text.match(urlRegex);
+		}
 	}
 }
