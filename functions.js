@@ -137,7 +137,7 @@ module.exports = {
 				auth:"AIzaSyC-8pJ7tM7nR4A6QzRnFpsx7laCPlth_6c"
 			});
 			await yt.search.list({
-				"channelId":"UCOZr_fd45CDuyqQEPQZaqMA",
+				"channelId":"Google Token",
 				"order":"date",
 				"part":"id"
 			}).then(await function(res) {
