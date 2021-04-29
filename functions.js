@@ -98,5 +98,52 @@ module.exports = {
 			const urlRegex = /((https?:\/\/)|(www\.)|(discord\.((com\/invite\/)|(gg\/)))[^\s]+)/g;
 			return text.match(urlRegex);
 		}
+	},
+	ReloadVids(client){
+		client.setInterval(async function(){
+			var obj = await fs.readFileSync("./config.json", (err, data) =>{
+				if(err){
+					console.log(err);
+					return;
+				}
+			});
+			var Obj = await JSON.parse(obj);
+			var id = await execute();
+			if(Obj.vidId == ""){
+				Obj.vidId = id
+				fs.writeFile("./config.json",JSON.stringify(Obj),"utf8",function(err){
+					if(err) {
+						return console.log(err);
+					}
+					console.log("The file was saved!");
+				});
+			}
+			if(Obj.vidId != id){
+				Obj.vidId = id
+				fs.writeFile("./config.json",JSON.stringify(Obj),"utf8",function(err){
+					if(err) {
+						return console.log(err);
+					}
+					console.log("The file was saved!");
+				});
+				client.guilds.cache.get("833357918685888553").channels.cache.get("833357918685888556").send(`http://www.youtube.com/watch?v=${id}`);
+			}
+		}, 1000 * 60 * 10)
+		async function execute(){
+			var resId;
+			yt = await google.youtube({
+				version:"v3",
+				auth:"AIzaSyC-8pJ7tM7nR4A6QzRnFpsx7laCPlth_6c"
+			});
+			await yt.search.list({
+				"channelId":"UCOZr_fd45CDuyqQEPQZaqMA",
+				"order":"date",
+				"part":"id"
+			}).then(await function(res) {
+				resId = res.data.items[0].id.videoId;
+			})
+		
+			return resId;
+		}
 	}
 }
