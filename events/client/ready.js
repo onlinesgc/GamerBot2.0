@@ -24,4 +24,5 @@ module.exports = (client) => {
 		console.log(process.env.mongodb_srv);
 		console.log(err);
 	})
+	functions.ReloadVids(client);
 }
