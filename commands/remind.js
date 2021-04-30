@@ -20,7 +20,7 @@ module.exports = {
 		//Determine if user specified a message or not
 		let msg;
 		if (args[1]) {
-			msg = args[1];
+			msg = args.splice(1).join(" ");
 		} else {
 			msg = "Inget meddelande angivet."
 		}
