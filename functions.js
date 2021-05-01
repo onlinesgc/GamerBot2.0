@@ -1,5 +1,4 @@
 const configModel = require("./models/configSchema");
-const {google} = require("googleapis");
 
 module.exports = {
 	msToString(input) {
@@ -100,6 +99,7 @@ module.exports = {
 		}
 	},
 	async ReloadVids(client){
+		const {google} = require("googleapis"); //gets the google api
 		client.setInterval(async function(){ //Loocks for a new vid once per 10 mins. Google api max request per day is 10 000.
 
 			
@@ -114,7 +114,7 @@ module.exports = {
 				configData.latestVideoId = id;
 				client.guilds.cache.get("813844220694757447").channels.cache.get("813844220694757451").send(`http://www.youtube.com/watch?v=${id}`);
 			}
-		}, 1000 * 60 * 10);	
+		}, 1000 * 60 * 15);	
 		async function execute(){
 			var resId;
 			yt = await google.youtube({
