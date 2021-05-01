@@ -100,17 +100,17 @@ module.exports = {
 		}
 	},
 	async ReloadVids(client){
-		client.setInterval(async function(){
+		client.setInterval(async function(){ //Loocks for a new vid once per 10 mins. Google api max request per day is 10 000.
 
 			
 			let configData = await configModel.fetchConfig(process.env.config_id);
-			let id = await execute;
-			if(configData.latestVideoId == "")
+			let id = await execute;  //gets the id of the latest vid
+			if(configData.latestVideoId == "")//Loocks if the first vid hasen't been set to enything
 			{
 				configData.latestVideoId = id;
 				client.guilds.cache.get("813844220694757447").channels.cache.get("813844220694757451").send(`http://www.youtube.com/watch?v=${id}`);
 			}
-			if(configData.latestVideoId != id){
+			if(configData.latestVideoId != id){ // looks if the video has alredy been sent.
 				configData.latestVideoId = id;
 				client.guilds.cache.get("813844220694757447").channels.cache.get("813844220694757451").send(`http://www.youtube.com/watch?v=${id}`);
 			}
@@ -119,12 +119,12 @@ module.exports = {
 			var resId;
 			yt = await google.youtube({
 				version:"v3",
-				auth:"google api"
+				auth:"youtube api key" //the youtube API key
 			});
 			await yt.search.list({
-				"channelId":"UCOZr_fd45CDuyqQEPQZaqMA",
-				"order":"date",
-				"part":"id"
+				"channelId":"UCOZr_fd45CDuyqQEPQZaqMA", //Stamsites channelId
+				"order":"date", //The latest vid
+				"part":"id"//What part it requests. The id.
 			}).then(await function(res) {
 				resId = res.data.items[0].id.videoId;
 			})
