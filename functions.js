@@ -1,5 +1,5 @@
 const configModel = require("./models/configSchema");
-
+const functions = require("./functions");
 module.exports = {
 	msToString(input) {
 		let totalSeconds = (input / 1000);
@@ -46,6 +46,7 @@ module.exports = {
 	applyOptions(client, configData) {
 		client.user.setUsername(configData.username);
 		client.user.setActivity(configData.activity, { type: configData.activityType.toUpperCase() });
+		
 	},
 	initWebserver(client) {
 		const express = require('express');
@@ -101,30 +102,30 @@ module.exports = {
 	async ReloadVids(client){
 		const {google} = require("googleapis"); //gets the google api
 		client.setInterval(async function(){ //Loocks for a new vid once per 10 mins. Google api max request per day is 10 000.
-
-			
 			let configData = await configModel.fetchConfig(process.env.config_id);
-			let id = await execute;  //gets the id of the latest vid
+			var id = await execute();  //gets the id of the latest vid
 			if(configData.latestVideoId == "")//Loocks if the first vid hasen't been set to enything
 			{
 				configData.latestVideoId = id;
-				client.guilds.cache.get("813844220694757447").channels.cache.get("813844220694757451").send(`http://www.youtube.com/watch?v=${id}`);
+				configData.save();
+				client.guilds.cache.get("833357918685888553").channels.cache.get("833357918685888556").send(`http://www.youtube.com/watch?v=${id}`);
 			}
 			if(configData.latestVideoId != id){ // looks if the video has alredy been sent.
 				configData.latestVideoId = id;
-				client.guilds.cache.get("813844220694757447").channels.cache.get("813844220694757451").send(`http://www.youtube.com/watch?v=${id}`);
+				configData.save();
+				client.guilds.cache.get("833357918685888553").channels.cache.get("833357918685888556").send(`http://www.youtube.com/watch?v=${id}`);
 			}
 		}, 1000 * 60 * 15);	
 		async function execute(){
 			var resId;
 			yt = await google.youtube({
-				version:"v3",
-				auth:"youtube api key" //the youtube API key
+				version : "v3",
+				auth : process.env.youtube_token //the youtube API key
 			});
 			await yt.search.list({
-				"channelId":"UCOZr_fd45CDuyqQEPQZaqMA", //Stamsites channelId
-				"order":"date", //The latest vid
-				"part":"id"//What part it requests. The id.
+				"channelId" : "UCOZr_fd45CDuyqQEPQZaqMA", //Stamsites channelId
+				"order" : "date", //The latest vid
+				"part" : "id" //What part it requests. The id.
 			}).then(await function(res) {
 				resId = res.data.items[0].id.videoId;
 			})
