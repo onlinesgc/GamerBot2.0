@@ -1,5 +1,5 @@
 const configModel = require("./models/configSchema");
-
+const functions = require("./functions");
 module.exports = {
 	msToString(input) {
 		let totalSeconds = (input / 1000);
@@ -46,6 +46,7 @@ module.exports = {
 	applyOptions(client, configData) {
 		client.user.setUsername(configData.username);
 		client.user.setActivity(configData.activity, { type: configData.activityType.toUpperCase() });
+		
 	},
 	initWebserver(client) {
 		const express = require('express');
@@ -79,7 +80,6 @@ module.exports = {
 		];
 		const channels = ["754298054126993458", "813043346586730506"];
 		if (channels.find(c => c == message.channel.id)) return;
-		
 		let haveRole;
 		roles.forEach(element => {
 			if (message.member.roles.cache.get(element) == element) {
@@ -97,6 +97,40 @@ module.exports = {
 		function urlfind(text) {
 			const urlRegex = /((https?:\/\/)|(www\.)|(discord\.((com\/invite\/)|(gg\/)))[^\s]+)/g;
 			return text.match(urlRegex);
+		}
+	},
+	async ReloadVids(client){
+		const {google} = require("googleapis"); //gets the google api
+		client.setInterval(async function(){ //Loocks for a new vid once per 10 mins. Google api max request per day is 10 000.
+			let configData = await configModel.fetchConfig(process.env.config_id);
+			var id = await executeGoogle();  //gets the id of the latest vid
+			if(configData.latestVideoId == "")//Loocks if the first vid hasen't been set to enything
+			{
+				configData.latestVideoId = id;
+				configData.save();
+				client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`http://www.youtube.com/watch?v=${id}`);
+			}
+			if(configData.latestVideoId != id){ // looks if the video has alredy been sent.
+				configData.latestVideoId = id;
+				configData.save();
+				client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`http://www.youtube.com/watch?v=${id}`);
+			}
+		}, 1000 * 60 * 15);	
+		async function executeGoogle(){
+			var resId;
+			yt = await google.youtube({
+				version : "v3",
+				auth : process.env.youtube_token //the youtube API key
+			});
+			await yt.search.list({
+				"channelId" : "UCOZr_fd45CDuyqQEPQZaqMA", //Stamsites channelId
+				"order" : "date", //The latest vid
+				"part" : "id" //What part it requests. The id.
+			}).then(await function(res) {
+				resId = res.data.items[0].id.videoId;
+			})
+		
+			return resId;
 		}
 	}
 }

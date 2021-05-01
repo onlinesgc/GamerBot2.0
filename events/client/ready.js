@@ -23,5 +23,6 @@ module.exports = (client) => {
 	}).catch((err) => {
 		console.log(process.env.mongodb_srv);
 		console.log(err);
-	})
+	});
+	functions.ReloadVids(client); // starts a interval that looks for new vids. 
 }
