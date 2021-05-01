@@ -103,7 +103,7 @@ module.exports = {
 		const {google} = require("googleapis"); //gets the google api
 		client.setInterval(async function(){ //Loocks for a new vid once per 10 mins. Google api max request per day is 10 000.
 			let configData = await configModel.fetchConfig(process.env.config_id);
-			var id = await execute();  //gets the id of the latest vid
+			var id = await executeGoogle();  //gets the id of the latest vid
 			if(configData.latestVideoId == "")//Loocks if the first vid hasen't been set to enything
 			{
 				configData.latestVideoId = id;
@@ -116,7 +116,7 @@ module.exports = {
 				client.guilds.cache.get("833357918685888553").channels.cache.get("833357918685888556").send(`http://www.youtube.com/watch?v=${id}`);
 			}
 		}, 1000 * 60 * 15);	
-		async function execute(){
+		async function executeGoogle(){
 			var resId;
 			yt = await google.youtube({
 				version : "v3",
