@@ -108,12 +108,12 @@ module.exports = {
 			{
 				configData.latestVideoId = id;
 				configData.save();
-				client.guilds.cache.get("833357918685888553").channels.cache.get("833357918685888556").send(`http://www.youtube.com/watch?v=${id}`);
+				client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`http://www.youtube.com/watch?v=${id}`);
 			}
 			if(configData.latestVideoId != id){ // looks if the video has alredy been sent.
 				configData.latestVideoId = id;
 				configData.save();
-				client.guilds.cache.get("833357918685888553").channels.cache.get("833357918685888556").send(`http://www.youtube.com/watch?v=${id}`);
+				client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`http://www.youtube.com/watch?v=${id}`);
 			}
 		}, 1000 * 60 * 15);	
 		async function executeGoogle(){
