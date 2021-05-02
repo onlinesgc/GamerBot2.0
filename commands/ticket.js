@@ -8,8 +8,11 @@ module.exports = {
 		await message.react("✅");
 
 		const channel = await message.guild.channels.create(`ticket - ${message.author.tag}`);
-		channel.setParent("822548929052409896");
-		channel.setParent("821139274589274143");
+		if (message.guild.id === "813844220694757447") {		//Test server
+			channel.setParent("821139274589274143");
+		} else if (message.guild.id === "516605157795037185") {	//Production server
+			channel.setParent("822548929052409896");
+		}
 
 		channel.updateOverwrite(message.guild.id, {
 			SEND_MESSAGES: false,
@@ -51,7 +54,8 @@ module.exports = {
 		})
 
 		message.channel.send(`Vi har skapat en kanal för dig! ${channel}`).then((msg) => {
-			setTimeout(() => msg.delete(), 7500);
+			setTimeout(() => message.delete(), 2500);
+			setTimeout(() => msg.delete(), 5000);
 		});
 	}
 }
