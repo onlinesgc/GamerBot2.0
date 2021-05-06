@@ -5,7 +5,7 @@
   "main": "GamerBot2.0.js",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "dotenv": "^8.2.0",
+    "dotenv": "^9.0.0",
     "express": "^4.17.1",
     "google-auth-library": "^7.0.4",
     "googleapis": "^72.0.0",
