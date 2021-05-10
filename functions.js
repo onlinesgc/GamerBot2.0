@@ -102,11 +102,14 @@ module.exports = {
 	},
 	async ReloadVids(client){
 		const {google} = require("googleapis"); //gets the google api
+		const {ApiClient} = require("twitch");
+		const {ClientCredentialsAuthProvider} = require("twitch-auth");
 		client.setInterval(async function(){ //Loocks for a new vid once per 10 mins. Google api max request per day is 10 000.
 			let configData = await configModel.fetchConfig(process.env.config_id);
 			var ytInfo = await executeGoogle();  //gets the id of the latest vid
 			var id = ytInfo.data.items[0].id.videoId
 			var title = ytInfo.data.items[0].snippet.title;
+
 			if(configData.latestVideoId == "")//Loocks if the first vid hasen't been set to enything
 			{
 				configData.latestVideoId = id;
@@ -118,6 +121,15 @@ module.exports = {
 				configData.save();
 				client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`STAMSITE har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${id}`);
 			}
+			var twInfo = await executeTwitch();
+			if(twInfo != null){
+				if(twInfo.id != configData.latestLiveStreamId){
+					client.guilds.cache.get("813844220694757447").channels.cache.get("813844220694757451").send(`STAMSITE har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite`);
+					configData.latestLiveStreamId = twInfo.id;
+					configData.save();
+				}
+			}
+
 		}, 1000 * 60 * 15);	
 		async function executeGoogle(){
 			var resId;
@@ -136,5 +148,14 @@ module.exports = {
 		
 			return resId;
 		}
+		async function executeTwitch(){
+			const clientId = process.env.twitch_token;
+			const tokenID = process.env.twitch_secret;
+			const authProvider = await new ClientCredentialsAuthProvider(clientId,tokenID);
+			const apiclient = await new ApiClient({authProvider});
+			const channel = await apiclient.helix.streams.getStreamByUserName("stamsite");
+			return channel;
+		}
+		
 	}
 }
