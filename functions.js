@@ -103,32 +103,37 @@ module.exports = {
 	async ReloadVids(client){
 		const {google} = require("googleapis"); //gets the google api
 		client.setInterval(async function(){ //Loocks for a new vid once per 10 mins. Google api max request per day is 10 000.
-			let configData = await configModel.fetchConfig(process.env.config_id);
 			var ytInfo = await executeGoogle();  //gets the id of the latest vid
-			var id = ytInfo.data.items[0].id.videoId
-			var title = ytInfo.data.items[0].snippet.title;
-			if(configData.latestVideoId == "")//Loocks if the first vid hasen't been set to enything
-			{
-				configData.latestVideoId = id;
-				configData.save();
-				client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`STAMSITE har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${id}`);
+			let configData = await configModel.fetchConfig(process.env.config_id);
+			if(ytInfo.data.items.length > 0){
+				var id = ytInfo.data.items[0].id.videoId
+				var title = ytInfo.data.items[0].snippet.title;
+				if(configData.latestVideoId == "")//Loocks if the first vid hasen't been set to enything
+				{
+					configData.latestVideoId = id;
+					configData.save();
+					client.guilds.cache.get("813844220694757447").channels.cache.get("813844220694757451").send(`STAMSITE har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${id}`);
+				}
+				if(configData.latestVideoId != id){ // looks if the video has alredy been sent.
+					configData.latestVideoId = id;
+					configData.save();
+					client.guilds.cache.get("813844220694757447").channels.cache.get("813844220694757451").send(`STAMSITE har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${id}`);
+				}
 			}
-			if(configData.latestVideoId != id){ // looks if the video has alredy been sent.
-				configData.latestVideoId = id;
-				configData.save();
-				client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`STAMSITE har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${id}`);
-			}
-		}, 1000 * 60 * 15);	
+		}, 1000 * 10);	
 		async function executeGoogle(){
 			var resId;
 			yt = await google.youtube({
 				version : "v3",
 				auth : process.env.youtube_token //the youtube API key
 			});
+			let thisDay = await new Date();
+			let Yersterday = `${thisDay.getFullYear()}-${thisDay.getMonth() + 1}-${(thisDay.getDate()-1)}T00:00:00Z`;
 			await yt.search.list({
 				"channelId" : "UCOZr_fd45CDuyqQEPQZaqMA", //Stamsites channelId
 				"order" : "date", //The latest vid
-				"part" : "snippet" //What part it requests. The id.
+				"part" : "snippet", //What part it requests. The id.
+				"publishedAfter":Yersterday
 			}).then(await function(res) {
 				//resId = res.data.items[0].id.videoId;
 				resId = res;
