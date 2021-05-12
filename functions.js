@@ -120,7 +120,7 @@ module.exports = {
 					client.guilds.cache.get("813844220694757447").channels.cache.get("813844220694757451").send(`STAMSITE har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${id}`);
 				}
 			}
-		}, 1000 * 10);	
+		}, 1000 * 60 * 15);	
 		async function executeGoogle(){
 			var resId;
 			yt = await google.youtube({
