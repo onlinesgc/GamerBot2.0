@@ -6,6 +6,9 @@ const ms = require('ms');
 module.exports = async (message, client) => {
 	if (message.author.bot) return;
 
+	//Remove links
+	await functions.checkForLinks(message);
+
 	//Retreive options
 	let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
 
