@@ -115,7 +115,8 @@ module.exports = async (message, client) => {
 				}
 				
 				profileData.xp = 0;
-				message.author.send(`Du levlade som faan till level \`${profileData.level - 1}\` i Stamsites Discord. Grattis!`);
+			    message.author.send(`Du levlade som faan till level \`${profileData.level - 1}\` i Stamsites Discord. Grattis!`)
+				.catch(console.error); // User has closed DMs for the server. Catch prevents crashes due to unkept promises.
 			}
 		}
 		await profileData.save();
