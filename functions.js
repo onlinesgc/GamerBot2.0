@@ -128,7 +128,7 @@ module.exports = {
 				auth : process.env.youtube_token //the youtube API key
 			});
 			let thisDay = await new Date();
-			let Yersterday = `${thisDay.getFullYear()}-${thisDay.getMonth() + 1}-${(thisDay.getDate()-1)}T00:00:00Z`;
+			let Yesterday = `${thisDay.getFullYear()}-${thisDay.getMonth() + 1}-${(thisDay.getDate()-1)}T00:00:00Z`;
 			await yt.search.list({
 				"channelId" : "UCOZr_fd45CDuyqQEPQZaqMA", //Stamsites channelId
 				"order" : "date", //The latest vid
