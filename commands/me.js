@@ -46,7 +46,8 @@ module.exports = {
         ProfileOptions.fillText(message.author.username,(whidth/2), 400)
 		ProfileOptions.font = "normal 40pt Sans"
 		ProfileOptions.fillText(`Level:\n${profileData.level-1}`,(whidth/2)-100,500);
-		ProfileOptions.fillText(`Progress:\n${progressBar}${xpPercentage}`,(whidth/2),630);
+		ProfileOptions.font = "normal 30pt Sans"
+		ProfileOptions.fillText(`Progress:\n${progressBar} ${xpPercentage}%`,(whidth/2),630);
         const buffer = Profile.toBuffer("image/png");
         await fs.writeFileSync("../Temp.png",buffer);
 		/*
