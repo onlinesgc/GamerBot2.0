@@ -64,7 +64,7 @@ module.exports = {
             ProfileOptions.drawImage(img,0,0,whidth,hight);
         })
         const buffer = Profile.toBuffer("image/png");
-        await fs.writeFileSync("../Temp.png",buffer);
+        await fs.writeFileSync("./canvas/Temp.png",buffer);
 		/*
 		const embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
@@ -78,6 +78,6 @@ module.exports = {
 				{ name: "id", value: message.author.id }
 			)
 		*/
-		message.channel.send({files:["../Temp.png"]});
+		message.channel.send({files:["./canvas/Temp.png"]});
 	}
 }
