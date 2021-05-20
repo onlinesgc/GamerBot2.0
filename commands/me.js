@@ -36,7 +36,12 @@ module.exports = {
 		registerFont("./canvas/Hard Compound.ttf",{family:"Hard_Compound"});
         const Profile = createCanvas(whidth,hight);
         const ProfileOptions = Profile.getContext("2d");
-        ProfileOptions.fillStyle = '#4A4E48';
+		if(profileData.colorHexCode == undefined){
+			console.log("insde "+ profileData.colorHexCode);
+			profileData.colorHexCode = "#787C75";
+			profileData.save();
+		}
+        ProfileOptions.fillStyle = profileData.colorHexCode;
         ProfileOptions.fillRect(0,0,whidth,hight);
         await loadImage(message.author.avatarURL({format:"png"})).then(img =>{
 			ProfileOptions.fillStyle = "#5FDA18";
@@ -64,20 +69,6 @@ module.exports = {
             ProfileOptions.drawImage(img,0,0,whidth,hight);
         })
         const buffer = Profile.toBuffer("image/png");
-        await fs.writeFileSync("./canvas/Temp.png",buffer);
-		/*
-		const embed = new Discord.MessageEmbed()
-			.setColor("#f54242")
-			.setTitle(`Användarinfo`)
-			.setDescription(`${message.member}'s information.`)
-			.setImage(message.author.avatarURL())
-			.addFields(
-				fields,
-				{ name: "Level", value: profileData.level - 1, inline: true },
-				{ name: "Progress", value: `${progressBar} ${xpPercentage}%` },
-				{ name: "id", value: message.author.id }
-			)
-		*/
-		message.channel.send({files:["./canvas/Temp.png"]});
+		message.channel.send({files:[buffer]});
 	}
 }
