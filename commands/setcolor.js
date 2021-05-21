@@ -1,9 +1,11 @@
-
 module.exports = {
 	name: "setcolor",
-	aliases: [],
-	description: "Changes the color of .me backround",
-	usage: [],
+	aliases: ["color"],
+	description: "Ändrar färgen av .me backround",
+	usage: [
+        `För att ändra din färg skriv .setcolor #"hexkåd"`,
+        `För att få en hex kåd kan du gå till https://htmlcolorcodes.com/`
+    ],
 	perms: [],
 	async do(message, args, profileData) {
         if(!args[0]){
