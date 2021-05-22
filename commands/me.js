@@ -21,12 +21,12 @@ module.exports = {
 		let TimeOut = "";
 		let Xp = "";
 		if ((!configData.xp.xpHidden) || (override)) {
-			Xp += "XP: "+profileData.xp;
+			Xp += "XP: " + profileData.xp;
 		}
 		if (((profileData.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) || (override)) {
 			TimeOut += "XP Timeout: " + functions.msToString(profileData.xpTimeoutUntil - message.createdTimestamp);
 		}
 		let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
-		message.channel.send({files:[await functions.getProfilePotho(profileData,TimeOut,Xp,xpPercentage,message)]});
+		message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message)] });
 	}
 }
