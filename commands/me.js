@@ -19,17 +19,16 @@ module.exports = {
 				override = true;
 			}
 		}
-
-		let fields = [];
+		let TimeOut = "";
+		let Xp = "";
 		if ((!configData.xp.xpHidden) || (override)) {
-			fields.push({ name: "XP", value: profileData.xp, inline: true });
+			Xp += "XP: "+profileData.xp;
 		}
 		if (((profileData.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) || (override)) {
-			fields.push({ name: "XP Timeout", value: functions.msToString(profileData.xpTimeoutUntil - message.createdTimestamp), inline: true });
+			TimeOut += "XP Timeout: " + functions.msToString(profileData.xpTimeoutUntil - message.createdTimestamp);
 		}
 
 		let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
-		let progressBar = "█".repeat(Math.round(xpPercentage / 10)) + "░".repeat(Math.round((100 - xpPercentage) / 10));
 
 		var whidth = 500;
         var hight = 800;
@@ -46,6 +45,8 @@ module.exports = {
         await loadImage(message.author.avatarURL({format:"png"})).then(img =>{
 			ProfileOptions.fillStyle = "#5FDA18";
 			ProfileOptions.fillRect((whidth/2)-135,70,270,270)
+			ProfileOptions.fillStyle = profileData.colorHexCode;
+			ProfileOptions.fillRect((whidth/2)-125,80,250,250)
             ProfileOptions.drawImage(img,(whidth/2) - 125,80,250,250);
         })
         ProfileOptions.font = "bold 50pt Hard_Compound"
@@ -65,6 +66,9 @@ module.exports = {
 		ProfileOptions.fillRect(70,550,Bar,40);
 		ProfileOptions.font = "normal 40pt Hard_Compound";
 		ProfileOptions.fillText(`${xpPercentage}%`,(whidth/2),645);
+		ProfileOptions.font = "normal 20pt Hard_Compound";
+		if(Xp != "") ProfileOptions.fillText(Xp,(whidth/2),700);
+		if(TimeOut != "") ProfileOptions.fillText(TimeOut,(whidth/2) ,730);
 		await loadImage("./canvas/BackrundsFrame.png").then(img =>{
             ProfileOptions.drawImage(img,0,0,whidth,hight);
         })
