@@ -83,9 +83,11 @@ module.exports = {
 		if (channels.find(c => c == message.channel.id)) return;
 		let haveRole;
 		roles.forEach(element => {
-			if (message.member.roles.cache.get(element) == element) {
-				haveRole = true;
-				return;
+			if(message.member && message.member.roles){
+				if (message.member.roles.cache.get(element) == element) {
+					haveRole = true;
+					return;
+				}
 			}
 		});
 		if (haveRole) return;
