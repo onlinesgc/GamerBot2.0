@@ -144,7 +144,7 @@ module.exports = {
 			return resId;
 		}
 	},
-	async getProfilePotho(profileData,TimeOut,Xp,xpPercentage,message){
+	async getProfilePotho(profileData,TimeOut,Xp,xpPercentage,iconUrl,username){
 		const {createCanvas, loadImage, registerFont} = require("canvas");
 		var whidth = 500;
         var hight = 800;
@@ -158,7 +158,7 @@ module.exports = {
 		}
         ProfileOptions.fillStyle = profileData.colorHexCode;
         ProfileOptions.fillRect(0,0,whidth,hight);
-        await loadImage(message.author.avatarURL({format:"png"})).then(img =>{
+        await loadImage(iconUrl).then(img =>{
 			ProfileOptions.fillStyle = "#5FDA18";
 			ProfileOptions.fillRect((whidth/2)-135,70,270,270)
 			ProfileOptions.fillStyle = profileData.colorHexCode;
@@ -168,7 +168,7 @@ module.exports = {
         ProfileOptions.font = "bold 50pt Hard_Compound"
         ProfileOptions.textAlign = "center"
         ProfileOptions.fillStyle = "#fff"
-        ProfileOptions.fillText(message.author.username,(whidth/2), 400)
+        ProfileOptions.fillText(username,(whidth/2), 400)
 		ProfileOptions.font = "normal 40pt Hard_Compound"
 		ProfileOptions.fillText(`Level: ${profileData.level-1}`,(whidth/2),500);
 		//ProfileOptions.font = "normal 30pt sans"

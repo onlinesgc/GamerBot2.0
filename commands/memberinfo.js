@@ -13,6 +13,7 @@ module.exports = {
 		let member;
 		let configData = await configModel.fetchConfig(process.env.config_id);
 		let override = false;
+		let options = false;
 
 		//Parse input .memberinfo -o or .memberinfo <argument> -o
 		if (args[0] === "-o") {
@@ -24,12 +25,12 @@ module.exports = {
 		} 
 		else if(args[0] != undefined) {
 			if (message.mentions.members.first()) {
-				member = message.mentions.members.first();
+				member = await message.mentions.members.first();
 			} else {
-				member = message.guild.members.fetch(args[0]);
+				member = await message.guild.members.fetch(args[0]);
 			}
 			profileData = await profileModel.fetchProfile(member.id, message.guild.id);
-			
+			options = true;
 			if ((args[1] === "-o") && (message.member.hasPermission("ADMINISTRATOR"))) {
 				override = true;
 			}
@@ -46,6 +47,11 @@ module.exports = {
 			TimeOut += "XP Timeout: " + functions.msToString(profileData.xpTimeoutUntil - message.createdTimestamp);
 		}
 		let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
-		message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message)]});
+		if(!options){
+			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({format:"png"}), message.author.username)]});
+		}
+		else{
+			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({format:"png"}), member.user.username)]});
+		}
 		}
 	}
