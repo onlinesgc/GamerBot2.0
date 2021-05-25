@@ -88,12 +88,22 @@ module.exports = {
 					configData.xp.levels.forEach(element => {		//Remove all level roles
 						member.roles.remove(message.guild.roles.cache.get(element.id));
 					});
-					for (let index = 0; index < configData.xp.levels.length; index++) {
-						const element = configData.xp.levels[index];
-						if (profile_data.level === element.level) {
-							member.roles.add(message.guild.roles.cache.get(element.id));
-						}
+				    //Adding find correct role
+				    for (let index = 0; index < configData.xp.levels.length; index++) {
+					const role = configData.xp.levels[index];
+					//nextRoleLevel allows for testing within span, and if statement helps in end of list.
+					let nextRoleLevel = 0;
+					if (index === configData.xp.levels.length-1) {
+					    nextRoleLevel = 100000000;
+					} else {
+					    nextRoleLevel = configData.xp.levels[index+1].level;
 					}
+					//Actually adding roles
+					if (profile_data.level >= role.level+1 && profile_data.level < nextRoleLevel+1) {
+					    member.roles.add(message.guild.roles.cache.get(role.id));
+					    message.channel.send("Added role: " + message.guild.roles.cache.get(role.id).name + ". To member: " + member.user.username);
+					}
+				    }
 					// member.roles.add(message.guild.roles.cache.get(configData.xp.levels[profile_data.level - 2])).catch((err) => {
 					// 	console.log(`Failed to add level role to user: ${member.user.tag}. He/She is at level ${profile_data.level - 1}`);
 					// 	console.log(`Errormessage: ${err}`);
