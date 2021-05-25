@@ -79,7 +79,7 @@ module.exports = {
 			"821043682970697818",
 			"821044349290807326"
 		];
-		const channels = ["754298054126993458", "813043346586730506"];
+		const channels = ["754298054126993458", "813043346586730506","521190821668716589"];
 		if (channels.find(c => c == message.channel.id)) return;
 		let haveRole;
 		roles.forEach(element => {
