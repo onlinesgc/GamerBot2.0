@@ -6,7 +6,7 @@ module.exports = {
         `För att ändra din färg skriv .setcolor #"hexkåd"`,
         `För att få en hex kåd kan du gå till https://htmlcolorcodes.com/`
     ],
-	perms: [],
+	perms: ["trustedCmd"],
 	async do(message, args, profileData) {
         if(!args[0]){
             message.channel.send("Du måste skriva en hex kåd. Tex:#FFF");
