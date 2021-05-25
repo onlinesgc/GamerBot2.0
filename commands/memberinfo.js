@@ -11,52 +11,44 @@ module.exports = {
     perms: [],
     async do(message, args) {
 	let member;
-	let user;
 	let profileData;
-	if (!args[0]) {
+	let configData = await configModel.fetchConfig(process.env.config_id);
+	let override = false;
+
+	//Parse input .memberinfo -o or .memberinfo <argument> -o
+	if (!args[0] || args[0] === "-o") {
 	    profileData = await profileModel.fetchProfileFromMessage(message);
+	    if (message.member.hasPermission("ADMINISTRATOR")) {
+		override = true;
+	    }
+    
 	} else {
+	    
 	    if (message.mentions.members.first()) {
 		member = message.mentions.members.first();
-		user = message.mentions.users.first();
 	    } else {
-		member = await message.guild.members.fetch(args[0]);
-		user = await message.client.users.fetch(args[0]);
+		member = message.guild.members.fetch(args[0]);
 	    }
 	    profileData = await profileModel.fetchProfile(member.id, message.guild.id);
-	}
-	
-	let override = false;
-	if (args[1]) {
+	    
 	    if ((args[1] === "-o") && (message.member.hasPermission("ADMINISTRATOR"))) {
 		override = true;
 	    }
+
 	}
-	
-	const configData = await configModel.fetchConfig(process.env.config_id);				//Retreive options
-	
-	let fields = [];
+
+	message.channel.send(profileData);
+
+	//Generate image
+	let TimeOut = "";
+	let Xp = "";
 	if ((!configData.xp.xpHidden) || (override)) {
-	    fields.push({ name: "XP", value: profileData.xp, inline: true });
+	    Xp += "XP: " + profileData.xp;
 	}
 	if (((profileData.xpTimeoutUntil - message.createdTimestamp > 0) && (!configData.xp.xpTimeoutHidden)) || (override)) {
-	    fields.push({ name: "XP Timeout", value: functions.msToString(profileData.xpTimeoutUntil - message.createdTimestamp), inline: true });
+	    TimeOut += "XP Timeout: " + functions.msToString(profileData.xpTimeoutUntil - message.createdTimestamp);
 	}
-	
 	let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
-	let progressBar = "█".repeat(Math.round(xpPercentage / 10)) + "░".repeat(Math.round((100 - xpPercentage) / 10));
-	
-	const embed = new Discord.MessageEmbed()
-	      .setColor("#f54242")
-	      .setTitle(`Information om medlem`)
-	      .setDescription(`${member}'s information.`)
-	      .setImage(user.avatarURL())
-	      .addFields(
-		  fields,
-		  { name: "Level", value: profileData.level - 1, inline: true },
-		  { name: "Progress", value: `${progressBar} ${xpPercentage}%` },
-		  { name: "id", value: profileData.userID }
-	      )
-	message.channel.send(embed);
+	message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message)]});
     }
 }
