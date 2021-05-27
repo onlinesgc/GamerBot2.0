@@ -135,7 +135,7 @@ module.exports = {
 				"channelId" : "UCOZr_fd45CDuyqQEPQZaqMA", //Stamsites channelId
 				"order" : "date", //The latest vid
 				"part" : "snippet", //What part it requests. The id.
-				"publishedAfter" : Yersterday
+				"publishedAfter" : Yesterday
 			}).then(await function(res) {
 				//resId = res.data.items[0].id.videoId;
 				resId = res;
