@@ -5,6 +5,7 @@ const ms = require('ms');
 
 module.exports = async (message, client) => {
 	if (message.author.bot) return;
+	if (message.channel.type == "dm") return;
 
 	//Remove links
 	await functions.checkForLinks(message);
