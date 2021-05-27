@@ -5,11 +5,11 @@ const configModel = require("../models/configSchema");
 
 module.exports = {
     name: "memberinfo",
-    aliases: ["userinfo", "myinfo"],
+    aliases: ["userinfo", "myinfo","me"],
     description: "Get member information for message author, or specified user",
     usage: [],
     perms: [],
-    async do(message, args,profileData) {
+    async do(message, args, profileData) {
 		let member;
 		let configData = await configModel.fetchConfig(process.env.config_id);
 		let override = false;

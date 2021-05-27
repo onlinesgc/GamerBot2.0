@@ -23,7 +23,7 @@ module.exports = async (message, client) => {
 			const pull = require(`../../commands/${cmd}.js`);
 			client.commands.set(cmd, pull);
 		} catch (err) {
-			console.log(err);
+			//console.log(err); Tog bort error här för det kommer spamma consolen när folk använder alias
 		}
 	}
 
