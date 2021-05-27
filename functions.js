@@ -104,6 +104,8 @@ module.exports = {
 	},
 	async ReloadVids(client){
 		const {google} = require("googleapis"); //gets the google api
+		const {ApiClient} = require("twitch");
+		const {ClientCredentialsAuthProvider} = require("twitch-auth");
 		client.setInterval(async function(){ //Loocks for a new vid once per 10 mins. Google api max request per day is 10 000.
 			var ytInfo = await executeGoogle();  //gets the id of the latest vid
 			let configData = await configModel.fetchConfig(process.env.config_id);
