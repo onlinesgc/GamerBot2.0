@@ -121,6 +121,14 @@ module.exports = {
 					configData.save();
 					client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`STAMSITE har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${id}`);
 				}
+				var twInfo = await executeTwitch();
+				if(twInfo != null){
+					if(twInfo.id != configData.latestLiveStreamId){
+						client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`STAMSITE har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite`);
+						configData.latestLiveStreamId = twInfo.id;
+						configData.save();
+					}
+				}
 			}
 		}, 1000 * 60 * 15);	
 		async function executeGoogle(){
@@ -142,6 +150,14 @@ module.exports = {
 			})
 		
 			return resId;
+		}
+		async function executeTwitch(){
+			const clientId = process.env.twitch_token;
+			const tokenID = process.env.twitch_secret;
+			const authProvider = await new ClientCredentialsAuthProvider(clientId,tokenID);
+			const apiclient = await new ApiClient({authProvider});
+			const channel = await apiclient.helix.streams.getStreamByUserName("stamsite");
+			return channel;
 		}
 	},
 	async getProfilePotho(profileData,TimeOut,Xp,xpPercentage,iconUrl,username){
