@@ -172,7 +172,7 @@ module.exports = {
 		if(profileData.colorHexCode == undefined){
 			console.log("insde "+ profileData.colorHexCode);
 			profileData.colorHexCode = "#787C75";
-			profileData.save();
+			await profileData.save();
 		}
         ProfileOptions.fillStyle = profileData.colorHexCode;
         ProfileOptions.fillRect(0,0,whidth,hight);
