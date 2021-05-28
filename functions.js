@@ -169,11 +169,6 @@ module.exports = {
 		registerFont("./canvas/Hard Compound.ttf",{family:"Hard_Compound"});
         const Profile = createCanvas(whidth,hight);
         const ProfileOptions = Profile.getContext("2d");
-		if(profileData.colorHexCode == undefined){
-			console.log("functions: No color data for this user, setting standard color ");
-			profileData.colorHexCode = "#787C75";
-			profileData.save();
-		}
         ProfileOptions.fillStyle = profileData.colorHexCode;
         ProfileOptions.fillRect(0,0,whidth,hight);
         await loadImage(iconUrl).then(img =>{
