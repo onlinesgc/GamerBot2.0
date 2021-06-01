@@ -124,7 +124,7 @@ module.exports = async (message, client) => {
 				//Adding new roles if required
 				//Removing old roles
 				configData.xp.levels.forEach(element => {		//Remove all level roles
-					message.member.roles.remove(message.guild.roles.cache.get(element.id));
+					message.member.roles.remove(message.guild.roles.cache.get(element.id), ["Test removed role. To later add a new or add back the old one"]);
 				});
 				//Adding find correct role
 				for (let index = 0; index < configData.xp.levels.length; index++) {
@@ -139,7 +139,7 @@ module.exports = async (message, client) => {
 					}
 					//Actually adding roles
 					if (profileData.level >= role.level+1 && profileData.level < nextRoleLevel+1) {
-						message.member.roles.add(message.guild.roles.cache.get(role.id));
+						message.member.roles.add(message.guild.roles.cache.get(role.id), ["New or old role added!"]);
 					}
 				}
 				
