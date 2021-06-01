@@ -5,6 +5,7 @@ const ms = require('ms');
 
 module.exports = async (message, client) => {
 	if (message.author.bot) return;
+	if (message.channel.type == "dm") return;
 
 	//Remove links
 	await functions.checkForLinks(message);
@@ -23,7 +24,7 @@ module.exports = async (message, client) => {
 			const pull = require(`../../commands/${cmd}.js`);
 			client.commands.set(cmd, pull);
 		} catch (err) {
-			console.log(err);
+			//console.log(err); Tog bort error här för det kommer spamma consolen när folk använder alias
 		}
 	}
 
@@ -46,7 +47,16 @@ module.exports = async (message, client) => {
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
-		} else {
+		} 
+		else if(command.perms.includes("trustedCmd")){
+		    if(profileData.level >= 11 || message.member.hasPermission("ADMINISTRATOR")){
+				command.do(message, args, profileData)
+			}
+			else{
+				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
+			}
+		} 
+		else {
 			try {
 				await command.do(message, args, profileData);
 			} catch (err) {
@@ -61,7 +71,16 @@ module.exports = async (message, client) => {
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
-		} else {
+		
+		}
+		else if(mention_command.perms.includes("trustedCmd")){
+		    if(profileData.level >= 11 || message.member.hasPermission("ADMINISTRATOR")){
+			    mention_command.do(message, args, profileData);
+			} else {
+				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
+			}
+		} 
+		else {
 			mention_command.do(message, args, profileData);
 		}
 	} else if (question_command) {
@@ -71,7 +90,17 @@ module.exports = async (message, client) => {
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
-		} else {
+
+		}
+		else if(question_command.perms.includes("trustedCmd")){
+			if(profileData.level >= 11 || message.member.hasPermission("ADMINISTRATOR")){
+				question_command.do(message, args, profileData)
+			}
+			else{
+				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
+			}
+		}
+		else {
 			question_command.do(message, args, profileData);
 		}
 	} else {
