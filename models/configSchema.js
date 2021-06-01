@@ -9,6 +9,7 @@ const configSchema = new mongoose.Schema({
 	activityType: { type: String },
 	removeLinks: false,
 	latestVideoId : "",
+	latestLiveStreamId : "",
 	xp: { type: Object, default: {
 		timeoutsEnabled: true,
 		xpHidden: true,
