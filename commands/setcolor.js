@@ -13,7 +13,7 @@ module.exports = {
             return;
         }else{
             if(!args[0].startsWith("#")){
-                message.channel.send("Du måste skriva en hex kåd. Tex:#FFF Glömm inte #");
+                message.channel.send("Du måste skriva en hex-kod, t.ex: #FFF. Glöm inte #");
             }else{
                 profileData.colorHexCode = args[0];
                 profileData.save();

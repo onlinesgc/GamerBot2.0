@@ -79,7 +79,7 @@ module.exports = {
 			"821043682970697818",
 			"821044349290807326"
 		];
-		const channels = ["754298054126993458", "813043346586730506"];
+		const channels = ["754298054126993458", "813043346586730506","521190821668716589"];
 		if (channels.find(c => c == message.channel.id)) return;
 		let haveRole;
 		roles.forEach(element => {
@@ -140,7 +140,14 @@ module.exports = {
 				auth : process.env.youtube_token //the youtube API key
 			});
 			let thisDay = await new Date();
-			let Yesterday = `${thisDay.getFullYear()}-${thisDay.getMonth() + 1}-${(thisDay.getDate()-1)}T00:00:00Z`;
+			let Yesterday
+			//Checks if its the last firt dat of the month. And if it is it gos back one month
+			if((thisDay.getDate()-1) != 0){
+				Yesterday = `${thisDay.getFullYear()}-${thisDay.getMonth() + 1}-${(thisDay.getDate()-1)}T00:00:00Z`;
+			}else{
+				let lastday = new Date(thisDay.getFullYear(), thisDay.getMonth(), 0).getDate();
+				Yesterday = `${thisDay.getFullYear()}-${thisDay.getMonth()}-${lastday}T00:00:00Z`
+			}
 			await yt.search.list({
 				"channelId" : "UCOZr_fd45CDuyqQEPQZaqMA", //Stamsites channelId
 				"order" : "date", //The latest vid
@@ -169,11 +176,6 @@ module.exports = {
 		registerFont("./canvas/Hard Compound.ttf",{family:"Hard_Compound"});
         const Profile = createCanvas(whidth,hight);
         const ProfileOptions = Profile.getContext("2d");
-		if(profileData.colorHexCode == undefined){
-			console.log("insde "+ profileData.colorHexCode);
-			profileData.colorHexCode = "#787C75";
-			profileData.save();
-		}
         ProfileOptions.fillStyle = profileData.colorHexCode;
         ProfileOptions.fillRect(0,0,whidth,hight);
         await loadImage(iconUrl).then(img =>{

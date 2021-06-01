@@ -12,7 +12,7 @@ const profileSchema = new mongoose.Schema({
 
 const model = mongoose.model("ProfileModels", profileSchema);
 
-const fetchProfile = async (userID, serverID, lastMessageTimestamp = null, xpTimeoutUntil = null) => {
+const fetchProfile = async (userID, serverID, lastMessageTimestamp = null, xpTimeoutUntil = null, colorHexCode = "#787C75") => {
 	let profileData = await model.findOne({ userID: userID });
 	if (!profileData) {
 		profileData = await model.create({
