@@ -28,7 +28,7 @@ module.exports = {
 		await welcomeMessage.react("⛔");
 
 		const collector = welcomeMessage.createReactionCollector((reaction, user) =>
-			{},
+			message.guild.members.cache.find((member) => member.id === user.id).hasPermission("ADMINISTRATOR"),
 			{ dispose: true }
 		);
 		collector.on("collect", (reaction, user) => {
