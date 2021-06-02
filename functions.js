@@ -178,13 +178,16 @@ module.exports = {
         const ProfileOptions = Profile.getContext("2d");
         ProfileOptions.fillStyle = profileData.colorHexCode;
         ProfileOptions.fillRect(0,0,whidth,hight);
-        await loadImage(iconUrl).then(img =>{
-			ProfileOptions.fillStyle = "#5FDA18";
-			ProfileOptions.fillRect((whidth/2)-135,70,270,270)
-			ProfileOptions.fillStyle = profileData.colorHexCode;
-			ProfileOptions.fillRect((whidth/2)-125,80,250,250)
-            ProfileOptions.drawImage(img,(whidth/2) - 125,80,250,250);
-        })
+
+		if(iconUrl != undefined){
+			await loadImage(iconUrl).then(img =>{
+				ProfileOptions.fillStyle = "#5FDA18";
+				ProfileOptions.fillRect((whidth/2)-135,70,270,270)
+				ProfileOptions.fillStyle = profileData.colorHexCode;
+				ProfileOptions.fillRect((whidth/2)-125,80,250,250)
+				ProfileOptions.drawImage(img,(whidth/2) - 125,80,250,250);
+			})
+		}
         ProfileOptions.font = "bold 50pt Hard_Compound"
         ProfileOptions.textAlign = "center"
         ProfileOptions.fillStyle = "#fff"
