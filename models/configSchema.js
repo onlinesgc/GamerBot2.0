@@ -8,8 +8,9 @@ const configSchema = new mongoose.Schema({
 	activity: { type: String },
 	activityType: { type: String },
 	removeLinks: false,
-	latestVideoId : "",
+	latestVideoId : [""],
 	latestLiveStreamId : "",
+	NotisChannels: ["UCOZr_fd45CDuyqQEPQZaqMA"],
 	xp: { type: Object, default: {
 		timeoutsEnabled: true,
 		xpHidden: true,
