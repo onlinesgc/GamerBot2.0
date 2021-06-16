@@ -10,7 +10,10 @@ const configSchema = new mongoose.Schema({
 	removeLinks: false,
 	latestVideoId : [""],
 	latestLiveStreamId : "",
-	NotisChannels: ["UCOZr_fd45CDuyqQEPQZaqMA"],
+	NotisChannels: {type: Array, default: {
+		id:"UCOZr_fd45CDuyqQEPQZaqMA",
+		Notis:true
+	}},
 	xp: { type: Object, default: {
 		timeoutsEnabled: true,
 		xpHidden: true,

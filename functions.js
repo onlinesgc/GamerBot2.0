@@ -103,7 +103,6 @@ module.exports = {
 		}
 	},
 	async ReloadVids(client){
-		const {google} = require("googleapis"); //gets the google api
 		const {ApiClient, HttpStatusCodeError} = require("twitch");
 		const {ClientCredentialsAuthProvider} = require("twitch-auth");
 		
@@ -111,8 +110,7 @@ module.exports = {
 			var configData = await configModel.fetchConfig(process.env.config_id);
 			var vids = [];
 			for(let i = 0 ; i < configData.NotisChannels.length; i++){
-				console.log(i);
-				await executeGoogle.getdad(configData.NotisChannels[i],async function(err, data){
+				await executeGoogle.getdad(configData.NotisChannels[i].id,async function(err, data){
 					let channelId = data.feed.url.split("=")[1];
 					let id = data.items[0].guid.split(":")[2];
 					let title = data.items[0].title;
@@ -121,15 +119,14 @@ module.exports = {
 						id:id,
 						title:title,
 						ChannelName:ChannelName,
-						channelId:channelId
+						channelId:channelId,
+						mentionChannel:configData.NotisChannels[i].Notis
 					}
 					vids[i] = obj;
 				})
-				console.log(i);
 			}
 			
 			setTimeout(async function(){
-				console.log(vids);
 				let oldid = configData.latestVideoId;
 				configData.latestVideoId = vids;
 				for(let i = 0 ; i < vids.length; i++){
@@ -141,8 +138,12 @@ module.exports = {
 						}
 					}
 					if(oldid[i].id != vids[i].id){
-						console.log(configData);
-						client.guilds.cache.get("813844220694757447").channels.cache.get("816724723739656222").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`)
+						if(vids[i].mentionChannel == true){
+							client.guilds.cache.get("813844220694757447").channels.cache.get("816724723739656222").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`)
+						}
+						else{
+							client.guilds.cache.get("813844220694757447").channels.cache.get("816724723739656222").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]**\n http://www.youtube.com/watch?v=${vids[i].id}`)
+						}
 					}
 				}
 				await configData.save();
