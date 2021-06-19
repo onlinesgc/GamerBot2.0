@@ -16,7 +16,7 @@
     "twitch": "^4.5.5"
   },
   "devDependencies": {
-    "jest": "^27.0.3"
+    "jest": "^27.0.4"
   },
   "scripts": {
     "test": "jest"
