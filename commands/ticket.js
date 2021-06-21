@@ -22,7 +22,7 @@ module.exports = {
 			VIEW_CHANNEL: true
 		});
 
-		const welcomeMessage = await channel.send(`Tack för att du öppnade en biljett! <@` + message.author.id + `> ! <@&812348382810210314> kommer svara inom kort!`);
+		const welcomeMessage = await channel.send(`Tack för att du öppnade en ticket! <@` + message.author.id + `> ! <@&812348382810210314> kommer svara inom kort!`);
 		await welcomeMessage.react("🔒");
 		await welcomeMessage.react("🔓");
 		await welcomeMessage.react("⛔");
