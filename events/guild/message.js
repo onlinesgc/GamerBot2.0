@@ -121,7 +121,11 @@ module.exports = async (message, client) => {
 			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent)) {
 				profileData.level++;
 
-				//Adding new roles if required
+			    //Adding new roles if required
+
+			    if(!configData.xp.levels.length) {
+				console.log("There Are no roles in the database for the user to get");
+			    }
 				//Removing old roles
 				configData.xp.levels.forEach(element => {		//Remove all level roles
 					message.member.roles.remove(message.guild.roles.cache.get(element.id), ["Test removed role. To later add a new or add back the old one"]);
