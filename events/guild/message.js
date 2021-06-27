@@ -5,6 +5,10 @@ const ms = require('ms');
 
 module.exports = async (message, client) => {
 	if (message.author.bot) return;
+	if (message.channel.type == "dm") return;
+
+	//Remove links
+	await functions.checkForLinks(message);
 
 	//Retreive options
 	let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
@@ -20,7 +24,7 @@ module.exports = async (message, client) => {
 			const pull = require(`../../commands/${cmd}.js`);
 			client.commands.set(cmd, pull);
 		} catch (err) {
-			console.log(err);
+			//console.log(err); Tog bort error här för det kommer spamma consolen när folk använder alias
 		}
 	}
 
@@ -43,7 +47,16 @@ module.exports = async (message, client) => {
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
-		} else {
+		} 
+		else if(command.perms.includes("trustedCmd")){
+		    if(profileData.level >= 11 || message.member.hasPermission("ADMINISTRATOR")){
+				command.do(message, args, profileData)
+			}
+			else{
+				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
+			}
+		} 
+		else {
 			try {
 				await command.do(message, args, profileData);
 			} catch (err) {
@@ -58,7 +71,16 @@ module.exports = async (message, client) => {
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
-		} else {
+		
+		}
+		else if(mention_command.perms.includes("trustedCmd")){
+		    if(profileData.level >= 11 || message.member.hasPermission("ADMINISTRATOR")){
+			    mention_command.do(message, args, profileData);
+			} else {
+				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
+			}
+		} 
+		else {
 			mention_command.do(message, args, profileData);
 		}
 	} else if (question_command) {
@@ -68,13 +90,28 @@ module.exports = async (message, client) => {
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
 			}
-		} else {
+
+		}
+		else if(question_command.perms.includes("trustedCmd")){
+			if(profileData.level >= 11 || message.member.hasPermission("ADMINISTRATOR")){
+				question_command.do(message, args, profileData)
+			}
+			else{
+				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
+			}
+		}
+		else {
 			question_command.do(message, args, profileData);
 		}
 	} else {
 		if (message.createdTimestamp - profileData.lastMessageTimestamp > ms("1w")) {
 			let days = Math.floor((message.createdTimestamp - profileData.lastMessageTimestamp) / 1000 / 86400);
-			profileData.xp -= days * 2;
+			let penalty = days * 2;
+			if (penalty > profileData.xp){
+				profileData.xp = 0;
+			} else {
+			profileData.xp -= penalty;
+			}
 		}
 		profileData.lastMessageTimestamp = message.createdTimestamp;
 		if ((profileData.xpTimeoutUntil - message.createdTimestamp < 0) || (!configData.xp.timeoutsEnabled)) {
@@ -84,19 +121,35 @@ module.exports = async (message, client) => {
 			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent)) {
 				profileData.level++;
 
-				//Update level
+			    //Adding new roles if required
+
+			    if(!configData.xp.levels.length) {
+				console.log("There Are no roles in the database for the user to get");
+			    }
+				//Removing old roles
 				configData.xp.levels.forEach(element => {		//Remove all level roles
-					message.member.roles.remove(message.guild.roles.cache.get(element.id));
+					message.member.roles.remove(message.guild.roles.cache.get(element.id), ["Test removed role. To later add a new or add back the old one"]);
 				});
+				//Adding find correct role
 				for (let index = 0; index < configData.xp.levels.length; index++) {
-					const element = configData.xp.levels[index];
-					if (profileData.level === element.level+1) { //This is the "early leveling" hotfix, we really need to fix this jungle up
-						message.member.roles.add(message.guild.roles.cache.get(element.id));
+					const role = configData.xp.levels[index];
+
+					//nextRoleLevel allows for testing within span, and if statement helps in end of list.
+					let nextRoleLevel = 0;
+					if (index === configData.xp.levels.length-1) {
+						nextRoleLevel = 10000000;
+					} else {
+						nextRoleLevel = configData.xp.levels[index+1].level;
+					}
+					//Actually adding roles
+					if (profileData.level >= role.level+1 && profileData.level < nextRoleLevel+1) {
+						message.member.roles.add(message.guild.roles.cache.get(role.id), ["New or old role added!"]);
 					}
 				}
 				
 				profileData.xp = 0;
-				message.author.send(`Du levlade som faan till level \`${profileData.level - 1}\` i Stamsites Discord. Grattis!`);
+			    message.author.send(`Du levlade som faan till level \`${profileData.level - 1}\` i Stamsites Discord. Grattis!`)
+				.catch(console.error); // User has closed DMs for the server. Catch prevents crashes due to unkept promises.
 			}
 		}
 		await profileData.save();

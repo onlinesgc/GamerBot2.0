@@ -1,15 +1,17 @@
 module.exports = {
-	name: "ticket",
-	aliases: [],
-	description: "Skapa en ny kanal för dig och moderatorerna att ta upp viktiga saker i.",
-	usage: [],
-	perms: [],
+    name: "ticket",
+    aliases: [],
+    usage: ["Skriv .ticket i #ticket kanalen för att skapa en ticket!\n\nTickets är det bästa sättet att få moderatorernas uppmärksamhet för att få hjälp samt att anmäla dåligt beteende hos någon servermedlem. Det är också ett bra sätt att påpeka problem eller önskemål med servern!"],
+    perms: [],
 	async do(message, args, profileData) {
 		await message.react("✅");
 
 		const channel = await message.guild.channels.create(`ticket - ${message.author.tag}`);
-		channel.setParent("822548929052409896");
-		channel.setParent("821139274589274143");
+		if (message.guild.id === "813844220694757447") {		//Test server
+			channel.setParent("821139274589274143");
+		} else if (message.guild.id === "516605157795037185") {	//Production server
+			channel.setParent("822548929052409896");
+		}
 
 		channel.updateOverwrite(message.guild.id, {
 			SEND_MESSAGES: false,
@@ -20,7 +22,7 @@ module.exports = {
 			VIEW_CHANNEL: true
 		});
 
-		const welcomeMessage = await channel.send(`Tack för att du öppnade en biljett! <@&812348382810210314>`);
+		const welcomeMessage = await channel.send(`Tack för att du öppnade en ticket! <@` + message.author.id + `> ! <@&812348382810210314> kommer svara inom kort!`);
 		await welcomeMessage.react("🔒");
 		await welcomeMessage.react("🔓");
 		await welcomeMessage.react("⛔");
@@ -51,7 +53,8 @@ module.exports = {
 		})
 
 		message.channel.send(`Vi har skapat en kanal för dig! ${channel}`).then((msg) => {
-			setTimeout(() => msg.delete(), 7500);
+			setTimeout(() => message.delete(), 2500);
+			setTimeout(() => msg.delete(), 5000);
 		});
 	}
 }
