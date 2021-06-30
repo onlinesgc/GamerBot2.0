@@ -40,6 +40,10 @@ module.exports = {
 		//Generate image
 		let TimeOut = "";
 		let Xp = "";
+		if(profileData.profileFrame == undefined){
+			profileData.profileFrame = 0;
+			await profileData.save()
+		}
 		if ((!configData.xp.xpHidden) || (override)) {
 			Xp += "XP: " + profileData.xp;
 		}
@@ -48,10 +52,10 @@ module.exports = {
 		}
 		let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
 		if(!options){
-			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({format:"png"}), message.author.username)]});
+			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({format:"png"}), message.author.username,profileData.profileFrame) ]});
 		}
 		else{
-			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({format:"png"}), member.user.username)]});
+			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({format:"png"}), member.user.username,profileData.profileFrame)]});
 		}
 		}
 	}

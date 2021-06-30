@@ -7,12 +7,13 @@ const profileSchema = new mongoose.Schema({
 	lastMessageTimestamp: { type: Number },
 	xpTimeoutUntil: { type: Number },
 	level: { type: Number },
-	colorHexCode: {type: String}
+	colorHexCode: {type: String},
+	profileFrame: {type: String}
 });
 
 const model = mongoose.model("ProfileModels", profileSchema);
 
-const fetchProfile = async (userID, serverID, lastMessageTimestamp = null, xpTimeoutUntil = null, colorHexCode = "#787C75") => {
+const fetchProfile = async (userID, serverID, lastMessageTimestamp = null, xpTimeoutUntil = null, colorHexCode = "#787C75", profileFrame = 0) => {
 	let profileData = await model.findOne({ userID: userID });
 	if (!profileData) {
 		profileData = await model.create({
@@ -22,7 +23,8 @@ const fetchProfile = async (userID, serverID, lastMessageTimestamp = null, xpTim
 			lastMessageTimestamp: lastMessageTimestamp,
 			xpTimeoutUntil: xpTimeoutUntil,
 			level: 1,
-			colorHexCode: colorHexCode
+			colorHexCode: colorHexCode,
+			profileFrame : profileFrame
 		});
 		await profileData.save();
 	}

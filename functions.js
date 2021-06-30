@@ -177,7 +177,7 @@ module.exports = {
 			return channel;
 		}
 	},
-	async getProfilePotho(profileData,TimeOut,Xp,xpPercentage,iconUrl,username){
+	async getProfilePotho(profileData,TimeOut,Xp,xpPercentage,iconUrl,username,ProfileFrame){
 		const {createCanvas, loadImage, registerFont} = require("canvas");
 		var whidth = 500;
         var hight = 800;
@@ -216,7 +216,7 @@ module.exports = {
 		ProfileOptions.font = "normal 20pt Hard_Compound";
 		if(Xp != "") ProfileOptions.fillText(Xp,(whidth/2),700);
 		if(TimeOut != "") ProfileOptions.fillText(TimeOut,(whidth/2) ,730);
-		await loadImage("./canvas/BackrundsFrame.png").then(img =>{
+		await loadImage(`./canvas/Backrounds/BackrundsFrame${ProfileFrame}.png`).then(img =>{
             ProfileOptions.drawImage(img,0,0,whidth,hight);
         })
         return Profile.toBuffer("image/png");
