@@ -201,18 +201,18 @@ module.exports = {
         ProfileOptions.fillStyle = "#fff"
         ProfileOptions.fillText(username,(whidth/2), 400)
 		ProfileOptions.font = "normal 40pt Hard_Compound"
-		ProfileOptions.fillText(`Level: ${profileData.level-1}`,(whidth/2),500);
+		ProfileOptions.fillText(`Level: ${profileData.level-1}`,(whidth/2),470);
 		//ProfileOptions.font = "normal 30pt sans"
 		//ProfileOptions.fillText(`Progress:\n${progressBar} ${xpPercentage}%`,(whidth/2),630);
 		var multiplier = 3.5;
 		var fildBar = 100 * multiplier;
 		var Bar = xpPercentage * multiplier;
 		ProfileOptions.fillStyle = "#898C87"
-		ProfileOptions.fillRect(70,550,fildBar,40);
+		ProfileOptions.fillRect(70,500,fildBar,40);
 		ProfileOptions.fillStyle = "#fff"
-		ProfileOptions.fillRect(70,550,Bar,40);
+		ProfileOptions.fillRect(70,500,Bar,40);
 		ProfileOptions.font = "normal 40pt Hard_Compound";
-		ProfileOptions.fillText(`${xpPercentage}%`,(whidth/2),645);
+		ProfileOptions.fillText(`${xpPercentage}%`,(whidth/2),600);
 		ProfileOptions.font = "normal 20pt Hard_Compound";
 		if(Xp != "") ProfileOptions.fillText(Xp,(whidth/2),700);
 		if(TimeOut != "") ProfileOptions.fillText(TimeOut,(whidth/2) ,730);

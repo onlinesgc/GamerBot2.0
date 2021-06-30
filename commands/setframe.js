@@ -11,13 +11,16 @@ module.exports = {
 		let frames = [//https://imgur.com/a/gfa7osM 
 			"https://i.imgur.com/zVxJiz4.png",
 			"https://i.imgur.com/T81IkJA.png",//temp
-			"https://i.imgur.com/8ksQiru.png"//temp 
+			"https://i.imgur.com/8ksQiru.png",//temp 
+			"https://i.imgur.com/S1RqlFR.png"//temp
 		]//the frames. It needs to be a link so they are upploaded to imgur.
 		let index = 0; //local index
 		let TimeOut, Xp, xpPercentage = 0;
 		let embed = new discord.MessageEmbed()
-			.setTitle("För att välja ram trycket du på ⏺️")
+			.setTitle("För att välja ram trycker du på ⏺️")
 			.setImage(frames[index])
+			.setAuthor(message.member.user.username)
+			.setFooter(`${index +1}/${frames.length}`)
 		var Photo = await message.channel.send(embed)
 		await Photo.react("◀️");
 		await Photo.react("⏺️");
@@ -36,8 +39,10 @@ module.exports = {
 				index++;
 			}
 			let embed = new discord.MessageEmbed()
-			.setTitle("För att välja ram trycket du på ⏺️")
-			.setImage(frames[index])
+				.setTitle("För att välja ram trycket du på ⏺️")
+				.setImage(frames[index])
+				.setAuthor(message.member.user.username)
+				.setFooter(`${index+1}/${frames.length}`)
 			Photo.edit(embed)
 			if(reaction.emoji.name == "⏺️"){
 				profileData.profileFrame = index;
@@ -45,6 +50,7 @@ module.exports = {
 				collector.stop();
 				let embed = new discord.MessageEmbed()
 					.setTitle("Du har nu ändradt din ram")
+					.setAuthor(message.member.user.username)
 				Photo.edit(embed);
 				Photo.reactions.removeAll()
 			}
