@@ -14,6 +14,6 @@ module.exports = {
 			.addFields(
 				{ name: "Repo", value: "Om du vill hjälpa till att utveckla mig finns källkoden tillgänglig [här](https://github.com/stamdiscord/GamerBot2.0)!"}
 			)
-		message.channel.send(embed);
+		message.channel.send({embeds:[embed]});
 	}
 }

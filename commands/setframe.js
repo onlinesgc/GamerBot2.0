@@ -21,21 +21,35 @@ module.exports = {
 			.setImage(frames[index])
 			.setAuthor(message.member.user.username)
 			.setFooter(`${index +1}/${frames.length}`)
-		var Photo = await message.channel.send({embeds:[embed]})
-		await Photo.react("◀️");
-		await Photo.react("⏺️");
-		await Photo.react("▶️");
-		let filter = (reaction, user) =>{ 
-			return (reaction, user)
+		const row = new discord.MessageActionRow()
+			.addComponents(
+				[
+					new discord.MessageButton()
+						.setStyle("SECONDARY")
+						.setEmoji("◀️")
+						.setCustomId("left"),
+					new discord.MessageButton()
+						.setStyle("SECONDARY")
+						.setEmoji("⏺️")
+						.setCustomId("pick"),
+					new discord.MessageButton()
+						.setStyle("SECONDARY")
+						.setEmoji("▶️")
+						.setCustomId("right"),
+				]
+			);
+		var Photo = await message.channel.send({embeds:[embed], components:[row] })
+		let filter = data =>{ 
+			return data;
 		}
-		const collector = Photo.createReactionCollector(filter,{ dispose: true });
-		collector.on("collect",async (reaction, user)=>{
-			if(user.id != message.member.id) return;
-			reaction.users.remove(user.id);	
-			if(reaction.emoji.name == "◀️" && index != 0){
+		const collector = Photo.createMessageComponentCollector(filter,{ dispose: true });
+		collector.on("collect",async data=>{
+			if(data.user.id != message.member.id) return;
+			data.deferUpdate()
+			if(data.customId == "left" && index != 0){
 				index--;
 			}
-			if(reaction.emoji.name == "▶️" && index != frames.length -1){
+			if(data.customId == "right" && index != frames.length -1){
 				index++;
 			}
 			let embed = new discord.MessageEmbed()
@@ -44,14 +58,15 @@ module.exports = {
 				.setAuthor(message.member.user.username)
 				.setFooter(`${index+1}/${frames.length}`)
 			Photo.edit({embeds:[embed]})
-			if(reaction.emoji.name == "⏺️"){
+			if(data.customId == "pick"){
 				profileData.profileFrame = index;
 				profileData.save();
+				await row.components.map(e => e.setDisabled(true))
 				collector.stop();
 				let embed = new discord.MessageEmbed()
 					.setTitle("Du har nu ändradt din ram")
 					.setAuthor(message.member.user.username)
-				Photo.edit({embeds:[embed]});
+				Photo.edit({embeds:[embed] , components:[row]});
 				Photo.reactions.removeAll()
 			}
 		})
