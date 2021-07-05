@@ -13,11 +13,11 @@ module.exports = {
 			channel.setParent("822548929052409896");
 		}
 
-		channel.updateOverwrite(message.guild.id, {
+		channel.permissionOverwrites.edit(message.guild.id, {
 			SEND_MESSAGES: false,
 			VIEW_CHANNEL: false
 		});
-		channel.updateOverwrite(message.author, {
+		channel.permissionOverwrites.edit(message.author, {
 			SEND_MESSAGES: true,
 			VIEW_CHANNEL: true
 		});
@@ -34,13 +34,13 @@ module.exports = {
 		collector.on("collect", (reaction, user) => {
 			switch (reaction.emoji.name) {
 				case "🔒":
-					channel.updateOverwrite(message.author, {
+					channel.permissionOverwrites.edit(message.author, {
 						SEND_MESSAGES: false
 					});
 					channel.send("Den här kanalen har blivit låst!");
 					break;
 				case "🔓":
-					channel.updateOverwrite(message.author, {
+					channel.permissionOverwrites.edit(message.author, {
 						SEND_MESSAGES: true
 					});
 					channel.send("Den här kanalen är nu upplåst igen!");

@@ -5,7 +5,7 @@ module.exports = {
 	usage: [],
 	perms: ["adminCmd"],
 	async do(message, args, profileData) {
-		message.channel.updateOverwrite(message.guild.id, {
+		message.channel.permissionOverwrites.edit(message.guild.id, {
 			VIEW_CHANNEL: false
 		});
 

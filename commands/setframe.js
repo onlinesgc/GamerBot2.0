@@ -21,7 +21,7 @@ module.exports = {
 			.setImage(frames[index])
 			.setAuthor(message.member.user.username)
 			.setFooter(`${index +1}/${frames.length}`)
-		var Photo = await message.channel.send(embed)
+		var Photo = await message.channel.send({embeds:[embed]})
 		await Photo.react("◀️");
 		await Photo.react("⏺️");
 		await Photo.react("▶️");
@@ -43,7 +43,7 @@ module.exports = {
 				.setImage(frames[index])
 				.setAuthor(message.member.user.username)
 				.setFooter(`${index+1}/${frames.length}`)
-			Photo.edit(embed)
+			Photo.edit({embeds:[embed]})
 			if(reaction.emoji.name == "⏺️"){
 				profileData.profileFrame = index;
 				profileData.save();
@@ -51,7 +51,7 @@ module.exports = {
 				let embed = new discord.MessageEmbed()
 					.setTitle("Du har nu ändradt din ram")
 					.setAuthor(message.member.user.username)
-				Photo.edit(embed);
+				Photo.edit({embeds:[embed]});
 				Photo.reactions.removeAll()
 			}
 		})

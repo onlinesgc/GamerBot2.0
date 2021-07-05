@@ -51,7 +51,7 @@ module.exports = {
 					profile_data.xp = args[index + 1];
 					fields.push({
 						name: "XP",
-						value: `Sätt ${member}'s xp till ${profile_data.xp}!`
+						value: `Sätt ${member}'s xp till ${profile_data.xp.toString()}!`
 					});
 				}
 				completedOperations.push("-x")
@@ -68,7 +68,7 @@ module.exports = {
 					profile_data.xpTimeoutUntil = message.createdTimestamp + ms(args[index + 1]);
 					fields.push({
 						name: "XP Timeout",
-						value: `Sätt ${member}'s xp timeout till ${profile_data.xpTimeoutUntil}!`
+						value: `Sätt ${member}'s xp timeout till ${profile_data.xpTimeoutUntil.toString()}!`
 					});
 				}
 				completedOperations.push("-t")
@@ -112,7 +112,7 @@ module.exports = {
 					profile_data.xp = 0;
 					fields.push({
 						name: "Level",
-						value: `Sätt ${member}'s level till ${profile_data.level - 1}!`
+						value: `Sätt ${member}'s level till ${(profile_data.level - 1).toString()}!`
 					});
 				}
 				completedOperations.push("-l")
@@ -134,6 +134,6 @@ module.exports = {
 			.addFields(
 				fields
 			)
-		message.channel.send(embed);
+		message.channel.send({embeds:[embed]});
 	}
 }

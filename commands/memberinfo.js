@@ -18,7 +18,7 @@ module.exports = {
 		//Parse input .memberinfo -o or .memberinfo <argument> -o
 		if (args[0] === "-o") {
 			profileData = await profileModel.fetchProfileFromMessage(message);
-			if (message.member.hasPermission("ADMINISTRATOR")) {
+			if (message.member.permissions.has("ADMINISTRATOR")) {
 				override = true;
 			}
 		
@@ -31,7 +31,7 @@ module.exports = {
 			}
 			profileData = await profileModel.fetchProfile(member.id, message.guild.id);
 			options = true;
-			if ((args[1] === "-o") && (message.member.hasPermission("ADMINISTRATOR"))) {
+			if ((args[1] === "-o") && (message.member.permissions.has("ADMINISTRATOR"))) {
 				override = true;
 			}
 
