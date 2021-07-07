@@ -15,7 +15,7 @@ module.exports = {
 	let currentTime = new Date().getTime();
 	let restartTime = new Date(currentTime - message.client.uptime);
 	
-	    const embed = new Discord.MessageEmbed()
+		const embed = new Discord.MessageEmbed()
 			.setColor("#0099ff")
 			.setTitle("Uptime")
 			.setDescription("Här kommer upptiden för botten!")
