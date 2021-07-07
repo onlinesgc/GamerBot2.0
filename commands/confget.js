@@ -3,12 +3,12 @@ const Discord = require('discord.js');
 const {SlashCommandBuilder} = require("@discordjs/builders")
 
 module.exports = {
-    name: "confget",
-    aliases: ["configget", "getconf"],
-    description: "Skicka värdet av config-variabler.",
-    usage: [
-	    "confget",
-	    "confget <variable>"
+	name: "confget",
+	aliases: ["configget", "getconf"],
+	description: "Skicka värdet av config-variabler.",
+	usage: [
+		"confget",
+		"confget <variable>"
 	],
     perms: ["adminCmd"],
 	data: new SlashCommandBuilder()
@@ -62,5 +62,4 @@ module.exports = {
 	    if(!isInteraction) return message.channel.send({embeds:[embed]});
 		else return message.reply({embeds:[embed]});
 	}
-    }
 }
