@@ -3,6 +3,7 @@ const discord = require("discord.js");
 module.exports = {
     name: "ticket",
     aliases: [],
+	description: "Skappar en hjälp kanal",
     usage: ["Skriv .ticket i #ticket kanalen för att skapa en ticket!\n\nTickets är det bästa sättet att få moderatorernas uppmärksamhet för att få hjälp samt att anmäla dåligt beteende hos någon servermedlem. Det är också ett bra sätt att påpeka problem eller önskemål med servern!"],
     perms: [],
 	async do(message, args, profileData) {
