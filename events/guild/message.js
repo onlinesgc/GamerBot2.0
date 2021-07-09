@@ -118,7 +118,7 @@ module.exports = async (message, client) => {
 			const xpAmount = Math.floor(Math.random() * 3) + 1;
 			profileData.xp += xpAmount;
 			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);
-			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent)) {
+			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) || (profileData.level > 30 && profileData.xp > 999)) {
 				profileData.level++;
 
 			    //Adding new roles if required
