@@ -9,7 +9,7 @@ module.exports = {
 	async do(message, args, profileData) {
 		const embed = new Discord.MessageEmbed()
 			.setColor("#0099ff")
-			.setTitle(`Serverinfo - ${message.guild.name}`)
+			.setTitle(`Serverinfo`)
 			.setImage(message.guild.iconURL())
 			.addFields(
 				{ name: "Medlemmar", value: `\`${message.guild.memberCount}\`` },
