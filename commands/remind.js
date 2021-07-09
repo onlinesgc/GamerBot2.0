@@ -4,7 +4,7 @@ const ms = require("ms");
 module.exports = {
 	name: "remind",
 	aliases: ["remindme"],
-	description: "Ställ in en påminnelse!",
+	description: "Ställ in en påminnelse! Tid anges såhär: 7d, 24h, 5m etc.",
 	usage: ["remind <time> <message>"],
 	perms: [],
 	async do(message, args, profileData) {
