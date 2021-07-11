@@ -15,7 +15,7 @@ module.exports = {
 				{ name: "Medlemmar", value: `\`${message.guild.memberCount}\`` },
 				{ name: "Status", value: `
 					🟢 \`${message.guild.members.cache.filter(m => m.presence.status === "online").size}\` medlemmar är online!
-					🕓 \`${message.guild.members.cache.filter(m => m.presence.status === "online" && m.hasPermission("ADMINISTRATOR") && !m.user.bot).size}\` admins är tillgängliga!
+					🕓 \`${message.guild.members.cache.filter(m => m.presence.status === "online" && m.permissions.has("ADMINISTRATOR") && !m.user.bot).size}\` admins är tillgängliga!
 
 					🔴 \`${message.guild.members.cache.filter(m => m.presence.status === "offline").size}\` personer är offline.
 				`}

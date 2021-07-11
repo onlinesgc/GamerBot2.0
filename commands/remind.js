@@ -41,7 +41,7 @@ module.exports = {
 				.setColor("#f54242")
 				.setTitle(`Påminnelse`)
 				.setDescription(msg)
-			message.author.send(embed)
+			message.author.send({embeds:[embed]})
 		}, timeout)
 	}
 }
