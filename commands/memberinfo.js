@@ -18,7 +18,7 @@ module.exports = {
 		//Parse input .memberinfo -o or .memberinfo <argument> -o
 		if (args[0] === "-o") {
 			profileData = await profileModel.fetchProfileFromMessage(message);
-			if (message.member.hasPermission("ADMINISTRATOR")) {
+			if (message.member.permissions.has("ADMINISTRATOR")) {
 				override = true;
 			}
 		
@@ -31,7 +31,7 @@ module.exports = {
 			}
 			profileData = await profileModel.fetchProfile(member.id, message.guild.id);
 			options = true;
-			if ((args[1] === "-o") && (message.member.hasPermission("ADMINISTRATOR"))) {
+			if ((args[1] === "-o") && (message.member.permissions.has("ADMINISTRATOR"))) {
 				override = true;
 			}
 
@@ -40,6 +40,10 @@ module.exports = {
 		//Generate image
 		let TimeOut = "";
 		let Xp = "";
+		if(profileData.profileFrame == undefined){
+			profileData.profileFrame = 0;
+			await profileData.save()
+		}
 		if ((!configData.xp.xpHidden) || (override)) {
 			Xp += "XP: " + profileData.xp;
 		}
@@ -48,10 +52,10 @@ module.exports = {
 		}
 		let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
 		if(!options){
-			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({format:"png"}), message.author.username)]});
+			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({format:"png"}), message.author.username,profileData.profileFrame) ]});
 		}
 		else{
-			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({format:"png"}), member.user.username)]});
+			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({format:"png"}), member.user.username,profileData.profileFrame)]});
 		}
 		}
 	}

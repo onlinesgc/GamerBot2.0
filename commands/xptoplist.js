@@ -17,8 +17,8 @@ module.exports = {
 			for (profile of profiles.slice(startPointer, startPointer + userCount)) {
 				const user = await message.client.users.fetch(profile.userID);
 				fields.push({
-					name: startPointer + n, value: `
-					Användare: ${user}
+					name: (startPointer + n).toString(), value: `
+					Användare: ${user.toString()}
 					Level: \`${profile.level - 1}\`
 				`});
 				n++;
@@ -38,7 +38,7 @@ module.exports = {
 		}
 
 		//Sort profiles in the right order
-		const profiles = await profileModel.fetchAll({ serverID: message.guild.id });
+		const profiles = await profileModel.fetchAll({ serverID: "516605157795037185" });
 		profiles.sort((a, b) => {
 			return b.xp - a.xp;
 		});
@@ -55,26 +55,36 @@ module.exports = {
 				fields
 			)
 			.setTimestamp()
-		let msg = await message.channel.send(embed);
-		await msg.react("⬅️");
-		await msg.react("➡️");
+		const row = new Discord.MessageActionRow()
+			.addComponents(
+				[
+					new Discord.MessageButton()
+						.setStyle("SECONDARY")
+						.setEmoji("⬅️")
+						.setCustomId("left"),
+					new Discord.MessageButton()
+						.setStyle("SECONDARY")
+						.setEmoji("➡️")
+						.setCustomId("right"),
+				]
+			);
+		let msg = await message.channel.send({embeds:[embed], components:[row]});
 
 		//Create a collector for page selecting
-		const filter = (reaction, user) => {
+		const filter = data => {
 			return true;
 		};
-		const collector = msg.createReactionCollector(filter);
+		const collector = msg.createMessageComponentCollector(filter);
 
 		//Collector reaction event
-		collector.on("collect", async (reaction, user) => {
-			reaction.users.remove(user.id);		//Remove reaction
-			switch (reaction.emoji.name) {
-				case "⬅️":
+		collector.on("collect", async data => {
+			switch (data.customId) {
+				case "left":
 					if (startPointer > 0) {
 						startPointer -= userCount;
 					}
 					break;
-				case "➡️":
+				case "right":
 					startPointer += userCount;
 					break;
 			}
@@ -86,7 +96,8 @@ module.exports = {
 					fields
 				)
 				.setTimestamp()
-			msg.edit(embed);
+			msg.edit({embeds:[embed], components:[row]});
+			data.deferUpdate()
 		});
 
 	}

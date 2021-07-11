@@ -20,6 +20,6 @@ module.exports = {
 					🔴 \`${message.guild.members.cache.filter(m => m.presence.status === "offline").size}\` personer är offline.
 				`}
 			)
-		message.channel.send(embed);
+		message.channel.send({embeds:[embed]});
 	}
 }
