@@ -9,7 +9,16 @@ module.exports = {
 	perms: ["trustedCmd"],
 	async do(message, args, profileData) {
 		let frames = [//https://imgur.com/a/gfa7osM 
-			"https://i.imgur.com/zVxJiz4.png"
+			"https://i.imgur.com/zVxJiz4.png", //orginal
+			"https://i.imgur.com/fI1bZ3W.png", //Vrile64
+			"https://i.imgur.com/Gwtlbi8.png",//arre
+			"https://i.imgur.com/WpjMGG0.png", //snizard
+			"https://i.imgur.com/6qMlNKs.png", //lukasabbe
+			"https://i.imgur.com/cYBWxKF.png",//Renen
+			"https://i.imgur.com/j9nCDqr.png",//snizard
+			"https://i.imgur.com/CQyzVpV.png",//snizard
+			"https://i.imgur.com/pUTFUAM.png",//snizard
+			"https://i.imgur.com/VvUSM3M.png"//pixi
 		]//the frames. It needs to be a link so they are upploaded to imgur.
 		let index = 0; //local index
 		let TimeOut, Xp, xpPercentage = 0;
