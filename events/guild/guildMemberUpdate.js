@@ -1,8 +1,15 @@
+const configModel = require("../../models/configSchema");
 module.exports = async ( oldMember, newMember, client) => {
     let supportRoles = ["864797910914695168","864799262625759232"]
     let megaSuportRole = "864800059840004107"
     let b = 0;
     let t = 0;
+    let configdata = await configModel.fetchConfig(process.env.config_id);
+    if(configdata.sendSupporterMessages == undefined){
+        configdata.sendSupporterMessages = false;
+        configdata.save(); 
+    }
+    if(!configdata.sendSupporterMessages) return
     newMember.roles.cache.forEach(async e =>{
         await supportRoles.forEach(e2 =>{
             if(e2 == e.id){
