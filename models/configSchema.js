@@ -9,6 +9,7 @@ const configSchema = new mongoose.Schema({
 	activityType: { type: String },
 	removeLinks: false,
 	latestVideoId : [""],
+	NotisSystemOn: false,
 	latestLiveStreamId : "",
 	NotisChannels: {type: Array, default: {
 		id:"UCOZr_fd45CDuyqQEPQZaqMA",

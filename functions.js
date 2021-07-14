@@ -108,6 +108,7 @@ module.exports = {
 		
 		client.setInterval(async function(){ 
 			var configData = await configModel.fetchConfig(process.env.config_id);
+			if(!configData.NotisSystemOn) return
 			var vids = [];
 			for(let i = 0 ; i < configData.NotisChannels.length; i++){
 				await executeGoogle.getdad(configData.NotisChannels[i].id,async function(err, data){
