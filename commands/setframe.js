@@ -6,7 +6,7 @@ module.exports = {
 	aliases: ["setram","ram","frame"],
 	description: "Med deta kommand så kan du ändra din ram",
 	usage: [],
-	perms: ["trustedCmd"],
+	perms: [],
 	async do(message, args, profileData) {
 		let frames = [//https://imgur.com/a/gfa7osM 
 			"https://i.imgur.com/zVxJiz4.png", //orginal
