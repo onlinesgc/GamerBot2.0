@@ -48,23 +48,25 @@ module.exports = {
 			{ dispose: true }
 		);
 		collector.on("collect", data => {
-			switch (data.customId) {
-				case "lock":
-					channel.permissionOverwrites.edit(message.author, {
-						SEND_MESSAGES: false
-					});
-					channel.send("Den här kanalen har blivit låst!");
-					break;
-				case "unlock":
-					channel.permissionOverwrites.edit(message.author, {
-						SEND_MESSAGES: true
-					});
-					channel.send("Den här kanalen är nu upplåst igen!");
-					break;
-				case "close":
-					channel.send("Tar bort kanalen om 5 sekunder...");
-					setTimeout(() => channel.delete(), 5000);
-					break;
+			if(message.guild.members.cache.find((member) => member.id === data.user.id).permissions.has("ADMINISTRATOR")){
+				switch (data.customId) {
+					case "lock":
+						channel.permissionOverwrites.edit(message.author, {
+							SEND_MESSAGES: false
+						});
+						channel.send("Den här kanalen har blivit låst!");
+						break;
+					case "unlock":
+						channel.permissionOverwrites.edit(message.author, {
+							SEND_MESSAGES: true
+						});
+						channel.send("Den här kanalen är nu upplåst igen!");
+						break;
+					case "close":
+						channel.send("Tar bort kanalen om 5 sekunder...");
+						setTimeout(() => channel.delete(), 5000);
+						break;
+				}
 			}
 			data.deferUpdate()
 		})
