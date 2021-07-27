@@ -191,7 +191,7 @@ module.exports = {
 		if(iconUrl != undefined){
 			await loadImage(iconUrl).then(img =>{
 				ProfileOptions.fillStyle = "#5FDA18";
-				ProfileOptions.fillRect((whidth/2)-135,70,270,270)
+				roundRect(ProfileOptions,(whidth/2)-135,70,270,270,20,true)
 				ProfileOptions.fillStyle = profileData.colorHexCode;
 				ProfileOptions.fillRect((whidth/2)-125,80,250,250)
 				ProfileOptions.drawImage(img,(whidth/2) - 125,80,250,250);
@@ -209,9 +209,9 @@ module.exports = {
 		var fildBar = 100 * multiplier;
 		var Bar = xpPercentage * multiplier;
 		ProfileOptions.fillStyle = "#898C87"
-		ProfileOptions.fillRect(70,500,fildBar,40);
+		roundRect(ProfileOptions,70,500,fildBar,40,15, true);
 		ProfileOptions.fillStyle = "#fff"
-		ProfileOptions.fillRect(70,500,Bar,40);
+		roundRect(ProfileOptions,70,500,Bar,40,15, true);
 		ProfileOptions.font = "normal 40pt Hard_Compound";
 		ProfileOptions.fillText(`${xpPercentage}%`,(whidth/2),600);
 		ProfileOptions.font = "normal 20pt Hard_Compound";
@@ -221,5 +221,38 @@ module.exports = {
             ProfileOptions.drawImage(img,0,0,whidth,hight);
         })
         return Profile.toBuffer("image/png");
+		function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+			if (typeof stroke === 'undefined') {
+			  stroke = true;
+			}
+			if (typeof radius === 'undefined') {
+			  radius = 5;
+			}
+			if (typeof radius === 'number') {
+			  radius = {tl: radius, tr: radius, br: radius, bl: radius};
+			} else {
+			  var defaultRadius = {tl: 0, tr: 0, br: 0, bl: 0};
+			  for (var side in defaultRadius) {
+				radius[side] = radius[side] || defaultRadius[side];
+			  }
+			}
+			ctx.beginPath();
+			ctx.moveTo(x + radius.tl, y);
+			ctx.lineTo(x + width - radius.tr, y);
+			ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+			ctx.lineTo(x + width, y + height - radius.br);
+			ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+			ctx.lineTo(x + radius.bl, y + height);
+			ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+			ctx.lineTo(x, y + radius.tl);
+			ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+			ctx.closePath();
+			if (fill) {
+			  ctx.fill();
+			}
+			if (stroke) {
+			  ctx.stroke();
+			}
+		}
 	}
 }
