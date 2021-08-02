@@ -112,9 +112,9 @@ module.exports = {
 			var vids = [];
 			for(let i = 0 ; i < configData.NotisChannels.length; i++){
 				await executeGoogle.getdad(configData.NotisChannels[i].id,async function(err, data){
-					let channelId = await data.feed.url.split("=")[1];
-					let id = await data.items[0].guid.split(":")[2];
-					let title = data.items[0].title;
+					let channelId = await data.feed.id.split(":")[2];
+					let id = await data.feed.entry[0].id.split(":")[2];
+					let title = data.feed.entry[0].title;
 					let ChannelName = data.feed.title;
 					let obj = {
 						id:id,
@@ -130,6 +130,7 @@ module.exports = {
 			setTimeout(async function(){
 				let oldid = configData.latestVideoId;
 				configData.latestVideoId = vids;
+				let uppdatedVid = false;
 				for(let i = 0 ; i < vids.length; i++){
 					if(oldid[i] == undefined) {
 						oldid[i] = {
@@ -139,15 +140,16 @@ module.exports = {
 						}
 					}
 					if(oldid[i].id != vids[i].id){
+						uppdatedVid = true;
 						if(vids[i].mentionChannel == true){
-							client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`)
+							client.guilds.cache.get("813844220694757447").channels.cache.get("816724723739656222").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`)
 						}
 						else{
-							client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]**\n http://www.youtube.com/watch?v=${vids[i].id}`)
+							client.guilds.cache.get("813844220694757447").channels.cache.get("816724723739656222").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]**\n http://www.youtube.com/watch?v=${vids[i].id}`)
 						}
 					}
 				}
-				await configData.save();
+				if(uppdatedVid) await configData.save();
 			}, 5000)
 			var twInfo = await executeTwitch();
 			if(twInfo != null){
@@ -157,14 +159,16 @@ module.exports = {
 					configData.save();
 				}
 			}
-		}, 1000 * 60 * 5);	
+		}, 1000 * 30);	
 		var executeGoogle = (function(){
 			const request = require("request");
+			let xmlparser = require("xml2json");
 			var fun = {}
 			fun.getdad = function(channel,callback){
-				request(`https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.youtube.com%2Ffeeds%2Fvideos.xml%3Fchannel_id%3D${channel}&api_key=${process.env.rss2jsonToken}`,{json:true},(err, res, body) =>{
+				request(`https://www.youtube.com/feeds/videos.xml?channel_id=${channel}`, async function(err, rep, body){
 					if(err) return console.log(err);
-					callback(null,body);
+					body = await xmlparser.toJson(body,{object:true});
+					callback(null,body)
 				})
 			}
 			return fun;
