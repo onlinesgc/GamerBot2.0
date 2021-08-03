@@ -116,7 +116,13 @@ module.exports = async (message, client) => {
 		profileData.lastMessageTimestamp = message.createdTimestamp;
 		if ((profileData.xpTimeoutUntil - message.createdTimestamp < 0) || (!configData.xp.timeoutsEnabled)) {
 			const xpAmount = Math.floor(Math.random() * 3) + 1;
-			profileData.xp += xpAmount;
+
+			if ((profileData.xpboost.stopBoostTimestamp - message.createdTimestamp > 0) || profileData.xpboost.stopBoostTimestamp === -1) {
+				profileData.xp += xpAmount * profileData.xpboost.multiplier;
+			} else {
+				profileData.xp += xpAmount;
+			}
+
 			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);
 			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) || (profileData.level > 30 && profileData.xp > 999)) {
 				profileData.level++;
@@ -124,7 +130,7 @@ module.exports = async (message, client) => {
 			    //Adding new roles if required
 
 			    if(!configData.xp.levels.length) {
-				console.log("There Are no roles in the database for the user to get");
+					console.log("There are no roles in the database for the user to get");
 			    }
 				//Removing old roles
 				configData.xp.levels.forEach(element => {		//Remove all level roles
