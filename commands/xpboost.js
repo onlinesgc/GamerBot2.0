@@ -1,4 +1,5 @@
 const profileModel = require("../models/profileSchema");
+const roleModel = require("../models/roleSchema");
 const functions = require("../functions");
 const Discord = require('discord.js');
 const configModel = require("../models/configSchema");
@@ -6,15 +7,16 @@ const configModel = require("../models/configSchema");
 module.exports = {
 	name: "xpboost",
 	aliases: ["boostxp"],
-	description: "Boosta xp per meddelande för en användare", //Or role
+	description: "Boosta xp per meddelande för en användare eller roll", //Or role
 	usage: [
-		"xpboost {<mentionedUser>|<userID>} <multiplier> <stopBoostDate>"
+		"xpboost {<mentionedUser>|<userID>|<roleID>} <multiplier> <stopBoostDate>"
 	],
 	perms: ["adminCmd"],
 	async do(message, args) {
 
 		let member;
 		let user;
+		let role;
 		if (!args[0]) {
 			return message.channel.send("Du måste ange vilken användare du vill xpboosta.");
 		} else {
@@ -22,11 +24,23 @@ module.exports = {
 				member = message.mentions.members.first();
 				user = message.mentions.users.first();
 			} else {
-				member = await message.guild.members.fetch(args[0]);
-				user = await message.client.users.fetch(args[0]);
+				try {
+					member = await message.guild.members.fetch(args[0]);
+					user = await message.client.users.fetch(args[0]);
+				} catch (err) {													//A role was entered
+					role = await message.guild.roles.fetch(args[0]);
+				}
 			}
 		}
-		let profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
+
+		let profile_data;
+		if (member) {
+			profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
+		} else if (role) {
+			profile_data = await roleModel.fetchRole(role.id);									//Fetch role
+		} else {
+			return message.channel.send(`Det finns ingen användare eller roll med id: \`${args[0]}\``)
+		}
 
 		if (!args[1]) return message.channel.send("Du måste ange hur mycket xp'n ska multipliceras med.");
 		if (!args[2]) return message.channel.send("Du måste ange när xpboosten slutar.");
@@ -52,9 +66,17 @@ module.exports = {
 		profile_data.save();
 
 		if (profile_data.xpboost.stopBoostTimestamp === -1) {
-			message.channel.send(`Varje gång ${member} får xp kommer jag multiplicera det med \`${args[1]}\`. XP-boosten varar tills du stänger av den.`);
+			if (member) {
+				message.channel.send(`Varje gång ${member} får xp kommer jag multiplicera det med \`${args[1]}\`. XP-boosten varar tills du stänger av den.`);
+			} else {
+				message.channel.send(`Varje gång någon i ${role.id} får xp kommer jag multiplicera det med \`${args[1]}\`. XP-boosten varar tills du stänger av den.`);
+			}
 		} else {
-			message.channel.send(`Varje gång ${member} får xp kommer jag multiplicera det med \`${args[1]}\`. XP-boosten slutar den \`${c}\``);
+			if (member) {
+				message.channel.send(`Varje gång ${member} får xp kommer jag multiplicera det med \`${args[1]}\`. XP-boosten slutar den \`${c}\``);
+			} else {
+				message.channel.send(`Varje gång någon i ${role.id} får xp kommer jag multiplicera det med \`${args[1]}\`. XP-boosten slutar den \`${c}\``);
+			}
 		}
 	}
 }
