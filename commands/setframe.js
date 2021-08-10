@@ -21,7 +21,6 @@ module.exports = {
 			"https://i.imgur.com/VvUSM3M.png"//pixi
 		]//the frames. It needs to be a link so they are upploaded to imgur.
 		let index = 0; //local index
-		let TimeOut, Xp, xpPercentage = 0;
 		let embed = new discord.MessageEmbed()
 			.setTitle("För att välja ram trycker du på ⏺️")
 			.setImage(frames[index])
