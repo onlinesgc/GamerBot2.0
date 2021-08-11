@@ -1,10 +1,22 @@
+const configModel = require("../../models/configSchema");
 module.exports = async ( oldMember, newMember, client) => {
-    let supportRoles = []
+    let supportRoles = ["817886647915642930","817887552370901042"];
+    let megaSuportRole = "864800059840004107";
+    let b = 0;
+    let t = 0;
+    let configdata = await configModel.fetchConfig(process.env.config_id);
+    if(configdata.sendSupporterMessages == undefined){
+        configdata.sendSupporterMessages = false;
+        configdata.save(); 
+    }
+    if(!configdata.sendSupporterMessages) return
     newMember.roles.cache.forEach(async e =>{
-        let b = false;
         await supportRoles.forEach(e2 =>{
             if(e2 == e.id){
-                b = true;
+                b++;
+                if(oldMember.roles.cache.get(e.id) == undefined){
+                    newMember.guild.channels.cache.get("816724723739656222").send(`Tack <@${newMember.id}>, för att du har blivit en ${e.name}`);
+                }
             }
         })
     })
