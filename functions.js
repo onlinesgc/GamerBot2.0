@@ -150,7 +150,7 @@ module.exports = {
 					}
 				}
 				if(uppdatedVid) await configData.save();
-			}, 5000)
+			}, 1000 * 40)
 			var twInfo = await executeTwitch();
 			if(twInfo != null){
 				if(twInfo.id != configData.latestLiveStreamId){
