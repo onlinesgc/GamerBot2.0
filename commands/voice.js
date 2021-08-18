@@ -36,14 +36,40 @@ module.exports = {
 				"SPEAK": true,
 				"CONNECT": true
 			});
-			return message.channel.send(`Jag bjöd in ${client.users.cache.get(args[1]).tag} till samtalet.`)
+			return message.channel.send(`Jag bjöd in ${client.users.cache.get(args[1]).tag} till samtalet.`);
 		case "kick":
 			channel.updateOverwrite(args[1], {
 				"VIEW_CHANNEL": false,
 				"SPEAK": false,
 				"CONNECT": false
 			});
-			return message.channel.send(`${client.users.cache.get(args[1]).tag} har inte längre tillgång till samtalet.`)
+			return message.channel.send(`${client.users.cache.get(args[1]).tag} har inte längre tillgång till samtalet.`);
+		case "name":																											//Change name of voice channel
+			channel.setName(args[1]);
+			break;
+		case "lock":																											//Make voice channel private whilst retaining all members
+			channel.updateOverwrite(message.guild.roles.everyone, {
+				"VIEW_CHANNEL": false,
+				"SPEAK": false,
+				"CONNECT": false
+			});
+			break;
+		case "unlock":																											//Make voice channel public
+			channel.updateOverwrite(message.guild.roles.everyone, {
+				"VIEW_CHANNEL": true,
+				"SPEAK": true,
+				"CONNECT": true
+			});
+			break;
+		case "limit":																											//Set user limit
+			let userLimit;
+			if (!args[1]) {
+				userLimit = 0;
+			} else {
+				userLimit = args[1];
+			}
+			channel.setUserLimit(userLimit);
+			break;
 		}
 	}
 }
