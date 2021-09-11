@@ -19,7 +19,7 @@ module.exports = (client) => {
 	  profiles.forEach((profile, i) => {
 		  profile.reminders.forEach(async (reminder, j) => {
 		  	let timeout = reminder.remindTimestamp - Date.now();
-		  	if (timeout > 0) {
+		  	if (timeout > 0 && timeout < 2147483637) {
 		  		setTimeout(() => {
 		  			const embed = new Discord.MessageEmbed()
 			  		.setColor("#f54242")
