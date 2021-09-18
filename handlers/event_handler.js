@@ -7,7 +7,6 @@ module.exports = (client) => {
 		for (const file of event_files) {
 			const event = require(`../events/${dirs}/${file}`);
 			const event_name = file.split(".")[0];
-			console.log(event_name);
 			client.on(event_name, (...args) => event(...args, client));
 		}
 	}

@@ -37,10 +37,14 @@ const fetchProfileFromMessage = async (message) => {
 	return fetchProfile(message.author.id, message.guild.id, message.createdTimestamp, message.createdTimestamp);
 };
 
+const fetchProfileFromInteraction = async (interaction) =>{
+	return fetchProfile(interaction.user.id, interaction.guildId, interaction.createdTimestamp, interaction.createdTimestamp);
+}
+
 const fetchAll = async (filter) => {
 	filter = filter || {};
 	let profiles = model.find(filter);
 	return profiles;
 };
 
-module.exports = { profileModel: model, fetchProfile, fetchProfileFromMessage, fetchAll };
+module.exports = { profileModel: model, fetchProfile, fetchProfileFromMessage, fetchAll , fetchProfileFromInteraction};

@@ -2,6 +2,7 @@ const profileModel = require("../models/profileSchema");
 const functions = require("../functions");
 const Discord = require('discord.js');
 const configModel = require("../models/configSchema");
+const {SlashCommandBuilder} = require("@discordjs/builders")
 
 module.exports = {
     name: "memberinfo",
@@ -9,13 +10,23 @@ module.exports = {
     description: "Get member information for message author, or specified user",
     usage: [],
     perms: [],
-    async do(message, args, profileData) {
+	data: new SlashCommandBuilder()
+		.setName("memberinfo")
+		.setDescription("Get member information for message author, or specified user")
+		.addUserOption((option) =>{
+			return option.setName("user").setDescription("this is if you want to find another user").setRequired(false)
+		})
+		.addBooleanOption((option) =>{
+			return option.setName("options").setDescription("This is a admin command").setRequired(false);
+		}),
+    async do(message, args, profileData,isInteraction) {
 		let member;
 		let configData = await configModel.fetchConfig(process.env.config_id);
 		let override = false;
 		let options = false;
 
 		//Parse input .memberinfo -o or .memberinfo <argument> -o
+		//.Commands
 		if (args[0] === "-o") {
 			profileData = await profileModel.fetchProfileFromMessage(message);
 			if (message.member.permissions.has("ADMINISTRATOR")) {
@@ -36,7 +47,37 @@ module.exports = {
 			}
 
 		}
+		//end of .commands
+		//start whit "/" commands
+		if(message.options != undefined){
+			if(message.options._hoistedOptions[0] != undefined){
 
+				if(message.options._hoistedOptions[0].type == "USER"){
+					member = message.options._hoistedOptions[0].member;
+					profileData = await profileModel.fetchProfile(member.id, message.guild.id);
+					options = true;
+					if(message.options._hoistedOptions[1] != undefined){
+						if(message.options._hoistedOptions[1].type == "BOOLEAN"){
+							if (message.options._hoistedOptions[0].value) {
+								if (message.member.permissions.has("ADMINISTRATOR")) {
+									override = true;
+								}
+							} 
+						}
+					}
+				}
+				if(message.options._hoistedOptions[0].type == "BOOLEAN"){
+					if (message.options._hoistedOptions[0].value) {
+						profileData = await profileModel.fetchProfileFromInteraction(message);
+						if (message.member.permissions.has("ADMINISTRATOR")) {
+							override = true;
+						}
+					
+					} 
+				}
+			}
+			
+		}
 		//Generate image
 		let TimeOut = "";
 		let Xp = "";
@@ -52,10 +93,12 @@ module.exports = {
 		}
 		let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
 		if(!options){
-			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({format:"png"}), message.author.username,profileData.profileFrame) ]});
+			if(isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.member.user.avatarURL({format:"png"}), message.member.user.username,profileData.profileFrame) ]})
+			else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({format:"png"}), message.author.username,profileData.profileFrame) ]});
 		}
 		else{
-			message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({format:"png"}), member.user.username,profileData.profileFrame)]});
+			if(isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({format:"png"}), member.user.username,profileData.profileFrame)]})
+			else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({format:"png"}), member.user.username,profileData.profileFrame)]});
 		}
 		}
 	}
