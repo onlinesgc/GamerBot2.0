@@ -1,5 +1,6 @@
 const functions = require("../functions")
 const discord  = require("discord.js");
+const {SlashCommandBuilder} = require("@discordjs/builders")
 
 module.exports = {
 	name: "setframe",
@@ -7,7 +8,10 @@ module.exports = {
 	description: "Med deta kommand så kan du ändra din ram",
 	usage: [],
 	perms: [],
-	async do(message, args, profileData) {
+	data: new SlashCommandBuilder()
+		.setName("setframe")
+		.setDescription("Med deta kommand så kan du ändra din ram"),
+	async do(message, args, profileData, isInteraction) {
 		let frames = [//https://imgur.com/a/gfa7osM 
 			"https://i.imgur.com/zVxJiz4.png", //orginal
 			"https://i.imgur.com/fI1bZ3W.png", //Vrile64
@@ -43,7 +47,9 @@ module.exports = {
 						.setCustomId("right"),
 				]
 			);
-		var Photo = await message.channel.send({embeds:[embed], components:[row] })
+		var Photo;
+		if(!isInteraction ) Photo = await message.channel.send({embeds:[embed], components:[row]})
+		else Photo = await message.reply({embeds:[embed], components:[row],fetchReply:true})
 		let filter = data =>{ 
 			return data;
 		}
@@ -62,7 +68,8 @@ module.exports = {
 				.setImage(frames[index])
 				.setAuthor(message.member.user.username)
 				.setFooter(`${index+1}/${frames.length}`)
-			Photo.edit({embeds:[embed]})
+			if(!isInteraction ) Photo.edit({embeds:[embed]})
+			else message.editReply({embeds:[embed]})
 			if(data.customId == "pick"){
 				profileData.profileFrame = index;
 				profileData.save();
@@ -71,7 +78,8 @@ module.exports = {
 				let embed = new discord.MessageEmbed()
 					.setTitle("Du har nu ändradt din ram")
 					.setAuthor(message.member.user.username)
-				Photo.edit({embeds:[embed] , components:[row]});
+				if(!isInteraction ) Photo.edit({embeds:[embed] , components:[row]});
+				else message.editReply({embeds:[embed] , components:[row]}) 
 				Photo.reactions.removeAll()
 			}
 		})

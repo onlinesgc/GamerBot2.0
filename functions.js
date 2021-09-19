@@ -204,11 +204,13 @@ module.exports = {
 
 		if(iconUrl != undefined){
 			await loadImage(iconUrl).then(img =>{
-				ProfileOptions.fillStyle = "#5FDA18";
-				roundRect(ProfileOptions,(whidth/2)-135,70,270,270,20,true)
+				ProfileOptions.fillStyle = profileData.colorHexCode;
+				//roundRect(ProfileOptions,(whidth/2)-135,70,270,270,20,true)
+				//ProfileOptions.fillRect((whidth/2)-135,70,270,270,20)
 				ProfileOptions.fillStyle = profileData.colorHexCode;
 				ProfileOptions.fillRect((whidth/2)-125,80,250,250)
 				ProfileOptions.drawImage(img,(whidth/2) - 125,80,250,250);
+				//roundRect(ProfileOptions,(whidth/2)-135,70,270,270,40 ,false, true)
 			})
 		}
         ProfileOptions.font = "bold 50pt Hard_Compound"
@@ -229,11 +231,13 @@ module.exports = {
 		ProfileOptions.font = "normal 40pt Hard_Compound";
 		ProfileOptions.fillText(`${xpPercentage}%`,(whidth/2),600);
 		ProfileOptions.font = "normal 20pt Hard_Compound";
-		if(Xp != "") ProfileOptions.fillText(Xp,(whidth/2),700);
-		if(TimeOut != "") ProfileOptions.fillText(TimeOut,(whidth/2) ,730);
+		
+		if(Xp != "") ProfileOptions.fillText(Xp,(whidth/2),630);
+		if(TimeOut != "") ProfileOptions.fillText(TimeOut,(whidth/2) ,660);
 		await loadImage(`./canvas/Backrounds/BackrundsFrame${ProfileFrame}.png`).then(img =>{
             ProfileOptions.drawImage(img,0,0,whidth,hight);
         })
+		
         return Profile.toBuffer("image/png");
 		function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
 			if (typeof stroke === 'undefined') {

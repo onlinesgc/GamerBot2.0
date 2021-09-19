@@ -1,11 +1,16 @@
+const {SlashCommandBuilder} = require("@discordjs/builders")
 module.exports = {
 	name: "emujoin",
 	aliases: [],
 	description: "Emulate someone joining the guild!",
 	usage: [],
 	perms: ["adminCmd"],
-	async do(message, args, profileData) {
+	data: new SlashCommandBuilder()
+		.setName("emujoin")
+		.setDescription("Emulate someone joining the guild!"),
+	async do(message, args, profileData,isInteraction) {
 		message.client.emit("guildMemberAdd", message.member);
-		message.channel.send("Emulerade att någon anslöt till servern!");
+		if(!isInteraction) message.channel.send("Emulerade att någon anslöt till servern!");
+		else message.reply("Emulerade att någon anslöt till servern!");
 	}
 }

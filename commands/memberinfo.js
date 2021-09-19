@@ -71,13 +71,12 @@ module.exports = {
 						profileData = await profileModel.fetchProfileFromInteraction(message);
 						if (message.member.permissions.has("ADMINISTRATOR")) {
 							override = true;
-						}
-					
+						}		
 					} 
 				}
 			}
-			
 		}
+		//end of slach command 
 		//Generate image
 		let TimeOut = "";
 		let Xp = "";
