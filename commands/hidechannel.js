@@ -1,14 +1,19 @@
+const {SlashCommandBuilder} = require("@discordjs/builders")
 module.exports = {
 	name: "hidechannel",
 	aliases: ["hide"],
 	description: "Göm en kanal.",
 	usage: [],
 	perms: ["adminCmd"],
-	async do(message, args, profileData) {
+	data: new SlashCommandBuilder()
+		.setName("hidechannel")
+		.setDescription("Göm en kanal"),
+	async do(message, args, profileData, isInteraction) {
 		message.channel.permissionOverwrites.edit(message.guild.id, {
 			VIEW_CHANNEL: false
 		});
 
-		message.channel.send("Denna kanal är nu gömd.");
+		if(!isInteraction) message.channel.send("Denna kanal är nu gömd.");
+		else message.reply("Denna kanal är nu gömd.")
 	}
 }
