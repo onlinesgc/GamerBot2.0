@@ -9,7 +9,8 @@ const profileSchema = new mongoose.Schema({
 	level: { type: Number },
 	reminders: { type: Array },
 	colorHexCode: {type: String},
-	profileFrame: {type: String}
+	profileFrame: {type: String},
+	exclusiveFrames: {type: Array}
 });
 
 const model = mongoose.model("ProfileModels", profileSchema);
@@ -26,7 +27,8 @@ const fetchProfile = async (userID, serverID, lastMessageTimestamp = null, xpTim
 			level: 1,
 			reminders: [],
 			colorHexCode: colorHexCode,
-			profileFrame : profileFrame
+			profileFrame : profileFrame,
+			exclusiveFrames: []
 		});
 		await profileData.save();
 	}
