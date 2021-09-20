@@ -2,6 +2,7 @@ const profileModel = require("../models/profileSchema");
 const ms = require("ms");
 const Discord = require('discord.js');
 const configModel = require("../models/configSchema");
+const { SlashCommandBuilder } = require("@discordjs/builders")
 
 module.exports = {
 	name: "setxp",
@@ -16,7 +17,19 @@ module.exports = {
 		"*xpTimeout* mäts som standard i millisekunder från att du skickar detta kommando. Du kan också specificera värdet genom att sätta \`h\`, \`s\`, \`m\` etc. bakom. Exempel:\n\`60s\`, \`8h\` och \`2w\`"
 	],
 	perms: ["adminCmd"],
-	async do(message, args, profileData) {
+	data: new SlashCommandBuilder()
+		.setName("setxp")
+		.setDescription("Sätt xp, xp timeout eller level för en användare!")
+		.addUserOption((option) => {
+			return option.setName("user").setDescription("användaren som du vill sätt xp på").setRequired(true)
+		})
+		.addStringOption((option) => {
+			return option.setName("option").setDescription("sätt en av dessa: -x -t -l").setRequired(true).addChoice("xp", "-x").addChoice("timeout", "-t").addChoice("level", "-l")
+		})
+		.addIntegerOption((option) => {
+			return option.setName("value").setDescription("Du skriver nummret du vill ändra till").setRequired(true)
+		}),
+	async do(message, args, profileData, isInteraction) {
 
 		//Retreive options
 		let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
@@ -24,7 +37,10 @@ module.exports = {
 		let member;
 		let user;
 		if (!args[0]) {
-			return message.channel.send("Du måste ange vilken användare du vill sätta xp'n för.");
+			if (isInteraction) {
+				member = message.options._hoistedOptions[0].member
+			}
+			else return message.channel.send("Du måste ange vilken användare du vill sätta xp'n för.");
 		} else {
 			if (message.mentions.members.first()) {
 				member = message.mentions.members.first();
@@ -33,6 +49,10 @@ module.exports = {
 				member = await message.guild.members.fetch(args[0]);
 				user = await message.client.users.fetch(args[0]);
 			}
+		}
+		if (isInteraction) {
+			args[1] = message.options._hoistedOptions[1].value;
+			args[2] = message.options._hoistedOptions[2].value;
 		}
 		if (!args[1]) return message.channel.send("Du måste ange minst en operation du vill utföra!");
 		let profile_data = await profileModel.fetchProfile(member.id, message.guild.id);		//Fetch profile
@@ -83,27 +103,28 @@ module.exports = {
 					return message.channel.send("Leveln måste vara ett nummer!");
 				} else {
 					profile_data.level = parseInt(args[index + 1]) + 1;
-					
+
 					//Update level
 					configData.xp.levels.forEach(element => {		//Remove all level roles
 						member.roles.remove(message.guild.roles.cache.get(element.id));
 					});
-				    //Adding find correct role
-				    for (let index = 0; index < configData.xp.levels.length; index++) {
-					const role = configData.xp.levels[index];
-					//nextRoleLevel allows for testing within span, and if statement helps in end of list.
-					let nextRoleLevel = 0;
-					if (index === configData.xp.levels.length-1) {
-					    nextRoleLevel = 100000000;
-					} else {
-					    nextRoleLevel = configData.xp.levels[index+1].level;
+					//Adding find correct role
+					for (let index = 0; index < configData.xp.levels.length; index++) {
+						const role = configData.xp.levels[index];
+						//nextRoleLevel allows for testing within span, and if statement helps in end of list.
+						let nextRoleLevel = 0;
+						if (index === configData.xp.levels.length - 1) {
+							nextRoleLevel = 100000000;
+						} else {
+							nextRoleLevel = configData.xp.levels[index + 1].level;
+						}
+						//Actually adding roles
+						if (profile_data.level >= role.level + 1 && profile_data.level < nextRoleLevel + 1) {
+							member.roles.add(message.guild.roles.cache.get(role.id));
+							if (!isInteraction) message.channel.send("Added role: " + message.guild.roles.cache.get(role.id).name + ". To member: " + member.user.username);
+							else message.reply("Added role: " + message.guild.roles.cache.get(role.id).name + ". To member: " + member.user.username);
+						}
 					}
-					//Actually adding roles
-					if (profile_data.level >= role.level+1 && profile_data.level < nextRoleLevel+1) {
-					    member.roles.add(message.guild.roles.cache.get(role.id));
-					    message.channel.send("Added role: " + message.guild.roles.cache.get(role.id).name + ". To member: " + member.user.username);
-					}
-				    }
 					// member.roles.add(message.guild.roles.cache.get(configData.xp.levels[profile_data.level - 2])).catch((err) => {
 					// 	console.log(`Failed to add level role to user: ${member.user.tag}. He/She is at level ${profile_data.level - 1}`);
 					// 	console.log(`Errormessage: ${err}`);
@@ -127,13 +148,14 @@ module.exports = {
 			}
 		}
 		await profile_data.save()
-		
+
 		const embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
 			.setTitle(`Set xp`)
 			.addFields(
 				fields
 			)
-		message.channel.send({embeds:[embed]});
+		if (!isInteraction) message.channel.send({ embeds: [embed] });
+		else message.reply({ embeds: [embed] });
 	}
 }

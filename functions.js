@@ -222,12 +222,12 @@ module.exports = {
 		//ProfileOptions.font = "normal 30pt sans"
 		//ProfileOptions.fillText(`Progress:\n${progressBar} ${xpPercentage}%`,(whidth/2),630);
 		var multiplier = 3.5;
-		var fildBar = 100 * multiplier;
-		var Bar = xpPercentage * multiplier;
+		var fildBar = 100 * multiplier + 10;
+		var Bar = xpPercentage * multiplier +10;
 		ProfileOptions.fillStyle = "#898C87"
-		roundRect(ProfileOptions,70,500,fildBar,40,15, true);
+		roundRect(ProfileOptions,65,500,fildBar,40,15, true);
 		ProfileOptions.fillStyle = "#fff"
-		roundRect(ProfileOptions,70,500,Bar,40,15, true);
+		roundRect(ProfileOptions,65,500,Bar,40,15, true);
 		ProfileOptions.font = "normal 40pt Hard_Compound";
 		ProfileOptions.fillText(`${xpPercentage}%`,(whidth/2),600);
 		ProfileOptions.font = "normal 20pt Hard_Compound";

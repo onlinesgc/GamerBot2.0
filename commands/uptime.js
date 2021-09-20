@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const functions = require("../functions");
+const {SlashCommandBuilder} = require("@discordjs/builders")
 
 module.exports = {
 	name: "uptime",
@@ -7,7 +8,10 @@ module.exports = {
 	description: "Få information om hur länge botten har varit uppe sedan senaste omstart och när den startades om",
 	usage: [],
 	perms: [],
-    async do(message, args, profileData) {
+	data: new SlashCommandBuilder()
+		.setName("uptime")
+		.setDescription("Få information om hur länge botten har varit uppe sedan senaste omstart och när den startades om"),
+    async do(message, args, profileData,isInteraction) {
 	let currentTime = new Date().getTime();
 	let restartTime = new Date(currentTime - message.client.uptime);
 	
@@ -22,6 +26,7 @@ module.exports = {
 			    { name: "Omstart skedde vid:", value: restartTime.toLocaleDateString().toString() + " " + restartTime.toLocaleTimeString().toString() }
 			)
 			.setTimestamp()
-		message.channel.send({embeds:[embed]});
+		if(!isInteraction) message.channel.send({embeds:[embed]});
+		else message.reply({embeds:[embed]})
 	}
 }
