@@ -1,5 +1,6 @@
 const profileModel = require("../models/profileSchema");
 const Discord = require("discord.js");
+const {SlashCommandBuilder} = require("@discordjs/builders")
 
 module.exports = {
 	name: "xptoplist",
@@ -10,12 +11,19 @@ module.exports = {
 		"xptoplist"
 	],
 	perms: [],
-	async do(message, args, profileData) {
+	data: new SlashCommandBuilder()
+		.setName("xptoplist")
+		.setDescription("Se XP-topplistan")
+		.addIntegerOption((option) => {
+			return option.setName("amount").setDescription("Användar mänged").setRequired(false)
+		}),
+	async do(message, args, profileData, isInteraction) {
+
 		async function createUserFields(profiles, startPointer, userCount) {
 			let fields = [];
 			let n = 1;
 			for (profile of profiles.slice(startPointer, startPointer + userCount)) {
-				const user = await message.client.users.fetch(profile.userID);
+				const user = await message.client.users.fetch(profile.userID); //LAG FEST <-----. The thing that lags the xptoplist
 				fields.push({
 					name: (startPointer + n).toString(), value: `
 					Användare: ${user.toString()}
@@ -26,6 +34,9 @@ module.exports = {
 			return fields;
 		}
 
+		if(isInteraction){
+			if(message.options._hoistedOptions[0] != null) args[0] = message.options._hoistedOptions[0].value;	
+		}
 		//Error handling
 		let userCount = 10;
 		let startPointer = 0;
@@ -37,14 +48,7 @@ module.exports = {
 			}
 		}
 
-		//Sort profiles in the right order
 		const profiles = await profileModel.fetchAll({ serverID: "516605157795037185" });
-		profiles.sort((a, b) => {
-			return b.xp - a.xp;
-		});
-		profiles.sort((a, b) => {
-			return b.level - a.level;
-		});
 
 		//Send the first message
 		let fields = await createUserFields(profiles, startPointer, userCount);
@@ -68,7 +72,9 @@ module.exports = {
 						.setCustomId("right"),
 				]
 			);
-		let msg = await message.channel.send({embeds:[embed], components:[row]});
+		let msg;	
+		if(!isInteraction) msg = await message.channel.send({embeds:[embed], components:[row]});
+		else msg = await message.reply( { embeds:[embed], components:[row], fetchReply:true} );
 
 		//Create a collector for page selecting
 		const filter = data => {
@@ -88,7 +94,9 @@ module.exports = {
 					startPointer += userCount;
 					break;
 			}
+			console.log("Start making field");
 			let fields = await createUserFields(profiles, startPointer, userCount);
+			console.log("made field")
 			const embed = new Discord.MessageEmbed()
 				.setColor("#0099ff")
 				.setTitle("XP-topplista")
@@ -96,7 +104,8 @@ module.exports = {
 					fields
 				)
 				.setTimestamp()
-			msg.edit({embeds:[embed], components:[row]});
+			if(!isInteraction) msg.edit({embeds:[embed], components:[row]});
+			else message.editReply({embeds:[embed], components:[row]})
 			data.deferUpdate()
 		});
 

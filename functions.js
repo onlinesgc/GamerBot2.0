@@ -213,6 +213,9 @@ module.exports = {
 				//roundRect(ProfileOptions,(whidth/2)-135,70,270,270,40 ,false, true)
 			})
 		}
+		await loadImage(`./canvas/Backrounds/BackrundsFrame${ProfileFrame}.png`).then(img =>{
+            ProfileOptions.drawImage(img,0,0,whidth,hight);
+        })
         ProfileOptions.font = "bold 50pt Hard_Compound"
         ProfileOptions.textAlign = "center"
         ProfileOptions.fillStyle = "#fff"
@@ -234,9 +237,6 @@ module.exports = {
 		
 		if(Xp != "") ProfileOptions.fillText(Xp,(whidth/2),630);
 		if(TimeOut != "") ProfileOptions.fillText(TimeOut,(whidth/2) ,660);
-		await loadImage(`./canvas/Backrounds/BackrundsFrame${ProfileFrame}.png`).then(img =>{
-            ProfileOptions.drawImage(img,0,0,whidth,hight);
-        })
 		
         return Profile.toBuffer("image/png");
 		function roundRect(ctx, x, y, width, height, radius, fill, stroke) {

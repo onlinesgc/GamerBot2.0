@@ -41,9 +41,9 @@ const fetchProfileFromInteraction = async (interaction) =>{
 	return fetchProfile(interaction.user.id, interaction.guildId, interaction.createdTimestamp, interaction.createdTimestamp);
 }
 
-const fetchAll = async (filter) => {
+const fetchAll = async (filter, maxUsers = 100) => {
 	filter = filter || {};
-	let profiles = model.find(filter);
+	let profiles = model.find(filter).sort({level:-1}).limit(maxUsers);
 	return profiles;
 };
 
