@@ -1,7 +1,7 @@
 const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
 const configModel = require("../../models/configSchema");
-const roleModel = require("../models/roleSchema");
+const roleModel = require("../../models/roleSchema");
 const ms = require('ms');
 
 module.exports = async (message, client) => {
@@ -127,7 +127,7 @@ module.exports = async (message, client) => {
 
 			//Role XP boost
 			const roles = message.member.roles.cache.map(role => role);
-			roles.forEach(role => {
+			roles.forEach(async role => {
 				roleData = await roleModel.fetchRole(role.id);
 				if ((roleData.xpboost.stopBoostTimestamp - message.createdTimestamp > 0) || roleData.xpboost.stopBoostTimestamp === -1) {
 					array.push(xpAmount * roleData.xpboost.multiplier);

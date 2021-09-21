@@ -106,7 +106,7 @@ module.exports = {
 		const {ApiClient, HttpStatusCodeError} = require("twitch");
 		const {ClientCredentialsAuthProvider} = require("twitch-auth");
 		
-		client.setInterval(async function(){ 
+		setInterval(async function(){ 
 			var configData = await configModel.fetchConfig(process.env.config_id);
 			var vids = [];
 			for(let i = 0 ; i < configData.NotisChannels.length; i++){
