@@ -26,7 +26,8 @@ module.exports = {
 		]//the frames. It needs to be a link so they are upploaded to imgur.
 		let exclusiveFrames2 = [
 			{ frameUrl: "https://i.imgur.com/lctjR3N.png", fileID: 10 }, //raze-end winers 10
-			{ frameUrl: "https://i.imgur.com/tT33FbV.png", fileID: 11 } //raze - smörevent 11
+			{ frameUrl: "https://i.imgur.com/tT33FbV.png", fileID: 11 }, //raze - smörevent 11
+			{ frameUrl: "https://i.imgur.com/frcctEf.png", fileID: 12}
 		]
 		if (profileData.exclusiveFrames == undefined) {
 			profileData.exclusiveFrames = [];

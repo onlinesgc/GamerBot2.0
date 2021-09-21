@@ -201,21 +201,20 @@ module.exports = {
         const ProfileOptions = Profile.getContext("2d");
         ProfileOptions.fillStyle = profileData.colorHexCode;
         ProfileOptions.fillRect(0,0,whidth,hight);
-
+		await loadImage(`./canvas/Backrounds/BackrundsFrame${ProfileFrame}.png`).then(img =>{
+            ProfileOptions.drawImage(img,0,0,whidth,hight);
+        })
 		if(iconUrl != undefined){
 			await loadImage(iconUrl).then(img =>{
 				ProfileOptions.fillStyle = profileData.colorHexCode;
 				//roundRect(ProfileOptions,(whidth/2)-135,70,270,270,20,true)
 				//ProfileOptions.fillRect((whidth/2)-135,70,270,270,20)
 				ProfileOptions.fillStyle = profileData.colorHexCode;
-				ProfileOptions.fillRect((whidth/2)-125,80,250,250)
+				//ProfileOptions.fillRect((whidth/2)-125,80,250,250)
 				ProfileOptions.drawImage(img,(whidth/2) - 125,80,250,250);
-				//roundRect(ProfileOptions,(whidth/2)-135,70,270,270,40 ,false, true)
+				//roundRect(ProfileOptions,(whidth/2)-125,80,250,250,40 ,true, true)
 			})
 		}
-		await loadImage(`./canvas/Backrounds/BackrundsFrame${ProfileFrame}.png`).then(img =>{
-            ProfileOptions.drawImage(img,0,0,whidth,hight);
-        })
         ProfileOptions.font = "bold 50pt Hard_Compound"
         ProfileOptions.textAlign = "center"
         ProfileOptions.fillStyle = "#fff"

@@ -15,8 +15,8 @@ module.exports = {
 		.setName("xptoplist")
 		.setDescription("Se XP-topplistan")
 		.addIntegerOption((option) => {
-			return option.setName("amount").setDescription("Användar mänged").setRequired(false)
-		}),
+			return option.setName("amount").setDescription("Användar mängd").setRequired(false)
+	}),
 	async do(message, args, profileData, isInteraction) {
 
 		async function createUserFields(profiles, startPointer, userCount) {
@@ -94,9 +94,7 @@ module.exports = {
 					startPointer += userCount;
 					break;
 			}
-			console.log("Start making field");
 			let fields = await createUserFields(profiles, startPointer, userCount);
-			console.log("made field")
 			const embed = new Discord.MessageEmbed()
 				.setColor("#0099ff")
 				.setTitle("XP-topplista")
