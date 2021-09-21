@@ -8,7 +8,11 @@ const profileSchema = new mongoose.Schema({
 	xpTimeoutUntil: { type: Number },
 	level: { type: Number },
 	reminders: { type: Array },
-	colorHexCode: {type: String}
+	colorHexCode: { type: String },
+	xpboost: { type: Object, default: {
+		multiplier: 1,
+		stopBoostTimestamp: null
+	}}
 });
 
 const model = mongoose.model("ProfileModels", profileSchema);
