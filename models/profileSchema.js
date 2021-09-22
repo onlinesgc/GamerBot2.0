@@ -1,16 +1,19 @@
 const mongoose = require("mongoose");
 
 const profileSchema = new mongoose.Schema({
-	userID: { type: String, require: true, unique: true},
-	serverID: { type: String, require: true },
-	xp: { type: Number, default: 0 },
-	lastMessageTimestamp: { type: Number },
-	xpTimeoutUntil: { type: Number },
-	level: { type: Number },
-	reminders: { type: Array },
-	colorHexCode: {type: String},
-	profileFrame: {type: String},
-	exclusiveFrames: {type: Array}
+    userID: { type: String, require: true, unique: true},
+    serverID: { type: String, require: true },
+    xp: { type: Number, default: 0 },
+    lastMessageTimestamp: { type: Number },
+    xpTimeoutUntil: { type: Number },
+    level: { type: Number },
+    reminders: { type: Array },
+    colorHexCode: { type: String },
+    profileFrame: {type: String},
+    xpboost: { type: Object, default: {
+	    multiplier: 1,
+	    stopBoostTimestamp: null}},
+    exclusiveFrames: {type: Array}
 });
 
 const model = mongoose.model("ProfileModels", profileSchema);
