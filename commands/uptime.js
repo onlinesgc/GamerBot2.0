@@ -17,11 +17,11 @@ module.exports = {
 			.setDescription("Här kommer upptiden för botten!")
 			.setThumbnail(message.client.user.avatarURL())
 			.addFields(
-				{ name: "Tid:", value: functions.msToString(message.client.uptime) },
-			    { name: "Totala millisekunder:", value: message.client.uptime },
-			    { name: "Omstart skedde vid:", value: restartTime.toLocaleDateString() + " " + restartTime.toLocaleTimeString() }
+				{ name: "Tid:", value: functions.msToString(message.client.uptime).toString() },
+			    { name: "Totala millisekunder:", value: message.client.uptime.toString() },
+			    { name: "Omstart skedde vid:", value: restartTime.toLocaleDateString().toString() + " " + restartTime.toLocaleTimeString().toString() }
 			)
 			.setTimestamp()
-		message.channel.send(embed);
+		message.channel.send({embeds:[embed]});
 	}
 }

@@ -7,36 +7,34 @@ const functions = require("../../functions");
 module.exports = (client) => {
 	console.log(`${client.user.username} is online! Hosting ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
 
-	mongoose.set('useCreateIndex', true);
 	mongoose.connect(process.env.mongodb_srv, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
-		useFindAndModify: false
 	}).then(async () => {
 		console.log("Connected to the database!");
     
-		let profiles = await profileModel.fetchAll({ reminders: { $exists: true, $not: { $size: 0 } } });
-		profiles.forEach((profile, i) => {
-			profile.reminders.forEach(async (reminder, j) => {
-				let timeout = reminder.remindTimestamp - Date.now();
-				if (timeout > 0) {
-					setTimeout(() => {
-						const embed = new Discord.MessageEmbed()
-							.setColor("#f54242")
-							.setTitle(`Påminnelse`)
-							.setDescription(reminder.message)
-						client.users.fetch(profile.userID).then(user => {
-							user.send(embed);
-						});
-					}, timeout);
-				} else {
-					profile.reminders.splice(j, 1);		//Remove old reminder
-
-					await profileModel.profileModel.findByIdAndUpdate(profile._id, profile);
-				}
-			});
-		});
-		console.log("Resumed reminders!");
+    let profiles = await profileModel.fetchAll({ reminders: {$exists: true, $not: {$size: 0}} });
+	  profiles.forEach((profile, i) => {
+		  profile.reminders.forEach(async (reminder, j) => {
+		  	let timeout = reminder.remindTimestamp - Date.now();
+		  	if (timeout > 0 && timeout < 2147483637) {
+		  		setTimeout(() => {
+		  			const embed = new Discord.MessageEmbed()
+			  		.setColor("#f54242")
+		  			.setTitle(`Påminnelse`)
+			  		.setDescription(reminder.message)
+			  		client.users.fetch(profile.userID).then(user => {
+			  			user.send(embed);
+			  		});
+			  	}, timeout);
+	  		} else {
+		  		profile.reminders.splice(j, 1);		//Remove old reminder
+				
+			  	await profileModel.profileModel.findByIdAndUpdate(profile._id, profile);
+		  	}
+		  });
+	  });
+	  console.log("Resumed reminders!");
 
 		//Retreive options
 		let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options

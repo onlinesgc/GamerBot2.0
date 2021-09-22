@@ -1,6 +1,6 @@
 module.exports = {
 	name: "setcolor",
-	aliases: ["color"],
+	aliases: ["color","changecolor"],
 	description: "Ändrar färgen av .me backround",
 	usage: [
         `För att ändra din färg skriv .setcolor #"hexkåd"`,

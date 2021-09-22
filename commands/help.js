@@ -8,19 +8,19 @@ module.exports = {
 	perms: [],
 	async do(message, args, profileData) {
 		if (args[0]) {
-			return message.channel.send(getSpecificCmd(message.client, args[0], message));
+			return await message.channel.send({embeds:[getSpecificCmd(message.client, args[0], message)]});
 		} else {
-			return message.channel.send(getAllCmds(message.client, message));
+			return await message.channel.send({embeds:[getAllCmds(message.client, message)]});
 		}
 	}
 }
 
 function getAllCmds(client, message) {
 	let fields = [
-		{ name: "Medlem", value: client.commands.filter(element => !element.perms.includes("adminCmd")).map(cmd => cmd.name) }
+		{ name: "Medlem", value: client.commands.filter(element => !element.perms.includes("adminCmd")).map(cmd => cmd.name).join("\n") }
 	]
-	if (message.member.hasPermission("ADMINISTRATOR")) {
-		fields.push({ name: "Moderator", value: client.commands.filter(element => element.perms.includes("adminCmd")).map(cmd => cmd.name) });
+	if (message.member.permissions.has("ADMINISTRATOR")) {
+		fields.push({ name: "Moderator", value: client.commands.filter(element => element.perms.includes("adminCmd")).map(cmd => cmd.name).join("\n") });
 	}
 	const embed = new Discord.MessageEmbed()
 		.setColor("#f54242")

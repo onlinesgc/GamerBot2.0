@@ -1,32 +1,34 @@
-const Discord = require("discord.js");
+const { Client, Intents, Collection } = require("discord.js");
 const functions = require("./functions");
-require('dotenv').config();
+const dotenv = require('dotenv');
 
-const client = new Discord.Client(
-	{
-		partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
-		intents: [
-			Discord.Intents.FLAGS.GUILDS,
-			Discord.Intents.FLAGS.GUILD_MEMBERS,
-			Discord.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-			Discord.Intents.FLAGS.DIRECT_MESSAGES,
-			Discord.Intents.FLAGS.GUILD_MESSAGES,
-			Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-			Discord.Intents.FLAGS.GUILD_PRESENCES,
-		]
-	}
+const client = new Client(
+    {
+    partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+    intents:[
+	Intents.FLAGS.GUILDS,
+	Intents.FLAGS.GUILD_MEMBERS,
+	Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+	Intents.FLAGS.DIRECT_MESSAGES,
+	Intents.FLAGS.GUILD_MESSAGES,
+	Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+    ]
+    }
 );
+
+dotenv.config();
 const token = process.env.token;
 
-functions.initWebserver(client)		//Start a web server
+functions.initWebserver(client);	//Start a web server
 
-client.commands = new Discord.Collection();
-client.mention_commands = new Discord.Collection();
-client.question_commands = new Discord.Collection();
-client.channel_actions = new Discord.Collection();
-client.reaction_actions = new Discord.Collection();
+client.commands = new Collection();
+client.mention_commands = new Collection();
+client.question_commands = new Collection();
+client.channel_actions = new Collection();
+client.reaction_actions = new Collection();
 
-["command_handler", "event_handler", "mention_handler", "question_handler", "channel_handler", "reaction_handler"].forEach(handler => {
+["command_handler", "event_handler", "mention_handler",
+ "question_handler", "channel_handler", "reaction_handler"].forEach(handler => {
 	require(`./handlers/${handler}.js`)(client);
 });
 

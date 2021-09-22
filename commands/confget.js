@@ -33,7 +33,7 @@ module.exports = {
 		  .addFields(
 		      { name: "Värde:", value: `\`\`\`json\n${JSON.stringify(configDataParsed[args[0]], null, 4)}\`\`\`` }
 		  )
-	    return message.channel.send(embed);
+	    return message.channel.send({embeds:[embed]});
 	} else {
 	    var settingsList = "";
 	    Object.keys(configDataParsed).forEach(setting => {
@@ -48,7 +48,7 @@ module.exports = {
 		      { name: "Konfiguration:", value: settingsList},
 		      { name: "ID:", value: `Den här boten använder konfigurationsdokumentet med id \`${configDataRaw.id}\`.` }
 		  )
-	    return message.channel.send(embed);
+	    return message.channel.send({embeds:[embed]});
 	}
     }
 }

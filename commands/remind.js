@@ -4,7 +4,7 @@ const ms = require("ms");
 module.exports = {
 	name: "remind",
 	aliases: ["remindme"],
-	description: "Ställ in en påminnelse!",
+	description: "Ställ in en påminnelse! Tid anges såhär: 7d, 24h, 5m etc.",
 	usage: ["remind <time> <message>"],
 	perms: [],
 	async do(message, args, profileData) {
@@ -41,7 +41,7 @@ module.exports = {
 				.setColor("#f54242")
 				.setTitle(`Påminnelse`)
 				.setDescription(msg)
-			message.author.send(embed)
+			message.author.send({embeds:[embed]})
 		}, timeout)
 	}
 }

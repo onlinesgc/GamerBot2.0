@@ -7,7 +7,6 @@ const ms = require('ms');
 module.exports = async (message, client) => {
 	if (message.author.bot) return;
 	if (message.channel.type == "dm") return;
-
 	//Remove links
 	await functions.checkForLinks(message);
 
@@ -38,7 +37,7 @@ module.exports = async (message, client) => {
 
 	if (command && message.content.startsWith(prefix)) {
 		if (command.perms.includes("adminCmd")) {
-			if (message.member.hasPermission("ADMINISTRATOR")) {
+			if (message.member.permissions.has("ADMINISTRATOR")) {
 				try {
 					await command.do(message, args, profileData);
 				} catch (err) {
@@ -46,11 +45,11 @@ module.exports = async (message, client) => {
 					message.channel.send("Det har inträffat ett fel med det här kommandot. Se konsolen för mer information!")
 				}
 			} else {
-				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
+				message.channel.send("Du har inte tillåtelse att använda det här kommandot!");
 			}
 		} 
 		else if(command.perms.includes("trustedCmd")){
-		    if(profileData.level >= 11 || message.member.hasPermission("ADMINISTRATOR")){
+		    if(profileData.level >= 11 || message.member.permissions.has("ADMINISTRATOR")){
 				command.do(message, args, profileData)
 			}
 			else{
@@ -67,7 +66,7 @@ module.exports = async (message, client) => {
 		}
 	} else if (mention_command && functions.checkIfMentioned(message)) {
 		if (mention_command.perms.includes("adminCmd")) {
-			if (message.member.hasPermission("ADMINISTRATOR")) {
+			if (message.member.hasPermissiopermissions.has("ADMINISTRATOR")) {
 				mention_command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
@@ -75,7 +74,7 @@ module.exports = async (message, client) => {
 		
 		}
 		else if(mention_command.perms.includes("trustedCmd")){
-		    if(profileData.level >= 11 || message.member.hasPermission("ADMINISTRATOR")){
+		    if(profileData.level >= 11 || message.member.hasPermissiopermissions.has("ADMINISTRATOR")){
 			    mention_command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
@@ -86,7 +85,7 @@ module.exports = async (message, client) => {
 		}
 	} else if (question_command) {
 		if (question_command.perms.includes("adminCmd")) {
-			if (message.member.hasPermission("ADMINISTRATOR")) {
+			if (message.member.hasPermissiopermissions.has("ADMINISTRATOR")) {
 				question_command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
@@ -94,7 +93,7 @@ module.exports = async (message, client) => {
 
 		}
 		else if(question_command.perms.includes("trustedCmd")){
-			if(profileData.level >= 11 || message.member.hasPermission("ADMINISTRATOR")){
+			if(profileData.level >= 11 || message.member.hasPermissiopermissions.has("ADMINISTRATOR")){
 				question_command.do(message, args, profileData)
 			}
 			else{
