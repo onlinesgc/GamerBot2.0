@@ -9,6 +9,6 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
-    target-branch: staging #Branch for manifests and PRs.
+    target-branch: main #Branch for manifests and PRs.
     reviewers:
       - "IsakTheHacker"
