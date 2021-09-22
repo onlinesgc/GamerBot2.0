@@ -4,7 +4,10 @@
   "description": "A bot in Stamsites Discord!",
   "main": "GamerBot2.0.js",
   "dependencies": {
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
     "canvas": "2.8.0",
+    "discord-api-types": "^0.23.1",
     "discord.js": "^13.1.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",

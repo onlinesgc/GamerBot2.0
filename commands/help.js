@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const {SlashCommandBuilder} = require("@discordjs/builders")
 
 module.exports = {
 	name: "help",
@@ -6,11 +7,22 @@ module.exports = {
 	description: "Get help with bot commands!",
 	usage: [],
 	perms: [],
-	async do(message, args, profileData) {
+	data: new SlashCommandBuilder()
+		.setName("help")
+		.setDescription("Get help with bot commands!")
+		.addStringOption((option) =>{
+			return option.setName("specific").setDescription("Specific the use the command by adding it here").setRequired(false)
+		}),
+	async do(message, args, profileData, isInteraction) {
+		if(isInteraction){
+			if(message.options._hoistedOptions[0] != null) args[0] = message.options._hoistedOptions[0].value;	
+		}
 		if (args[0]) {
-			return await message.channel.send({embeds:[getSpecificCmd(message.client, args[0], message)]});
+			if(!isInteraction) return await message.channel.send({embeds:[getSpecificCmd(message.client, args[0], message)]});
+			else return message.reply({embeds:[getSpecificCmd(message.client, args[0], message)]});
 		} else {
-			return await message.channel.send({embeds:[getAllCmds(message.client, message)]});
+			if(!isInteraction) return await message.channel.send({embeds:[getAllCmds(message.client, message)]});
+			else return message.reply({embeds:[getAllCmds(message.client, message)]})
 		}
 	}
 }
@@ -37,7 +49,7 @@ function getSpecificCmd(client, input, message) {
 
 	if (!cmd) {
 		return "Kommandot kunde inte hittas!";
-	} else if (cmd.perms.includes("adminCmd") && !message.member.hasPermission("ADMINISTRATOR")) {
+	} else if (cmd.perms.includes("adminCmd") && !message.member.permissions.has("ADMINISTRATOR")) {
 		return "Du har inte tillåtelse att visa information om hur det här kommandot används.";
 	} else {
 		let aliases = cmd.aliases.join(", ");

@@ -11,8 +11,9 @@ const profileSchema = new mongoose.Schema({
     colorHexCode: { type: String },
     profileFrame: {type: String},
     xpboost: { type: Object, default: {
-	multiplier: 1,
-	stopBoostTimestamp: null}}
+	    multiplier: 1,
+	    stopBoostTimestamp: null}},
+    exclusiveFrames: {type: Array}
 });
 
 const model = mongoose.model("ProfileModels", profileSchema);
@@ -29,7 +30,8 @@ const fetchProfile = async (userID, serverID, lastMessageTimestamp = null, xpTim
 			level: 1,
 			reminders: [],
 			colorHexCode: colorHexCode,
-			profileFrame : profileFrame
+			profileFrame : profileFrame,
+			exclusiveFrames: []
 		});
 		await profileData.save();
 	}
@@ -40,10 +42,14 @@ const fetchProfileFromMessage = async (message) => {
 	return fetchProfile(message.author.id, message.guild.id, message.createdTimestamp, message.createdTimestamp);
 };
 
-const fetchAll = async (filter) => {
+const fetchProfileFromInteraction = async (interaction) =>{
+	return fetchProfile(interaction.user.id, interaction.guildId, interaction.createdTimestamp, interaction.createdTimestamp);
+}
+
+const fetchAll = async (filter, maxUsers = 100) => {
 	filter = filter || {};
-	let profiles = model.find(filter);
+	let profiles = model.find(filter).sort({level:-1}).limit(maxUsers);
 	return profiles;
 };
 
-module.exports = { profileModel: model, fetchProfile, fetchProfileFromMessage, fetchAll };
+module.exports = { profileModel: model, fetchProfile, fetchProfileFromMessage, fetchAll , fetchProfileFromInteraction};
