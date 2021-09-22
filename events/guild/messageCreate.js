@@ -1,6 +1,7 @@
 const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
 const configModel = require("../../models/configSchema");
+const roleModel = require("../../models/roleSchema");
 const ms = require('ms');
 
 module.exports = async (message, client) => {
@@ -115,15 +116,33 @@ module.exports = async (message, client) => {
 		profileData.lastMessageTimestamp = message.createdTimestamp;
 		if ((profileData.xpTimeoutUntil - message.createdTimestamp < 0) || (!configData.xp.timeoutsEnabled)) {
 			const xpAmount = Math.floor(Math.random() * 3) + 1;
-			profileData.xp += xpAmount;
+			let array = [];
+			array.push(xpAmount) //This is used for when there isn't any xpboost that should be applied for this user.
+
+			//Profile XP boost
+			if ((profileData.xpboost.stopBoostTimestamp - message.createdTimestamp > 0) || profileData.xpboost.stopBoostTimestamp === -1) {
+				array.push(xpAmount * profileData.xpboost.multiplier)
+			}
+
+			//Role XP boost
+			const roles = message.member.roles.cache.map(role => role);
+			roles.forEach(async role => {
+				roleData = await roleModel.fetchRole(role.id);
+				if ((roleData.xpboost.stopBoostTimestamp - message.createdTimestamp > 0) || roleData.xpboost.stopBoostTimestamp === -1) {
+					array.push(xpAmount * roleData.xpboost.multiplier);
+				}
+			});
+
+			profileData.xp += Math.max(...array);		//Use the highest xpboost
+
 			profileData.xpTimeoutUntil = message.createdTimestamp + 300000 * xpAmount + functions.getRandomIntRange(-100000, 100000);
-			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent)) {
+			if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) || (profileData.level > 30 && profileData.xp > 999)) {
 				profileData.level++;
 
 			    //Adding new roles if required
 
 			    if(!configData.xp.levels.length) {
-				console.log("There Are no roles in the database for the user to get");
+					console.log("There are no roles in the database for the user to get");
 			    }
 				//Removing old roles
 				configData.xp.levels.forEach(element => {		//Remove all level roles

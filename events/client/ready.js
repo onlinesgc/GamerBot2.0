@@ -7,11 +7,9 @@ const functions = require("../../functions");
 module.exports = (client) => {
 	console.log(`${client.user.username} is online! Hosting ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
 
-	mongoose.set('useCreateIndex', true);
 	mongoose.connect(process.env.mongodb_srv, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
-		useFindAndModify: false
 	}).then(async () => {
 		console.log("Connected to the database!");
     
