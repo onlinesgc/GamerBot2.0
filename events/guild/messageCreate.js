@@ -121,17 +121,17 @@ module.exports = async (message, client) => {
 
 			//Profile XP boost
 			if ((profileData.xpboost.stopBoostTimestamp - message.createdTimestamp > 0) || profileData.xpboost.stopBoostTimestamp === -1) {
-				array.push(xpAmount * profileData.xpboost.multiplier)
+				array.push(xpAmount * profileData.xpboost.multiplier);
 			}
 
 			//Role XP boost
 			const roles = message.member.roles.cache.map(role => role);
-			roles.forEach(async role => {
+			for (const role of roles) {
 				roleData = await roleModel.fetchRole(role.id);
 				if ((roleData.xpboost.stopBoostTimestamp - message.createdTimestamp > 0) || roleData.xpboost.stopBoostTimestamp === -1) {
 					array.push(xpAmount * roleData.xpboost.multiplier);
 				}
-			});
+			}
 
 			profileData.xp += Math.max(...array);		//Use the highest xpboost
 
