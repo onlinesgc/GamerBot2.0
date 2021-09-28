@@ -27,14 +27,15 @@ module.exports = {
 		let exclusiveFrames2 = [
 			{ frameUrl: "https://i.imgur.com/lctjR3N.png", fileID: 10 }, //raze-end winers 10
 			{ frameUrl: "https://i.imgur.com/tT33FbV.png", fileID: 11 }, //raze - smörevent 11
-			{ frameUrl: "https://i.imgur.com/frcctEf.png", fileID: 12}
+			{ frameUrl: "https://i.imgur.com/frcctEf.png", fileID: 12}, //mod frame
+			{ frameUrl: "https://i.imgur.com/TlyTYIt.png" , fileID:13 }, //memme master
+			{ frameUrl: "https://i.imgur.com/ufqLNzx.png", fileID: 14} // level snubbe
 		]
 		if (profileData.exclusiveFrames == undefined) {
 			profileData.exclusiveFrames = [];
 			await profileData.save();
 		}
-		console.log(profileData.exclusiveFrames)
-		if (profileData.exclusiveFrames.length != 0) {
+		if (profileData.exclusiveFrames.length != 0) { //adds exlusive frames
 			for (let i = 0; i < profileData.exclusiveFrames.length; i++) {
 				frames.push(exclusiveFrames2[profileData.exclusiveFrames[i]])
 			}
