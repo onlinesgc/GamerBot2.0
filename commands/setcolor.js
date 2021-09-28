@@ -16,7 +16,7 @@ module.exports = {
         return option.setName("collor").setDescription("Ange en hex kåd som #fff eller #4EC41B (Glöm inte #)").setRequired(true)
     }),
 	async do(message, args, profileData,isInteraction) {
-        args[0] = message.options._hoistedOptions[0].value;
+        if(isInteraction) args[0] = message.options._hoistedOptions[0].value;
         if(!args[0]){
             message.channel.send("Du måste skriva en hex kåd. Tex:#FFF");
             return;
