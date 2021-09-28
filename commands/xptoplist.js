@@ -18,7 +18,13 @@ module.exports = {
 			return option.setName("amount").setDescription("Användar mängd").setRequired(false)
 	}),
 	async do(message, args, profileData, isInteraction) {
-		
+		if(isInteraction){
+			message.reply("Xptoplist är tillfälligt ur funktion");	
+		}
+		else {
+			message.channel.send("Xptoplist är tillfälligt ur funktion");
+		}
+		/*
 		async function createUserFields(profiles, startPointer, userCount) {
 			let fields = [];
 			let n = 1;
@@ -106,6 +112,6 @@ module.exports = {
 			else message.editReply({embeds:[embed], components:[row]})
 			data.deferUpdate()
 		});
-
+	*/
 	}
 }
