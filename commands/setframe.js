@@ -24,7 +24,7 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/pUTFUAM.png", fileID: 8 },//snizard
 			{ frameUrl: "https://i.imgur.com/VvUSM3M.png", fileID: 9 }//pixi
 		]//the frames. It needs to be a link so they are upploaded to imgur.
-		let exclusiveFrames2 = [
+		var exclusiveFrames2 = [
 			{ frameUrl: "https://i.imgur.com/lctjR3N.png", fileID: 10 }, //raze-end winers 10
 			{ frameUrl: "https://i.imgur.com/tT33FbV.png", fileID: 11 }, //raze - smörevent 11
 			{ frameUrl: "https://i.imgur.com/frcctEf.png", fileID: 12}, //mod frame
