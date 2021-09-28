@@ -7,8 +7,6 @@ const functions = require("../../functions");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 
-const guildId = "813844220694757447";
-
 module.exports = (client) => {
 	console.log(`${client.user.username} is online! Hosting ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
 
@@ -55,17 +53,20 @@ module.exports = (client) => {
 		}).setToken(process.env.token);
 		(async () => {
 			try {
-				console.log("Start to fix commands...")
-				await rest.put(
-					Routes.applicationGuildCommands(await configModel.fetchConfig(process.env.config_id).id, guildId), {
-					body: client.commandArray
-				}
-				)
-				console.log("Fixed all commands!")
+				process.stdout.write("Start to register slash commands... ");
+
+				client.guilds.cache.forEach(async guild => {
+					await rest.put(
+						Routes.applicationGuildCommands(configData.id, guild.id), { body: client.commandArray }
+					)
+				});
+
+				console.log("Done!");
 			} catch (err) {
-				console.log(err);
+				console.log("Error:");
+				console.log(err)
 			}
-		});
+		})();
 
 	}).catch((err) => {
 		console.log(process.env.mongodb_srv);
