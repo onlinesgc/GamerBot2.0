@@ -5,13 +5,13 @@ const configModel = require("../models/configSchema");
 const {SlashCommandBuilder} = require("@discordjs/builders")
 
 module.exports = {
-    name: "memberinfo",
-    aliases: ["userinfo", "myinfo","me"],
+    name: "me",
+    aliases: ["userinfo", "myinfo","memberinfo"],
     description: "Get member information for message author, or specified user",
     usage: [],
     perms: [],
 	data: new SlashCommandBuilder()
-		.setName("memberinfo")
+		.setName("me")
 		.setDescription("Get member information for message author, or specified user")
 		.addUserOption((option) =>{
 			return option.setName("user").setDescription("this is if you want to find another user").setRequired(false)
