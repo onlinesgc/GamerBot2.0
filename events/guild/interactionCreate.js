@@ -12,10 +12,8 @@ var perms = [
         permName: "trustedCmd",
         neededPermission: null,
         neededLevel: "2"
-    },
+    }
 ]
-
-
 
 module.exports = async (Interaction, client) => {
     if (!Interaction.isCommand()) return;
