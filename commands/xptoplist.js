@@ -18,7 +18,7 @@ module.exports = {
 			return option.setName("amount").setDescription("Användar mängd").setRequired(false)
 	}),
 	async do(message, args, profileData, isInteraction) {
-
+		
 		async function createUserFields(profiles, startPointer, userCount) {
 			let fields = [];
 			let n = 1;

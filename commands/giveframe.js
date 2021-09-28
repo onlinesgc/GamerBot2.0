@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
+const profileModel = require("../models/profileSchema");
 module.exports = {
     name: "giveframe",
     aliases: [],
@@ -21,6 +22,7 @@ module.exports = {
         if (isInteraction) {
             member = message.options._hoistedOptions[0].member;
             args[1] = message.options._hoistedOptions[1].value;
+            profileData = await profileModel.fetchProfile(member.id, message.guild.id);
         }
         else {
             if (!args[0]) {
@@ -33,6 +35,7 @@ module.exports = {
                     member = await message.guild.members.fetch(args[0]);
                     user = await message.client.users.fetch(args[0]);
                 }
+                profileData = await profileModel.fetchProfile(member.id, message.guild.id);
             }
 
         }
