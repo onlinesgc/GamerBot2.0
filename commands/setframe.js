@@ -29,7 +29,9 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/tT33FbV.png", fileID: 11 }, //raze - smörevent 11
 			{ frameUrl: "https://i.imgur.com/frcctEf.png", fileID: 12}, //mod frame
 			{ frameUrl: "https://i.imgur.com/TlyTYIt.png" , fileID:13 }, //memme master
-			{ frameUrl: "https://i.imgur.com/ufqLNzx.png", fileID: 14} // level snubbe
+			{ frameUrl: "https://i.imgur.com/ufqLNzx.png", fileID: 14}, // level snubbe
+			{ frameUrl: "https://i.imgur.com/KxVrzuf.png", fileID: 15}, //serverboost? Pixi
+			{ frameUrl: "https://i.imgur.com/MtTN87w.png", fileID: 16} //hallown
 		]
 		if (profileData.exclusiveFrames == undefined) {
 			profileData.exclusiveFrames = [];
