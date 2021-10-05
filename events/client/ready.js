@@ -57,7 +57,7 @@ module.exports = (client) => {
 
 				client.guilds.cache.forEach(async guild => {
 					await rest.put(
-						Routes.applicationGuildCommands(configData.id, guild.id), { body: client.commandArray }
+						Routes.applicationGuildCommands(client.user.id, guild.id), { body: client.commandArray }
 					)
 				});
 
