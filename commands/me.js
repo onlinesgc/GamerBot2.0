@@ -14,10 +14,10 @@ module.exports = {
 		.setName("me")
 		.setDescription("Get member information for message author, or specified user")
 		.addUserOption((option) =>{
-			return option.setName("user").setDescription("this is if you want to find another user").setRequired(false)
+			return option.setName("user").setDescription("This is used to fetch another user").setRequired(false)
 		})
 		.addBooleanOption((option) =>{
-			return option.setName("options").setDescription("This is a admin command").setRequired(false);
+			return option.setName("options").setDescription("This is an admin command").setRequired(false);
 		}),
     async do(message, args, profileData,isInteraction) {
 		let member;
@@ -48,7 +48,7 @@ module.exports = {
 
 		}
 		//end of .commands
-		//start whit "/" commands
+		//start with "/" commands
 		if(message.options != undefined){
 			if(message.options._hoistedOptions[0] != undefined){
 

@@ -5,12 +5,12 @@ const { SlashCommandBuilder } = require("@discordjs/builders")
 module.exports = {
 	name: "setframe",
 	aliases: ["setram", "ram", "frame"],
-	description: "Med deta kommand så kan du ändra din ram",
+	description: "Med detta kommando kan du ändra din ram.",
 	usage: [],
 	perms: [],
 	data: new SlashCommandBuilder()
 		.setName("setframe")
-		.setDescription("Med deta kommand så kan du ändra din ram"),
+		.setDescription("Med detta kommando kan du ändra din ram."),
 	async do(message, args, profileData, isInteraction) {
 		let frames = [//https://imgur.com/a/gfa7osM 
 			{ frameUrl: "https://i.imgur.com/zVxJiz4.png", fileID: 0 }, //orginal
@@ -82,7 +82,7 @@ module.exports = {
 				index++;
 			}
 			let embed = new discord.MessageEmbed()
-				.setTitle("För att välja ram trycket du på ⏺️")
+				.setTitle("För att välja ram trycker du på ⏺️")
 				.setImage(frames[index].frameUrl)
 				.setAuthor(message.member.user.username)
 				.setFooter(`${index + 1}/${frames.length}`)
@@ -94,7 +94,7 @@ module.exports = {
 				await row.components.map(e => e.setDisabled(true))
 				collector.stop();
 				let embed = new discord.MessageEmbed()
-					.setTitle("Du har nu ändradt din ram")
+					.setTitle("Du har nu ändrat din ram!")
 					.setAuthor(message.member.user.username)
 				if (!isInteraction) Photo.edit({ embeds: [embed], components: [row] });
 				else message.editReply({ embeds: [embed], components: [row] })
