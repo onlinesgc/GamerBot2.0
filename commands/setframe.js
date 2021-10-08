@@ -31,7 +31,8 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/TlyTYIt.png" , fileID:13 }, //memme master
 			{ frameUrl: "https://i.imgur.com/ufqLNzx.png", fileID: 14}, // level snubbe
 			{ frameUrl: "https://i.imgur.com/KxVrzuf.png", fileID: 15}, //serverboost? Pixi
-			{ frameUrl: "https://i.imgur.com/MtTN87w.png", fileID: 16} //hallown
+			{ frameUrl: "https://i.imgur.com/MtTN87w.png", fileID: 16}, //hallown
+			{ frameUrl: "https://i.imgur.com/7uYHaMp.png", fileID: 17}
 		]
 		if (profileData.exclusiveFrames == undefined) {
 			profileData.exclusiveFrames = [];
