@@ -34,7 +34,8 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/MtTN87w.png", fileID: 16}, //hallown
 			{ frameUrl: "https://i.imgur.com/7uYHaMp.png", fileID: 17}, // Gamerbot Ram
 			{ frameUrl: "https://i.imgur.com/WpnSNhl.png", fileID: 18}, //Vinnare bygg tävlning
-			{ frameUrl: "https://i.imgur.com/Nf0rPzQ.png", fileID: 19}
+			{ frameUrl: "https://i.imgur.com/Nf0rPzQ.png", fileID: 19},
+			{ frameUrl: "https://i.imgur.com/IXvC6U3.png", fileID: 20} //redit ram
 		]
 		if (profileData.exclusiveFrames == undefined) {
 			profileData.exclusiveFrames = [];
