@@ -32,7 +32,9 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/ufqLNzx.png", fileID: 14}, // level snubbe
 			{ frameUrl: "https://i.imgur.com/KxVrzuf.png", fileID: 15}, //serverboost? Pixi
 			{ frameUrl: "https://i.imgur.com/MtTN87w.png", fileID: 16}, //hallown
-			{ frameUrl: "https://i.imgur.com/7uYHaMp.png", fileID: 17}
+			{ frameUrl: "https://i.imgur.com/7uYHaMp.png", fileID: 17}, // Gamerbot Ram
+			{ frameUrl: "https://i.imgur.com/WpnSNhl.png", fileID: 18}, //Vinnare bygg tävlning
+			{ frameUrl: "https://i.imgur.com/Nf0rPzQ.png", fileID: 19}
 		]
 		if (profileData.exclusiveFrames == undefined) {
 			profileData.exclusiveFrames = [];

@@ -13,7 +13,10 @@ const profileSchema = new mongoose.Schema({
     xpboost: { type: Object, default: {
 	    multiplier: 1,
 	    stopBoostTimestamp: null}},
-    exclusiveFrames: {type: Array}
+    exclusiveFrames: {type: Array},
+	other: {type: Object, default:{
+		hasHallowenFrame: false
+	}}
 });
 
 const model = mongoose.model("ProfileModels", profileSchema);

@@ -1,4 +1,5 @@
 const {SlashCommandBuilder} = require("@discordjs/builders")
+const discord = require("discord.js");
 module.exports = {
 	name: "sendhallowen",
 	aliases: [],
@@ -20,8 +21,21 @@ module.exports = {
         else{
             channel = message.options._hoistedOptions[0].channel;
         }
+        const row = new discord.MessageActionRow()
+        .addComponents(
+            [
+                new discord.MessageButton()
+                    .setStyle("DANGER")
+                    .setCustomId("trick")
+                    .setLabel("Bus"),
+                new discord.MessageButton()
+                    .setStyle("SUCCESS")
+                    .setCustomId("treat")
+                    .setLabel("Godis"),
+            ]
+        );
+        channel.send({content:"**Boooooo! Vill du ha bus eller godis?** \nVälj noga, du kan bara välja en!", components:[row]});
 
-        channel.send("test");
         if(isInteraction) message.reply("sent message to the channel")
         
 	}
