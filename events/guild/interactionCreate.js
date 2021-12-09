@@ -16,30 +16,20 @@ var perms = [
 ]
 
 module.exports = async (Interaction, client) => {
-    //hallowen code lol
+    //frame code
     if(Interaction.customId != undefined){
         let profileData = await profileModel.fetchProfile(Interaction.user.id, Interaction.guildId, Interaction.createdTimestamp, Interaction.createdTimestamp);
-        if(profileData.other == undefined || profileData.other.hasHallowenFrame == undefined ){
-            profileData.other.hasHallowenFrame = false;
-            await profileData.save();
-        }
-        if(profileData.other.hasHallowenFrame == false){
-            if(Interaction.customId == "trick"){
-                profileData.other.hasHallowenFrame = true;
-                profileData.markModified("other")
+        let y = false;
+        if(await Interaction.customId.split(":")[0] == "framesender"){
+            await profileData.exclusiveFrames.forEach(async element => {
+                if(element == await Interaction.customId.split(":")[1]){
+                    y = true;
+                }
+            });
+            if(!y){
+                profileData.exclusiveFrames.push(Interaction.customId.split(":")[1])
                 await profileData.save();
-                profileData.exclusiveFrames.push("9")
-                await profileData.save();
-                Interaction.member.send("Buuu! Du valde bus! Skriv /setframe i <#822546907007811585> för att se vad du fått!")
-                return Interaction.deferUpdate();
-            }
-            else if(Interaction.customId == "treat"){//6
-                profileData.other.hasHallowenFrame = true;
-                profileData.markModified("other")
-                await profileData.save();
-                profileData.exclusiveFrames.push("6")
-                await profileData.save();
-                Interaction.member.send("Buuu! Du valde godis! Skriv /setframe i <#822546907007811585> för att se vad du fått!")
+                Interaction.member.send("God jul. Nu ska du ha fått en ny ram. Skriv /setframe i <#822546907007811585> för att se vad du fått!")
                 return Interaction.deferUpdate();
             }
         }

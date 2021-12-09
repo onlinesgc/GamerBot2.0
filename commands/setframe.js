@@ -25,17 +25,18 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/VvUSM3M.png", fileID: 9 }//pixi
 		]//the frames. It needs to be a link so they are upploaded to imgur.
 		var exclusiveFrames2 = [
-			{ frameUrl: "https://i.imgur.com/lctjR3N.png", fileID: 10 }, //raze-end winers 10
-			{ frameUrl: "https://i.imgur.com/tT33FbV.png", fileID: 11 }, //raze - smörevent 11
-			{ frameUrl: "https://i.imgur.com/frcctEf.png", fileID: 12}, //mod frame
-			{ frameUrl: "https://i.imgur.com/TlyTYIt.png" , fileID:13 }, //memme master
-			{ frameUrl: "https://i.imgur.com/ufqLNzx.png", fileID: 14}, // level snubbe
-			{ frameUrl: "https://i.imgur.com/KxVrzuf.png", fileID: 15}, //serverboost? Pixi
-			{ frameUrl: "https://i.imgur.com/MtTN87w.png", fileID: 16}, //hallown
-			{ frameUrl: "https://i.imgur.com/7uYHaMp.png", fileID: 17}, // Gamerbot Ram
-			{ frameUrl: "https://i.imgur.com/WpnSNhl.png", fileID: 18}, //Vinnare bygg tävlning
-			{ frameUrl: "https://i.imgur.com/Nf0rPzQ.png", fileID: 19},
-			{ frameUrl: "https://i.imgur.com/IXvC6U3.png", fileID: 20} //redit ram
+			{ frameUrl: "https://i.imgur.com/lctjR3N.png", fileID: 10 }, //raze-end winers 1  - 0
+			{ frameUrl: "https://i.imgur.com/tT33FbV.png", fileID: 11 }, //raze - smörevent 11 - 1 
+			{ frameUrl: "https://i.imgur.com/frcctEf.png", fileID: 12}, //mod frame - 2
+			{ frameUrl: "https://i.imgur.com/TlyTYIt.png" , fileID:13 }, //memme master - 3
+			{ frameUrl: "https://i.imgur.com/ufqLNzx.png", fileID: 14}, // level snubbe - 4
+			{ frameUrl: "https://i.imgur.com/KxVrzuf.png", fileID: 15}, //serverboost? Pixi - 5 
+			{ frameUrl: "https://i.imgur.com/MtTN87w.png", fileID: 16}, //hallown - 6 
+			{ frameUrl: "https://i.imgur.com/7uYHaMp.png", fileID: 17}, // Gamerbot Ram - 7
+			{ frameUrl: "https://i.imgur.com/WpnSNhl.png", fileID: 18}, //Vinnare bygg tävlning -8
+			{ frameUrl: "https://i.imgur.com/Nf0rPzQ.png", fileID: 19}, // hallowen -9
+			{ frameUrl: "https://i.imgur.com/IXvC6U3.png", fileID: 20}, //redit ram -10
+			{ frameUrl: "https://i.imgur.com/Dd9yAAC.png", fileID: 21} //jul ram - 11
 		]
 		if (profileData.exclusiveFrames == undefined) {
 			profileData.exclusiveFrames = [];
