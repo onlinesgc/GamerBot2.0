@@ -2,24 +2,24 @@ const profileModel = require("../models/profileSchema");
 const functions = require("../functions");
 const Discord = require('discord.js');
 const configModel = require("../models/configSchema");
-const {SlashCommandBuilder} = require("@discordjs/builders")
+const { SlashCommandBuilder } = require("@discordjs/builders")
 
 module.exports = {
-    name: "me",
-    aliases: ["userinfo", "myinfo","memberinfo"],
-    description: "Get member information for message author, or specified user",
-    usage: [],
-    perms: [],
+	name: "me",
+	aliases: ["userinfo", "myinfo", "memberinfo"],
+	description: "Get member information for message author, or specified user",
+	usage: [],
+	perms: [],
 	data: new SlashCommandBuilder()
 		.setName("me")
 		.setDescription("Get member information for message author, or specified user")
-		.addUserOption((option) =>{
+		.addUserOption((option) => {
 			return option.setName("user").setDescription("This is used to fetch another user").setRequired(false)
 		})
-		.addBooleanOption((option) =>{
+		.addBooleanOption((option) => {
 			return option.setName("options").setDescription("This is an admin command").setRequired(false);
 		}),
-    async do(message, args, profileData,isInteraction) {
+	async do(message, args, profileData, isInteraction) {
 		let member;
 		let configData = await configModel.fetchConfig(process.env.config_id);
 		let override = false;
@@ -32,9 +32,9 @@ module.exports = {
 			if (message.member.permissions.has("ADMINISTRATOR")) {
 				override = true;
 			}
-		
-		} 
-		else if(args[0] != undefined) {
+
+		}
+		else if (args[0] != undefined) {
 			if (message.mentions.members.first()) {
 				member = await message.mentions.members.first();
 			} else {
@@ -49,30 +49,30 @@ module.exports = {
 		}
 		//end of .commands
 		//start with "/" commands
-		if(message.options != undefined){
-			if(message.options._hoistedOptions[0] != undefined){
+		if (message.options != undefined) {
+			if (message.options._hoistedOptions[0] != undefined) {
 
-				if(message.options._hoistedOptions[0].type == "USER"){
+				if (message.options._hoistedOptions[0].type == "USER") {
 					member = message.options._hoistedOptions[0].member;
 					profileData = await profileModel.fetchProfile(member.id, message.guild.id);
 					options = true;
-					if(message.options._hoistedOptions[1] != undefined){
-						if(message.options._hoistedOptions[1].type == "BOOLEAN"){
+					if (message.options._hoistedOptions[1] != undefined) {
+						if (message.options._hoistedOptions[1].type == "BOOLEAN") {
 							if (message.options._hoistedOptions[0].value) {
 								if (message.member.permissions.has("ADMINISTRATOR")) {
 									override = true;
 								}
-							} 
+							}
 						}
 					}
 				}
-				if(message.options._hoistedOptions[0].type == "BOOLEAN"){
+				if (message.options._hoistedOptions[0].type == "BOOLEAN") {
 					if (message.options._hoistedOptions[0].value) {
 						profileData = await profileModel.fetchProfileFromInteraction(message);
 						if (message.member.permissions.has("ADMINISTRATOR")) {
 							override = true;
-						}		
-					} 
+						}
+					}
 				}
 			}
 		}
@@ -80,7 +80,7 @@ module.exports = {
 		//Generate image
 		let TimeOut = "";
 		let Xp = "";
-		if(profileData.profileFrame == undefined){
+		if (profileData.profileFrame == undefined) {
 			profileData.profileFrame = 0;
 			await profileData.save()
 		}
@@ -91,13 +91,25 @@ module.exports = {
 			TimeOut += "XP Timeout: " + functions.msToString(profileData.xpTimeoutUntil - message.createdTimestamp);
 		}
 		let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
-		if(!options){
-			if(isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.member.user.avatarURL({format:"png"}), message.member.user.username,profileData.profileFrame) ]})
-			else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({format:"png"}), message.author.username,profileData.profileFrame) ]});
+		if (!options) {
+			if (profileData.profileFrame >= 0) {
+				if (isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.member.user.avatarURL({ format: "png" }), message.member.user.username, profileData.profileFrame)] })
+				else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({ format: "png" }), message.author.username, profileData.profileFrame)] });
+			}
+			else{
+				if (isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.member.user.avatarURL({ format: "png" }), message.member.user.username, profileData.profileFrame,true)],name:"frame.gif"})
+				else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({ format: "png" }), message.author.username, profileData.profileFrame,true)],name:"frame.gif"});
+			}
 		}
-		else{
-			if(isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({format:"png"}), member.user.username,profileData.profileFrame)]})
-			else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({format:"png"}), member.user.username,profileData.profileFrame)]});
-		}
+		else {
+			if (profileData.profileFrame >= 0) {
+				if (isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({ format: "png" }), member.user.username, profileData.profileFrame)] })
+				else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({ format: "png" }), member.user.username, profileData.profileFrame)] });
+			}
+			else{
+				if (isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({ format: "png" }), member.user.username, profileData.profileFrame,true)], name:"frame.gif"})
+				else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({ format: "png" }), member.user.username, profileData.profileFrame,true)],name:"frame.gif"});
+			}
 		}
 	}
+}

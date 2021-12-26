@@ -25,10 +25,10 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/VvUSM3M.png", fileID: 9 }//pixi
 		]//the frames. It needs to be a link so they are upploaded to imgur.
 		var exclusiveFrames2 = [
-			{ frameUrl: "https://i.imgur.com/lctjR3N.png", fileID: 10 }, //raze-end winers 1  - 0
-			{ frameUrl: "https://i.imgur.com/tT33FbV.png", fileID: 11 }, //raze - smörevent 11 - 1 
+			{ frameUrl: "https://i.imgur.com/lctjR3N.png", fileID: 10}, //raze-end winers 1  - 0
+			{ frameUrl: "https://i.imgur.com/tT33FbV.png", fileID: 11}, //raze - smörevent 11 - 1 
 			{ frameUrl: "https://i.imgur.com/frcctEf.png", fileID: 12}, //mod frame - 2
-			{ frameUrl: "https://i.imgur.com/TlyTYIt.png" , fileID:13 }, //memme master - 3
+			{ frameUrl: "https://i.imgur.com/TlyTYIt.png", fileID: 13}, //memme master - 3
 			{ frameUrl: "https://i.imgur.com/ufqLNzx.png", fileID: 14}, // level snubbe - 4
 			{ frameUrl: "https://i.imgur.com/KxVrzuf.png", fileID: 15}, //serverboost? Pixi - 5 
 			{ frameUrl: "https://i.imgur.com/MtTN87w.png", fileID: 16}, //hallown - 6 
