@@ -18,21 +18,14 @@ module.exports = {
 			return option.setName("amount").setDescription("Användar mängd").setRequired(false)
 	}),
 	async do(message, args, profileData, isInteraction) {
-		if(isInteraction){
-			message.reply("Xptoplist är tillfälligt ur funktion");	
-		}
-		else {
-			message.channel.send("Xptoplist är tillfälligt ur funktion");
-		}
-		/*
 		async function createUserFields(profiles, startPointer, userCount) {
 			let fields = [];
 			let n = 1;
 			for (profile of profiles.slice(startPointer, startPointer + userCount)) {
-				const user = await message.client.users.fetch(profile.userID); //LAG FEST <-----. The thing that lags the xptoplist
+				//const user = await message.client.users.fetch(profile.userID); //LAG FEST <-----. The thing that lags the xptoplist
 				fields.push({
 					name: (startPointer + n).toString(), value: `
-					Användare: ${user.toString()}
+					Användare: <@!${profile.userID}>
 					Level: \`${profile.level - 1}\`
 				`});
 				n++;
@@ -112,6 +105,5 @@ module.exports = {
 			else message.editReply({embeds:[embed], components:[row]})
 			data.deferUpdate()
 		});
-	*/
 	}
 }
