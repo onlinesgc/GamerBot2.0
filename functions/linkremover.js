@@ -31,7 +31,7 @@ module.exports = async (message) => {
 
     if (urlfind(message.content) != null) {
         message.delete()
-        message.reply("Skicka inte länkar, tack!").then(msg => msg.delete({ timeout: 1000 * 5 }))
+        message.channel.send("Skicka inte länkar, tack!").then(msg => msg.delete({ timeout: 1000 * 5 }))
     }
 
     function urlfind(text) {

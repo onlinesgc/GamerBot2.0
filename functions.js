@@ -64,12 +64,12 @@ module.exports = {
 		});
 	},
 	async checkForLinks(message) {
-		require("./functions/linkremover")(message)
+		await require("./functions/linkremover")(message)
 	},
 	async ReloadVids(client){
-		require("./functions/reloadvids")(client)
+		await require("./functions/reloadvids")(client)
 	},
 	async getProfilePotho(profileData, TimeOut, Xp, xpPercentage, iconUrl, username, ProfileFrame, isGif = false) {
-		return require("./functions/getProfilePotho")(profileData, TimeOut, Xp, xpPercentage, iconUrl, username, ProfileFrame, isGif)
+		return await require("./functions/getProfilePotho")(profileData, TimeOut, Xp, xpPercentage, iconUrl, username, ProfileFrame, isGif)
 	}
 }

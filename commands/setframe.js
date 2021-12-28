@@ -80,11 +80,13 @@ module.exports = {
 		collector.on("collect", async data => {
 			if (data.user.id != message.member.id) return;
 			data.deferUpdate()
-			if (data.customId == "left" && index != 0) {
-				index--;
+			if (data.customId == "left") {
+				if(index != 0) index--;
+				else index = frames.length - 1;
 			}
-			if (data.customId == "right" && index != frames.length - 1) {
-				index++;
+			if (data.customId == "right") {
+				if(index != frames.length - 1) index++;
+				else index = 0
 			}
 			let embed = new discord.MessageEmbed()
 				.setTitle("För att välja ram trycker du på ⏺️")

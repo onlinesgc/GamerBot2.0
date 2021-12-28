@@ -26,36 +26,38 @@ module.exports = async (client) => {
             //saves all data to vids 
             vids.push(obj)
         }
-        fs.readFile("./videos/videos.json", async (err,data) =>{
-            if(err) console.log(err);
-            data = await JSON.parse(data);
-            for(i = 0 ; i < vids.length;i++){
-                isNotNewVid = false;
-                data.forEach(element =>{
-                    if(element == vids[i].id) isNotNewVid = true;
-                })
-                if(isNotNewVid) continue;
-                if (vids[i].mentionChannel == true) {
-                    client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`)
-                }
-                else {
-                    client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]**\n http://www.youtube.com/watch?v=${vids[i].id}`)
-                }
-                data.push(vids[i].id);
-            }
-            fs.writeFile("./videos/videos.json",JSON.stringify(data),(err)=>{
+        setTimeout(async function(){
+            fs.readFile("./videos/videos.json", async (err,data) =>{
                 if(err) console.log(err);
+                data = await JSON.parse(data);
+                for(i = 0 ; i < vids.length;i++){
+                    isNotNewVid = false;
+                    data.forEach(element =>{
+                        if(element == vids[i].id) isNotNewVid = true;
+                    })
+                    if(isNotNewVid) continue;
+                    if (vids[i].mentionChannel == true) {
+                        client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`)
+                    }
+                    else {
+                        client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]**\n http://www.youtube.com/watch?v=${vids[i].id}`)
+                    }
+                    data.push(vids[i].id);
+                }
+                fs.writeFile("./videos/videos.json",JSON.stringify(data),(err)=>{
+                    if(err) console.log(err);
+                })
             })
-        })
-        var twInfo = await executeTwitch();
-        if (twInfo != null) {
-            if (twInfo.id != configData.latestLiveStreamId) {
-                client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`STAMSITE har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite`);
-                configData.latestLiveStreamId = twInfo.id;
-                configData.save();
+            var twInfo = await executeTwitch();
+            if (twInfo != null) {
+                if (twInfo.id != configData.latestLiveStreamId) {
+                    client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`STAMSITE har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite`);
+                    configData.latestLiveStreamId = twInfo.id;
+                    configData.save();
+                }
             }
-        }
-    }, 1000 * 60 * 3)
+        },1000 )
+    }, 1000 * 10)
 
     function getYoutubeVideoData(channel) {
         const request = require("request");
