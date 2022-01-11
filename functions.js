@@ -71,5 +71,8 @@ module.exports = {
 	},
 	async getProfilePotho(profileData, TimeOut, Xp, xpPercentage, iconUrl, username, ProfileFrame, isGif = false) {
 		return await require("./functions/getProfilePotho")(profileData, TimeOut, Xp, xpPercentage, iconUrl, username, ProfileFrame, isGif)
+	},
+	async RemoveVoiceChannels(oldMember, newMember,client){
+		await require("./functions/RemoveVoiceChannels")(oldMember, newMember,client)
 	}
 }

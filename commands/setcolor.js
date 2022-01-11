@@ -13,7 +13,7 @@ module.exports = {
     .setName("setcolor")
     .setDescription("Ändrar färgen av .me backround")
     .addStringOption((option) =>{
-        return option.setName("collor").setDescription("Ange en hex kåd som #fff eller #4EC41B (Glöm inte #)").setRequired(true)
+        return option.setName("color").setDescription("Ange en hex kåd som #fff eller #4EC41B (Glöm inte #)").setRequired(true)
     }),
 	async do(message, args, profileData,isInteraction) {
         if(isInteraction) args[0] = message.options._hoistedOptions[0].value;

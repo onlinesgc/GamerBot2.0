@@ -9,7 +9,6 @@ const { Routes } = require("discord-api-types/v9");
 
 module.exports = (client) => {
 	console.log(`${client.user.username} is online! Hosting ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
-
 	mongoose.connect(process.env.mongodb_srv, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,

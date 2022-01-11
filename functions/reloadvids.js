@@ -4,8 +4,8 @@ const { ClientCredentialsAuthProvider } = require("twitch-auth");
 const fs = require("fs");
 
 module.exports = async (client) => {
-    var configData = await configModel.fetchConfig(process.env.config_id);
     setInterval(async function () {
+        var configData = await configModel.fetchConfig(process.env.config_id);
         if (!configData.NotisSystemOn) return;
         var vids = [];
         for(i = 0 ; i < configData.NotisChannels.length;i++){
@@ -53,7 +53,7 @@ module.exports = async (client) => {
                 if (twInfo.id != configData.latestLiveStreamId) {
                     client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`STAMSITE har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite`);
                     configData.latestLiveStreamId = twInfo.id;
-                    configData.save();
+                    await configData.save();
                 }
             }
         },1000 )

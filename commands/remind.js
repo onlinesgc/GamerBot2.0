@@ -25,13 +25,16 @@ module.exports = {
 		}
 		let timeout = 0;
 		let array = args[0].split("-");
+		let un = false;
 		array.forEach(element => {
 			if (ms(element) == undefined){
-				if(!isInteraction) return message.channel.send("Tiden måste kunna omvandlas till millisekunder!");
+				if(!isInteraction) message.channel.send("Tiden måste kunna omvandlas till millisekunder!");
 				else message.reply("Tiden måste kunna omvandlas till millisekunder!")
+				un = true;
 			} 
 			timeout += ms(element);
 		});
+		if(un) return;
 
 		//Determine if user specified a message or not
 		let msg;
