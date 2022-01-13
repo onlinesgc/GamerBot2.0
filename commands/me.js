@@ -38,7 +38,13 @@ module.exports = {
 			if (message.mentions.members.first()) {
 				member = await message.mentions.members.first();
 			} else {
-				member = await message.guild.members.fetch(args[0]);
+				try{
+					member = await message.guild.members.fetch(args[0]);
+				}
+				catch(err){
+					if (isInteraction) return message.reply("Det är inte en person. Testa att skriva ID istälet eller använde @");
+					else message.channel.send("Det är inte en person. Testa att skriva ID istälet eller använde @")
+				}
 			}
 			profileData = await profileModel.fetchProfile(member.id, message.guild.id);
 			options = true;
