@@ -50,7 +50,7 @@ module.exports = async (oldMember, newMember,client) => {
 		if(channel.guild.premiumTier!="NONE"){
 			thread = await channel.threads.create({
 				name:`Threads - ${member.user.tag}`,
-				autoArchiveDuration: 120,
+				autoArchiveDuration: 1440,
 				type: 'GUILD_PRIVATE_THREAD',
 				invitable:true,
 				reason: `Voice Thread>`,
