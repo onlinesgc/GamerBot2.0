@@ -52,6 +52,7 @@ module.exports = async (oldMember, newMember,client) => {
 				name:`Threads - ${member.user.tag}`,
 				autoArchiveDuration: 120,
 				type: 'GUILD_PRIVATE_THREAD',
+				invitable:true,
 				reason: `Voice Thread>`,
 			})
 			thread.members.add(newMember.id);
