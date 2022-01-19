@@ -10,6 +10,7 @@ const profileSchema = new mongoose.Schema({
     reminders: { type: Array },
     colorHexCode: { type: String },
 	privateVoiceID: { type: String, default: "" },
+	privateVoiceThreadID: { type: String, default: "" },
     profileFrame: {type: String},
     xpboost: { type: Object, default: {
 	    multiplier: 1,

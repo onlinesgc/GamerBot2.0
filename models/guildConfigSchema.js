@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 const guildConfigSchema = new mongoose.Schema({
 	guildID: { type: String, require: true, unique: true },
 	privateVoiceChannel: { type: String, default: "" },
-	publicVoiceChannel: { type: String, default: "" }
+	publicVoiceChannel: { type: String, default: "" },
+	infoVoiceChannel: {type:String , default: ""},
+	notificationChannel: {type: String , default: ""}
 });
 
 const model = mongoose.model("GuildConfig", guildConfigSchema);
