@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const functions = require("../functions");
 const profileModel = require("../models/profileSchema");
+const guildConfig = require("../models/guildConfigSchema");
 const {SlashCommandBuilder} = require("@discordjs/builders")
 
 module.exports = {
@@ -37,7 +38,6 @@ module.exports = {
 			return option.setName("give").setDescription("Ge kanalen till en annan användare i samtalet").setRequired(false);
 		}),
 	async do(message, args, profileData,isInteraction) {
-
 		if (profileData.privateVoiceID !== message.member.voice.channelId) {
 			if(!isInteraction) return message.channel.send("Du måste vara i en privat röstkanal som tillhör dig för att använda det här kommandot.")
 			else return message.reply({content:"Du måste vara i en privat röstkanal som tillhör dig för att använda det här kommandot.",ephemeral:true})
@@ -61,8 +61,10 @@ module.exports = {
 			args[0] = message.options._hoistedOptions[0].name;
 		}
 		let member;
+		let guildConfigData;
 		switch (args[0]) {
 			case "invite":
+				guildConfigData = await guildConfig.fetchGuildConfig(message.guild.id);	
 				if(!isInteraction){
 					if (message.mentions.members.first()) {
 						member = await message.mentions.members.first();
@@ -72,6 +74,7 @@ module.exports = {
 				}
 				else member = message.options._hoistedOptions[0].member;
 				if(member != undefined){
+					if(profileData.privateVoiceThreadID != "" ) await message.guild.channels.cache.get(guildConfigData.infoVoiceChannel).threads.cache.get(profileData.privateVoiceThreadID).members.add(member.id)
 					channel.permissionOverwrites.edit(member, {
 						"VIEW_CHANNEL": true,
 						"SPEAK": true,
@@ -86,6 +89,7 @@ module.exports = {
 				}
 			break;
 			case "kick":
+				guildConfigData = await guildConfig.fetchGuildConfig(message.guild.id);	
 				if(!isInteraction){
 					if (message.mentions.members.first()) {
 						member = await message.mentions.members.first();
@@ -95,6 +99,7 @@ module.exports = {
 				}
 				else member = message.options._hoistedOptions[0].member;
 				if(member != undefined){
+					if(profileData.privateVoiceThreadID != "" ) await message.guild.channels.cache.get(guildConfigData.infoVoiceChannel).threads.cache.get(profileData.privateVoiceThreadID).members.remove(member.id)
 					channel.permissionOverwrites.edit(member, {
 						"VIEW_CHANNEL": false,
 						"SPEAK": false,
@@ -107,6 +112,7 @@ module.exports = {
 					if(!isInteraction) return message.channel.send(`Du förskte kicka någon som inte är i detta samtal`);
 					else message.reply({content:`Du förskte kicka någon som inte är i detta samtal`,ephemeral:true})
 				}
+				break;
 			case "name":																											//Change name of voice channel
 				if(isInteraction){
 					channel.setName(message.options._hoistedOptions[0].value);
