@@ -22,7 +22,12 @@ module.exports = {
 					🔴 \`${message.guild.members.cache.filter(m => m.presence && m.presence.status === "dnd").size}\` personer är stör ej.
 					⚫ \`${message.guild.members.cache.filter(m => m.presence == null || m.presence.status === "offline").size}\` personer är offline.
 
+					🟣 \`${message.guild.members.cache.filter(m => m.premiumSince).size}\` Personer som bostar servern
 					🕓 \`${message.guild.members.cache.filter(m => m.presence && m.presence.status === "online" && m.permissions.has("ADMINISTRATOR") && !m.user.bot).size}\` admins är tillgängliga!`
+
+				},
+				{
+					name:"Boost nivå", value: `\`${message.guild.premiumTier}\``
 				}
 			)
 		if(!isInteraction) message.channel.send({embeds:[embed]});
