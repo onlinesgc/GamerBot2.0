@@ -17,8 +17,11 @@ module.exports = async (message) => {
         "870289214556758077", 
         "924078241344536607" //Twitch moderator
     ];
-    const channels = ["754298054126993458", "813043346586730506", "521190821668716589","933058996301070336","933058007946903603"];
+    const channels = ["754298054126993458", "813043346586730506", "521190821668716589","933058996301070336"];
     if (channels.find(c => c == message.channel.id)) return;
+    if(message.channel.type == "GUILD_NEWS_THREAD"||message.channel.type == "GUILD_PUBLIC_THREAD"||message.channel.type == "GUILD_PRIVATE_THREAD"){
+        if (channels.find(c => c == message.channel.parent.id)) return;
+    }
     let haveRole;
     roles.forEach(element => {
         if (message.member && message.member.roles) {
