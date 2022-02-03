@@ -66,7 +66,7 @@ module.exports = async (message, client) => {
 		}
 	} else if (mention_command && functions.checkIfMentioned(message)) {
 		if (mention_command.perms.includes("adminCmd")) {
-			if (message.member.hasPermissiopermissions.has("ADMINISTRATOR")) {
+			if (message.member.permissions.has("ADMINISTRATOR")) {
 				mention_command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
@@ -74,7 +74,7 @@ module.exports = async (message, client) => {
 		
 		}
 		else if(mention_command.perms.includes("trustedCmd")){
-		    if(profileData.level >= 11 || message.member.hasPermissiopermissions.has("ADMINISTRATOR")){
+		    if(profileData.level >= 11 || message.member.permissions.has("ADMINISTRATOR")){
 			    mention_command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
@@ -85,7 +85,7 @@ module.exports = async (message, client) => {
 		}
 	} else if (question_command) {
 		if (question_command.perms.includes("adminCmd")) {
-			if (message.member.hasPermissiopermissions.has("ADMINISTRATOR")) {
+			if (message.member.permissions.has("ADMINISTRATOR")) {
 				question_command.do(message, args, profileData);
 			} else {
 				message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
@@ -93,7 +93,7 @@ module.exports = async (message, client) => {
 
 		}
 		else if(question_command.perms.includes("trustedCmd")){
-			if(profileData.level >= 11 || message.member.hasPermissiopermissions.has("ADMINISTRATOR")){
+			if(profileData.level >= 11 || message.member.permissions.has("ADMINISTRATOR")){
 				question_command.do(message, args, profileData)
 			}
 			else{
