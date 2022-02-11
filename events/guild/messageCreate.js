@@ -163,7 +163,7 @@ module.exports = async (message, client) => {
                                         }
                                         //Actually adding roles
                                     if (profileData.level >= role.level+1 && profileData.level < nextRoleLevel+1) {
-                                        for (let id_index = 0; index < role.id.length; id_index++) {
+                                        for (let id_index = 0; id_index < role.id.length; id_index++) {
                                             message.member.roles.add(message.guild.roles.cache.get(role.id[id_index]), ["New or old role added!"]);
                                         }
                                     }
