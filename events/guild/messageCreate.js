@@ -146,7 +146,7 @@ module.exports = async (message, client) => {
                             }
                                 //Removing old roles
                             configData.xp.levels.forEach(element => {               //Remove all level roles
-                                for (let id_index = 0; id_index < element.id.length; index++) {
+                                for (let id_index = 0; id_index < element.id.length; id_index++) {
                                     message.member.roles.remove(message.guild.roles.cache.get(element.id[id_index]), ["Test removed role. To later add a new or add back the old one"]);
                                 }
                             });
