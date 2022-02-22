@@ -35,24 +35,28 @@ module.exports = {
 		
 		channel.permissionOverwrites.edit(message.guild.id, {
 			SEND_MESSAGES: false,
-			VIEW_CHANNEL: false
+			VIEW_CHANNEL: false,
+			ATTACH_FILES:true
 		});
 		if(!isInteraction){
 			channel.permissionOverwrites.edit(message.author, {
 				SEND_MESSAGES: true,
-				VIEW_CHANNEL: true
+				VIEW_CHANNEL: true,
+				ATTACH_FILES:true
 			});
 		}
 		else{
 			channel.permissionOverwrites.edit(message.member, {
 				SEND_MESSAGES: true,
-				VIEW_CHANNEL: true
+				VIEW_CHANNEL: true,
+				ATTACH_FILES:true
 			});
 		}
 		if(args[0] != undefined){
 			channel.permissionOverwrites.edit(args[0], {
 				SEND_MESSAGES: true,
-				VIEW_CHANNEL: true
+				VIEW_CHANNEL: true,
+				ATTACH_FILES:true
 			});
 		}
 		const row = new discord.MessageActionRow()

@@ -104,6 +104,11 @@ module.exports = async (message, client) => {
 			question_command.do(message, args, profileData);
 		}
 	} else {
+		//Removes messages in Help
+		if(message.channel.id == "834118959053275176"){
+			message.delete();
+		}
+
 		if (message.createdTimestamp - profileData.lastMessageTimestamp > ms("1w")) {
 			let days = Math.floor((message.createdTimestamp - profileData.lastMessageTimestamp) / 1000 / 86400);
 			let penalty = days * 2;
