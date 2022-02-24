@@ -5,7 +5,8 @@ const guildConfigSchema = new mongoose.Schema({
 	privateVoiceChannel: { type: String, default: "" },
 	publicVoiceChannel: { type: String, default: "" },
 	infoVoiceChannel: {type:String , default: ""},
-	notificationChannel: {type: String , default: ""}
+	notificationChannel: {type: String , default: ""},
+	cardChance: {type: Number , default:0.4}
 });
 
 const model = mongoose.model("GuildConfig", guildConfigSchema);

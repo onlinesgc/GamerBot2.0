@@ -2,6 +2,7 @@ const functions = require("../../functions");
 const profileModel = require("../../models/profileSchema");
 const configModel = require("../../models/configSchema");
 const roleModel = require("../../models/roleSchema");
+const cardCounter = require("../custom/CardCounter");
 const ms = require('ms');
 
 module.exports = async (message, client) => {
@@ -12,6 +13,9 @@ module.exports = async (message, client) => {
 
         //Retreive options
         let configData = await configModel.fetchConfig(process.env.config_id);          //Retreive options
+
+		//Count message card for counter!
+		//cardCounter.countMessage(message);
 
         const prefix = configData.prefix;
         const args = message.content.slice(prefix.length).split(/ +/);
@@ -34,6 +38,8 @@ module.exports = async (message, client) => {
         const channel_action = client.channel_actions.find(object => object.channels.includes(message.channel.id));
         
         let profileData = await profileModel.fetchProfileFromMessage(message);          //Fetch profile
+
+
 
         if (command && message.content.startsWith(prefix)) {
                 if (command.perms.includes("adminCmd")) {
@@ -108,6 +114,7 @@ module.exports = async (message, client) => {
 				if(message.channel.id == "834118959053275176"){
 					message.delete();
 				}
+
                 if (message.createdTimestamp - profileData.lastMessageTimestamp > ms("1w")) {
                         let days = Math.floor((message.createdTimestamp - profileData.lastMessageTimestamp) / 1000 / 86400);
                         let penalty = days * 2;
