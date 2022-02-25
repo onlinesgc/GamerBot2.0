@@ -36,6 +36,17 @@ module.exports = {
 		})
 		.addUserOption((option) =>{
 			return option.setName("give").setDescription("Ge kanalen till en annan användare i samtalet").setRequired(false);
+		})
+		.addStringOption((option) =>{
+			return option.setName("inveterole").setDescription("Bjud in en hel rol").setRequired(false)
+			.addChoice("Alla trusted", "AllTrusted")
+			.addChoice("VIP", "vip")
+			.addChoice("XPTrusted", "818809151257575464")
+			.addChoice("Twitch Mods", "924078241344536607")
+			.addChoice("Eventsnubbar","813804280741101678")
+			.addChoice("Twitch Subs","817886647915642930")
+			.addChoice("YouTube Members","835156231861698562")
+			.addChoice("level 30", "872096892845166613")
 		}),
 	async do(message, args, profileData,isInteraction) {
 		if (profileData.privateVoiceID !== message.member.voice.channelId) {
@@ -201,7 +212,45 @@ module.exports = {
 					if(!isInteraction) message.channel.send(`Du förskte ge samtalet till någon som inte är i kanlen!`);
 					else message.reply(`Du förskte ge samtalet till någon som inte är i kanlen!`)
 				}
-			break; 
+			break;
+			case "inveterole":
+				if(!isInteraction) return message.channel.send("Detta command kan bara bli aktiverat med / commands");
+				var MultipleRoles = [
+					{
+						value:"AllTrusted",
+						roles:["813804280741101678","924078241344536607","520331216415621143","818809151257575464","821059798270214176","812324460429836318","813482380887064597","872157696709783552"]
+					},
+					{
+						value:"VIP",
+						roles:["813804280741101678","924078241344536607","520331216415621143","818809151257575464","821059798270214176","812324460429836318","813482380887064597","817886647915642930","835156231861698562"]
+					}
+				]
+				if(/\d/.test(message.options._hoistedOptions[0].value)){ //if it has number
+					let role = await channel.guild.roles.cache.get(message.options._hoistedOptions[0].value);
+					channel.permissionOverwrites.edit(role, {
+						"VIEW_CHANNEL": true,
+						"SPEAK": true,
+						"CONNECT": true
+					});
+					message.reply("I have inveted " + role.name + " role to the voice chat");
+				}
+				else{
+					MultipleRoles.forEach(element =>{
+						if(element.value == message.options._hoistedOptions[0].value){
+							element.roles.forEach(async element2 =>{
+								let role = await channel.guild.roles.cache.get(element2);
+								await channel.permissionOverwrites.edit(role, {
+									"VIEW_CHANNEL": true,
+									"SPEAK": true,
+									"CONNECT": true
+								});
+							})
+						}
+					})
+					message.reply("Bjöd in alla dem rolerna\n(Om du vill att någon ska kunna se denna threed så måste du bjuda in den personen manuelt!)");
+				}
+
+			break;
 		}
 		async function getVoiceLobbyMembers(channel){
 			let members = [];
