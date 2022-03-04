@@ -1,6 +1,6 @@
 const configModel = require("../models/configSchema");
 module.exports = async (message) => {
-    let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
+    let configData = await configModel.fetchConfig(process.env.config_id);              //Retreive options
     if (!configData.removeLinks) return;
 
     const roles = [
@@ -29,12 +29,16 @@ module.exports = async (message) => {
         "https://svenska.yle.fi/",
         "https://edition.cnn.com/",
         "https://www.msnbc.com/",
-        "https://www.bbc.com/news"
+        "https://www.bbc.com/news",
+        "https://scratch.mit.edu/",
+        "https://www.youtube.com/",
+        "https://www.twitch.tv/",
+        "https://github.com/"
     ]; //Panik länkar
     const channels = ["754298054126993458", "813043346586730506", "521190821668716589","933058996301070336"];
     if (channels.find(c => c == message.channel.id)) return;
 
-    if(message.channel.id == "897532538447339581"){
+    if(message.channel.id == "897532538447339581" || message.channel.id == "949294374343303198"){ //Politik-hörnan and #dela-din-progress for the content-jam
         let isTrue = false;
         allowdLink.forEach(element =>{
             if(message.content.includes(element)) isTrue = true;
