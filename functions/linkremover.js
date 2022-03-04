@@ -33,7 +33,8 @@ module.exports = async (message) => {
         "https://scratch.mit.edu/",
         "https://www.youtube.com/",
         "https://www.twitch.tv/",
-        "https://github.com/"
+        "https://github.com/",
+        "https://gitlab.com"
     ]; //Panik länkar
     const channels = ["754298054126993458", "813043346586730506", "521190821668716589","933058996301070336"];
     if (channels.find(c => c == message.channel.id)) return;
