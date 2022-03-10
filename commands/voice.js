@@ -55,7 +55,6 @@ module.exports = {
 
 		}
 		let channel = message.guild.channels.cache.get(profileData.privateVoiceID);
-
 		if (!args[0] && message.options._hoistedOptions[0] == undefined) {		//Show information about the user's private voice channel
 			const embed = new Discord.MessageEmbed()
 				.setColor("#0099ff")
@@ -198,7 +197,10 @@ module.exports = {
 						await profileData.save();
 						let giveMember = await profileModel.fetchProfile(member.id, member.guild.id)
 						giveMember.privateVoiceID = channel.id;
-						giveMember.save();
+						giveMember.privateVoiceThreadID = profileData.privateVoiceThreadID;
+						await giveMember.save();
+						profileData.privateVoiceThreadID = "";
+						await profileData.save();
 						if(!isInteraction) message.channel.send(`Du har nu get kanalen till <@!${member.id}>`);
 						else message.reply(`Du har nu get kanalen till <@!${member.id}>`)
 					}
