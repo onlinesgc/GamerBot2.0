@@ -37,7 +37,7 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/Nf0rPzQ.png", fileID: 19}, // hallowen -9
 			{ frameUrl: "https://i.imgur.com/IXvC6U3.png", fileID: 20}, //redit ram -10
 			{ frameUrl: "https://i.imgur.com/Dd9yAAC.png", fileID: 21}, //jul ram - 11
-			{ frameUrl: "https://i.imgur.com/PnFZTTg.png", fileID: 22} //game jam - 12
+			{ frameUrl: "https://i.imgur.com/upfjkDq.png", fileID: 22} //game jam - 12
 		]
 		if (profileData.exclusiveFrames == undefined) {
 			profileData.exclusiveFrames = [];
