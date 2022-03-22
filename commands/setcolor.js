@@ -8,7 +8,7 @@ module.exports = {
         `För att ändra din färg skriv .setcolor #"hexkåd"`,
         `För att få en hex kåd kan du gå till https://htmlcolorcodes.com/`
     ],
-	perms: ["trustedCmd"],
+	perms: [],
     data: new SlashCommandBuilder()
     .setName("setcolor")
     .setDescription("Ändrar färgen av .me backround")
