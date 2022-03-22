@@ -45,7 +45,7 @@ module.exports = async (client) => {
                                 client.guilds.cache.get(guild.id).channels.cache.get(guildConfigData.notificationChannel).send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`)
                             }
                             else {
-                                client.guilds.cache.get(guild.id).channels.cache.get(guildConfigData.notificationChannel).send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]**\n http://www.youtube.com/watch?v=${vids[i].id}`)
+                                client.guilds.cache.get(guild.id).channels.cache.get(guildConfigData.notificationChannel).send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&955887503829774448>\n http://www.youtube.com/watch?v=${vids[i].id}`)
                             }
                         }
                     }
