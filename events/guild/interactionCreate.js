@@ -34,7 +34,8 @@ module.exports = async (Interaction, client) => {
             }
         }
     }
-    //end of hallowencode
+    //Tar bort tickets om collector har dött
+    
     if (!Interaction.isCommand()) return;
     const command = client.commands.get(Interaction.commandName)
     if (!command) return;

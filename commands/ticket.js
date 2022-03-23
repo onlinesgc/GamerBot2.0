@@ -64,47 +64,45 @@ module.exports = {
 				[
 					new discord.MessageButton()
 						.setStyle("SECONDARY")
-						.setEmoji("🔒")
-						.setCustomId("lock"),
-					new discord.MessageButton()
-						.setStyle("SECONDARY")
-						.setEmoji("🔓")
-						.setCustomId("unlock"),
-					new discord.MessageButton()
-						.setStyle("SECONDARY")
 						.setEmoji("⛔")
-						.setCustomId("close"),
+						.setCustomId("close_ticket"),
 				]
 			);
 		let welcomeMessage
-		if(args[0] != undefined) welcomeMessage = await channel.send({content:`Vi har öppnat en ticket för dig! <@` + args[0] + `> ! <@&812348382810210314> kommer svara inom kort varför!`,components:[row]});
+		if(args[0] != undefined) welcomeMessage = await channel.send({content:`Vi har öppnat en ticket för dig! <@` + args[0] + `> ! <@&812348382810210314> kommer svara inom kort varför!\nDu kan lämna ticket:en om du trycker på ⛔`,components:[row]});
 		else{
-			if(!isInteraction) welcomeMessage = await channel.send({content:`Tack för att du öppnade en ticket! <@` + message.author.id + `> ! <@&812348382810210314> kommer svara inom kort!`,components:[row]});
-			else welcomeMessage = await channel.send({content:`Tack för att du öppnade en ticket! <@` + message.user.id + `> ! <@&812348382810210314> kommer svara inom kort!`,components:[row]});
+			if(!isInteraction) welcomeMessage = await channel.send({content:`Tack för att du öppnade en ticket! <@` + message.author.id + `> ! <@&812348382810210314> kommer svara inom kort!\nDu kan lämna ticket:en om du trycker på ⛔`,components:[row]});
+			else welcomeMessage = await channel.send({content:`Tack för att du öppnade en ticket! <@` + message.user.id + `> ! <@&812348382810210314> kommer svara inom kort!\nDu kan lämna ticket:en om du trycker på ⛔`,components:[row]});
 		} 
-		const collector = welcomeMessage.createMessageComponentCollector(data =>
-			message.guild.members.cache.find((member) => member.id === data.user.id).permissions.has("ADMINISTRATOR"),
+		const collector = welcomeMessage.createMessageComponentCollector((data => {return data;}),
 			{ dispose: true }
 		);
+		let ticketCreator;
+		if(args[0] != undefined) ticketCreator = await message.guild.members.cache.get(args[0]);
+		else{
+			ticketCreator = message.member;
+		}
+		let personLeft = false;
 		collector.on("collect", data => {
-			if(message.guild.members.cache.find((member) => member.id === data.user.id).permissions.has("ADMINISTRATOR")){
+			if((ticketCreator.permissions.has("ADMINISTRATOR") && ticketCreator.id != data.member.id ) || personLeft == true){
 				switch (data.customId) {
-					case "lock":
-						channel.permissionOverwrites.edit(message.author, {
-							SEND_MESSAGES: false
-						});
-						channel.send("Den här kanalen har blivit låst!");
-						break;
-					case "unlock":
-						channel.permissionOverwrites.edit(message.author, {
-							SEND_MESSAGES: true
-						});
-						channel.send("Den här kanalen är nu upplåst igen!");
-						break;
-					case "close":
+					case "close_ticket":
 						channel.send("Tar bort kanalen om 5 sekunder...");
 						setTimeout(() => channel.delete(), 5000);
 						break;
+				}
+			}
+			else{
+				switch (data.customId) {
+					case "close_ticket":
+						channel.permissionOverwrites.edit(ticketCreator, {
+							SEND_MESSAGES: false,
+							VIEW_CHANNEL: false,
+							ATTACH_FILES: false
+						});
+						channel.send(`Nu har <@${ticketCreator.id}> lämmnat!\nFör att ta bort ticket så kan man trycka på ⛔`)
+						personLeft = true;
+					break;
 				}
 			}
 			data.deferUpdate()
