@@ -13,12 +13,12 @@ module.exports = {
 		.setDescription("Med detta kommando kan du ändra din ram."),
 	async do(message, args, profileData, isInteraction) {
 		let frames = [//https://imgur.com/a/gfa7osM 
-			{ frameUrl: "https://i.imgur.com/zVxJiz4.png", fileID: 0 }, //orginal
-			{ frameUrl: "https://i.imgur.com/fI1bZ3W.png", fileID: 1 }, //Vrile64
+			{ frameUrl: "https://i.imgur.com/PT8cJrF.png", fileID: 0 }, //orginal
+			{ frameUrl: "https://i.imgur.com/7IiXckO.png", fileID: 1 }, //Vrile64
 			{ frameUrl: "https://i.imgur.com/Gwtlbi8.png", fileID: 2 },//arre
-			{ frameUrl: "https://i.imgur.com/WpjMGG0.png", fileID: 3 }, //snizard
+			{ frameUrl: "https://i.imgur.com/pGv4nxG.png", fileID: 3 }, //snizard
 			{ frameUrl: "https://i.imgur.com/6qMlNKs.png", fileID: 4 }, //lukasabbe
-			{ frameUrl: "https://i.imgur.com/cYBWxKF.png", fileID: 5 },//Renen
+			{ frameUrl: "https://i.imgur.com/wGsbg51.png", fileID: 5 },//Renen
 			{ frameUrl: "https://i.imgur.com/j9nCDqr.png", fileID: 6 },//snizard
 			{ frameUrl: "https://i.imgur.com/CQyzVpV.png", fileID: 7 },//snizard
 			{ frameUrl: "https://i.imgur.com/pUTFUAM.png", fileID: 8 },//snizard
@@ -27,7 +27,7 @@ module.exports = {
 		var exclusiveFrames2 = [
 			{ frameUrl: "https://i.imgur.com/lctjR3N.png", fileID: 10}, //raze-end winers 1  - 0
 			{ frameUrl: "https://i.imgur.com/tT33FbV.png", fileID: 11}, //raze - smörevent 11 - 1 
-			{ frameUrl: "https://i.imgur.com/frcctEf.png", fileID: 12}, //mod frame - 2
+			{ frameUrl: "https://i.imgur.com/lo30uCl.png", fileID: 12}, //mod frame - 2
 			{ frameUrl: "https://i.imgur.com/TlyTYIt.png", fileID: 13}, //memme master - 3
 			{ frameUrl: "https://i.imgur.com/ufqLNzx.png", fileID: 14}, // level snubbe - 4
 			{ frameUrl: "https://i.imgur.com/KxVrzuf.png", fileID: 15}, //serverboost? Pixi - 5 
