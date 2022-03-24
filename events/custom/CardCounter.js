@@ -15,7 +15,12 @@ module.exports =  {
     },
     cardSendChance(message){
         var guildConfigData = guildConfig.fetchGuildConfig(message.guild.id);
-        var randomInt = functions.getRandomIntRange(0,10);
+        var randomInt = Math.random();
+        let channelsCount = message.guild.channels.cache.size;
+        message.guild.channels.cache.forEach(element => {
+            if(element.type == "GUILD_TEXT")
+                console.log(message.guild.roles.everyone.permissionsIn(element).has("SEND_MESSAGES"));
+        });
         
     }
 }

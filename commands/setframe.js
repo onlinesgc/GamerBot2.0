@@ -30,7 +30,7 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/lo30uCl.png", fileID: 12}, //mod frame - 2
 			{ frameUrl: "https://i.imgur.com/TlyTYIt.png", fileID: 13}, //memme master - 3
 			{ frameUrl: "https://i.imgur.com/ufqLNzx.png", fileID: 14}, // level snubbe - 4
-			{ frameUrl: "https://i.imgur.com/KxVrzuf.png", fileID: 15}, //serverboost? Pixi - 5 
+			{ frameUrl: "https://i.imgur.com/JfQOLhf.png", fileID: 15}, //serverboost? Pixi - 5 
 			{ frameUrl: "https://i.imgur.com/MtTN87w.png", fileID: 16}, //hallown - 6 
 			{ frameUrl: "https://i.imgur.com/7uYHaMp.png", fileID: 17}, // Gamerbot Ram - 7
 			{ frameUrl: "https://i.imgur.com/WpnSNhl.png", fileID: 18}, //Vinnare bygg tävlning -8

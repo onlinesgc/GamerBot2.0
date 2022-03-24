@@ -74,5 +74,8 @@ module.exports = {
 	},
 	async RemoveVoiceChannels(oldMember, newMember,client){
 		await require("./functions/RemoveVoiceChannels")(oldMember, newMember,client)
+	},
+	async nitrobosterframe(guild){
+		await require("./functions/nitrobosterframe")(guild);
 	}
 }

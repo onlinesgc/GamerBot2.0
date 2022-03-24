@@ -5,15 +5,15 @@ module.exports = {
 	aliases: ["color","changecolor"],
 	description: "Ändrar färgen av .me backround",
 	usage: [
-        `För att ändra din färg skriv .setcolor #"hexkåd"`,
-        `För att få en hex kåd kan du gå till https://htmlcolorcodes.com/`
+        `För att ändra din färg skriv .setcolor #"hexkod"`,
+        `För att få en hex kod kan du gå till https://htmlcolorcodes.com/`
     ],
 	perms: [],
     data: new SlashCommandBuilder()
     .setName("setcolor")
     .setDescription("Ändrar färgen av .me backround")
     .addStringOption((option) =>{
-        return option.setName("color").setDescription("Ange en hex kåd som #fff eller #4EC41B (Glöm inte #)").setRequired(true)
+        return option.setName("color").setDescription("Ange en hex kod som #fff eller #4EC41B (Glöm inte #)").setRequired(true)
     }),
 	async do(message, args, profileData,isInteraction) {
         if(isInteraction) args[0] = message.options._hoistedOptions[0].value;
