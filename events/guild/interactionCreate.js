@@ -29,7 +29,12 @@ module.exports = async (Interaction, client) => {
             if(!y){
                 profileData.exclusiveFrames.push(Interaction.customId.split(":")[1])
                 await profileData.save();
-                Interaction.member.send("Dino time!!. Nu ska du ha fått en ny ram. Skriv /setframe i <#822546907007811585> för att se vad du fått!")
+                try{
+                    Interaction.member.send("Dino time!!. Nu ska du ha fått en ny ram. Skriv /setframe i <#822546907007811585> för att se vad du fått!")
+                }
+                catch(err){
+                    
+                }
                 return Interaction.deferUpdate();
             }
         }

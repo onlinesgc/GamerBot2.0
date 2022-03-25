@@ -5,7 +5,7 @@ module.exports = async (guild) => {
     setInterval(() =>{
         guild.members.cache.forEach(async member =>{
             let profileData = await profileModel.fetchProfile(member.id, guild.id)
-            if(member.roles.premiumSubscriberRole != undefined){
+            if(member.roles.cache.has(member.rolespremiumSubscriberRole.id)){
                 if(!profileData.exclusiveFrames.includes("5")){
                     profileData.exclusiveFrames.push("5");
                     profileData.save()
