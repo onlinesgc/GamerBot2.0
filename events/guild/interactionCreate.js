@@ -1,5 +1,5 @@
 const profileModel = require("../../models/profileSchema");
-
+const {removeTicket} = require("../../commands/ticket");
 //premisonList
 
 var perms = [
@@ -40,7 +40,16 @@ module.exports = async (Interaction, client) => {
         }
     }
     //Tar bort tickets om collector har dött
-    
+    if(Interaction.customId != undefined){
+        let customIDTicket = Interaction.customId.split(":")
+        if(customIDTicket[0] == "close_ticket"){
+            let member = await Interaction.guild.members.cache.get(customIDTicket[2]);
+            let channel = await Interaction.guild.channels.cache.get(customIDTicket[1]);
+            removeTicket(Interaction,channel,member,customIDTicket[3]);
+        }
+    }
+
+
     if (!Interaction.isCommand()) return;
     const command = client.commands.get(Interaction.commandName)
     if (!command) return;

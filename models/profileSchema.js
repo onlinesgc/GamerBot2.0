@@ -12,6 +12,7 @@ const profileSchema = new mongoose.Schema({
 	privateVoiceID: { type: String, default: "" },
 	privateVoiceThreadID: { type: String, default: "" },
     profileFrame: {type: String},
+	hasLeftTicket: {type: Boolean},
     xpboost: { type: Object, default: {
 	    multiplier: 1,
 	    stopBoostTimestamp: null}},
