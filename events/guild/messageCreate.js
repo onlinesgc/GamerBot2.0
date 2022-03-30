@@ -14,8 +14,8 @@ module.exports = async (message, client) => {
         //Retreive options
         let configData = await configModel.fetchConfig(process.env.config_id);          //Retreive options
 
-		//Count message card for counter!
-		//cardCounter.countMessage(message);
+        //Count message card for counter!
+        //cardCounter.countMessage(message);
 
         const prefix = configData.prefix;
         const args = message.content.slice(prefix.length).split(/ +/);
@@ -36,7 +36,7 @@ module.exports = async (message, client) => {
         const mention_command = client.mention_commands.find(object => message.content && object.permittedMessages.some(element => message.content.toLowerCase().includes(element)));
         const question_command = client.question_commands.find(object => message.content && object.permittedMessages.some(element => message.content.toLowerCase().replace(/\s/g, "").includes(element)));
         const channel_action = client.channel_actions.find(object => object.channels.includes(message.channel.id));
-        
+
         let profileData = await profileModel.fetchProfileFromMessage(message);          //Fetch profile
 
 
@@ -53,15 +53,15 @@ module.exports = async (message, client) => {
                         } else {
                                 message.channel.send("Du har inte tillåtelse att använda det här kommandot!");
                         }
-                } 
-                else if(command.perms.includes("trustedCmd")){
-                    if(profileData.level >= 11 || message.member.permissions.has("ADMINISTRATOR")){
+                }
+                else if (command.perms.includes("trustedCmd")) {
+                        if (profileData.level >= 11 || message.member.permissions.has("ADMINISTRATOR")) {
                                 command.do(message, args, profileData)
                         }
-                        else{
+                        else {
                                 message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
                         }
-                } 
+                }
                 else {
                         try {
                                 await command.do(message, args, profileData);
@@ -77,15 +77,15 @@ module.exports = async (message, client) => {
                         } else {
                                 message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
                         }
-                
+
                 }
-                else if(mention_command.perms.includes("trustedCmd")){
-                    if(profileData.level >= 11 || message.member.permissions.has("ADMINISTRATOR")){
-                            mention_command.do(message, args, profileData);
+                else if (mention_command.perms.includes("trustedCmd")) {
+                        if (profileData.level >= 11 || message.member.permissions.has("ADMINISTRATOR")) {
+                                mention_command.do(message, args, profileData);
                         } else {
                                 message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
                         }
-                } 
+                }
                 else {
                         mention_command.do(message, args, profileData);
                 }
@@ -98,11 +98,11 @@ module.exports = async (message, client) => {
                         }
 
                 }
-                else if(question_command.perms.includes("trustedCmd")){
-                        if(profileData.level >= 11 || message.member.permissions.has("ADMINISTRATOR")){
+                else if (question_command.perms.includes("trustedCmd")) {
+                        if (profileData.level >= 11 || message.member.permissions.has("ADMINISTRATOR")) {
                                 question_command.do(message, args, profileData)
                         }
-                        else{
+                        else {
                                 message.channel.send("Du har inte tillåtelse att exekvera det här kommandot!");
                         }
                 }
@@ -110,18 +110,18 @@ module.exports = async (message, client) => {
                         question_command.do(message, args, profileData);
                 }
         } else {
-				//Removes messages in Help
-				if(message.channel.id == "834118959053275176"){
-					message.delete();
-				}
+                //Removes messages in Help
+                if (message.channel.id == "834118959053275176") {
+                        message.delete();
+                }
 
                 if (message.createdTimestamp - profileData.lastMessageTimestamp > ms("1w")) {
                         let days = Math.floor((message.createdTimestamp - profileData.lastMessageTimestamp) / 1000 / 86400);
                         let penalty = days * 2;
-                        if (penalty > profileData.xp){
+                        if (penalty > profileData.xp) {
                                 profileData.xp = 0;
                         } else {
-                        profileData.xp -= penalty;
+                                profileData.xp -= penalty;
                         }
                 }
                 profileData.lastMessageTimestamp = message.createdTimestamp;
@@ -150,39 +150,39 @@ module.exports = async (message, client) => {
                         if (profileData.xp >= Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) || (profileData.level > 30 && profileData.xp > 999)) {
                                 profileData.level++;
 
-                            //Adding new roles if required
+                                //Adding new roles if required
 
-                            if(!configData.xp.levels.length) {
+                                if (!configData.xp.levels.length) {
                                         console.log("There are no roles in the database for the user to get");
-                            }
-                                //Removing old roles
-                            configData.xp.levels.forEach(element => {               //Remove all level roles
-                                for (let id_index = 0; id_index < element.id.length; id_index++) {
-                                    message.member.roles.remove(message.guild.roles.cache.get(element.id[id_index]), ["Test removed role. To later add a new or add back the old one"]);
                                 }
-                            });
+                                //Removing old roles
+                                configData.xp.levels.forEach(element => {               //Remove all level roles
+                                        for (let id_index = 0; id_index < element.id.length; id_index++) {
+                                                message.member.roles.remove(message.guild.roles.cache.get(element.id[id_index]), ["Test removed role. To later add a new or add back the old one"]);
+                                        }
+                                });
                                 //Adding find correct role
                                 for (let index = 0; index < configData.xp.levels.length; index++) {
                                         const role = configData.xp.levels[index];
 
                                         //nextRoleLevel allows for testing within span, and if statement helps in end of list.
                                         let nextRoleLevel = 0;
-                                        if (index === configData.xp.levels.length-1) {
+                                        if (index === configData.xp.levels.length - 1) {
                                                 nextRoleLevel = 10000000;
                                         } else {
-                                                nextRoleLevel = configData.xp.levels[index+1].level;
+                                                nextRoleLevel = configData.xp.levels[index + 1].level;
                                         }
                                         //Actually adding roles
-                                    if (profileData.level >= role.level+1 && profileData.level < nextRoleLevel+1) {
-                                        for (let id_index = 0; id_index < role.id.length; id_index++) {
-                                            message.member.roles.add(message.guild.roles.cache.get(role.id[id_index]), ["New or old role added!"]);
+                                        if (profileData.level >= role.level + 1 && profileData.level < nextRoleLevel + 1) {
+                                                for (let id_index = 0; id_index < role.id.length; id_index++) {
+                                                        message.member.roles.add(message.guild.roles.cache.get(role.id[id_index]), ["New or old role added!"]);
+                                                }
                                         }
-                                    }
                                 }
-                                
+
                                 profileData.xp = 0;
-                            message.author.send(`Du levlade som faan till level \`${profileData.level - 1}\` i Stamsites gaming community. Grattis!`)
-                                .catch(console.error); // User has closed DMs for the server. Catch prevents crashes due to unkept promises.
+                                message.author.send(`Du levlade som faan till level \`${profileData.level - 1}\` i Stamsites gaming community. Grattis!`)
+                                        .catch(console.error); // User has closed DMs for the server. Catch prevents crashes due to unkept promises.
                         }
                 }
                 await profileData.save();
@@ -191,9 +191,9 @@ module.exports = async (message, client) => {
         if (channel_action) {
                 channel_action.do(message, profileData);
         }
-        
+
         if (message.content.toLowerCase().includes("christerpog") || message.content.toLowerCase().includes("cristerpog")) {
-                if (message.channel.id == "809483972282810390" || message.channel.id == "780765093343395880" || message.channel.id == "810221092878680124")  {
+                if (message.channel.id == "809483972282810390" || message.channel.id == "780765093343395880" || message.channel.id == "810221092878680124") {
                         message.react("810255466952917052")
                         message.channel.send("<:mello_ChristerPOG:810255466952917052>")
                 }
