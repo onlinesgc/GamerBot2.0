@@ -59,7 +59,7 @@ module.exports = async (client) => {
             var twInfo = await executeTwitch();
             if (twInfo != null) {
                 if (twInfo.id != configData.latestLiveStreamId) {
-                    client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`STAMSITE har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite`);
+                    client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`Matinbum har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite\nPOG POG`);
                     configData.latestLiveStreamId = twInfo.id;
                     await configData.save();
                 }
