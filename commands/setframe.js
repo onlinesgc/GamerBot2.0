@@ -39,7 +39,8 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/Dd9yAAC.png", fileID: 21}, //jul ram - 11
 			{ frameUrl: "https://i.imgur.com/upfjkDq.png", fileID: 22}, //game jam - 12
 			{ frameUrl: "https://i.imgur.com/OiIWDvK.png", fileID: 23}, //beta test - 13
-			{ frameUrl: "https://i.imgur.com/8MhBh89.png", fileID:24} //DinoGang ram, laika111 - 14
+			{ frameUrl: "https://i.imgur.com/8MhBh89.png", fileID:24}, //DinoGang ram, laika111 - 14
+			{ frameUrl: "https://i.imgur.com/UdVq8UI.png", fileID:25} //April ram, 15
 		]
 		if (profileData.exclusiveFrames == undefined) {
 			profileData.exclusiveFrames = [];
