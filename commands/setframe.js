@@ -81,22 +81,25 @@ module.exports = {
 			return data;
 		}
 		const collector = Photo.createMessageComponentCollector(filter, { dispose: true });
+		let isTurnedOf = false;
 		collector.on("collect", async data => {
 			if (data.user.id != message.member.id) return;
 			data.deferUpdate()
 			if (data.customId == "left") {
 				if(index != 0) index--;
 				else index = frames.length - 1;
+				isTurnedOf = false;
 			}
 			if (data.customId == "right") {
 				if(index != frames.length - 1) index++;
-				else index = 0
+				else index = 0;
+				isTurnedOf = false;
 			}
 			let embed = new discord.MessageEmbed()
 				.setTitle("För att välja ram trycker du på ⏺️")
 				.setImage(frames[index].frameUrl)
 				.setAuthor(message.member.user.username)
-				.setFooter(`${index + 1}/${frames.length}`)
+				.setFooter({text:`${index + 1}/${frames.length}`})
 			if (!isInteraction) Photo.edit({ embeds: [embed] })
 			else message.editReply({ embeds: [embed] })
 			if (data.customId == "pick") {
@@ -112,5 +115,18 @@ module.exports = {
 				Photo.reactions.removeAll()
 			}
 		})
+		setInterval(async ()=>{
+			if(isTurnedOf){
+				let embed = new discord.MessageEmbed()
+					.setTitle("Avstängd")
+					.setDescription("Avstängd för att ingen ändring har blvit gjort. Gör en ny med /setframe")
+					.setAuthor({name:message.member.user.username})
+				collector.stop();
+				await row.components.forEach(element=> element.setDisabled(true));
+				if(!isInteraction) Photo.edit({embeds:[embed], components:[row]});
+				else message.editReply({embeds:[embed], components:[row]})
+			}
+			isTurnedOf = true;
+		},1000 * 60 * 2)
 	}
 }

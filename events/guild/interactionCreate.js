@@ -60,8 +60,11 @@ module.exports = async (Interaction, client) => {
             if (command.perms.includes(perms[i].permName)) {
                 if (perms[i].neededPermission != null) {
                     if (Interaction.member.permissions.has("ADMINISTRATOR")) {
-                        await command.do(Interaction, [], profileData, true);
-                        executedCommand = true;
+                        try{
+                            await command.do(Interaction, [], profileData, true);
+                            executedCommand = true;
+                        }
+                        catch(error){}
                     }
                     else {
                         await Interaction.reply({ content: "You don't have prems to use this command" });
@@ -70,8 +73,12 @@ module.exports = async (Interaction, client) => {
                 }
                 else if (perms[i].neededPermission == null) {
                     if (profileData.level - 1 >= perms[i].neededLevel || Interaction.member.permissions.has("ADMINISTRATOR")) {
-                        await command.do(Interaction, [], profileData, true);
-                        executedCommand = true;
+                        try{
+                            await command.do(Interaction, [], profileData, true);
+                            executedCommand = true;
+                        }catch(err){
+
+                        }
                     }
                     else {
                         await Interaction.reply({ content: "You don't have prems to use this command" });

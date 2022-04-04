@@ -80,7 +80,7 @@ module.exports = {
 			return true;
 		};
 		const collector = msg.createMessageComponentCollector(filter);
-
+		let isTurnedOf = false;
 		//Collector reaction event
 		collector.on("collect", async data => {
 			switch (data.customId) {
@@ -88,9 +88,11 @@ module.exports = {
 					if (startPointer > 0) {
 						startPointer -= userCount;
 					}
+					isTurnedOf = false;
 					break;
 				case "right":
 					startPointer += userCount;
+					isTurnedOf = false;
 					break;
 			}
 			let fields = await createUserFields(profiles, startPointer, userCount);
@@ -105,5 +107,19 @@ module.exports = {
 			else message.editReply({embeds:[embed], components:[row]})
 			data.deferUpdate()
 		});
+		setInterval(async ()=>{
+			if(isTurnedOf){
+				const embed = new Discord.MessageEmbed()
+					.setColor("#0099ff")
+					.setTitle("XP-topplista")
+					.setDescription("Avstängd, skappa en ny med /xptoplist")
+					.setTimestamp()
+				collector.stop();
+				await row.components.forEach(element=> element.setDisabled(true));
+				if(!isInteraction) msg.edit({embeds:[embed], components:[row]});
+				else message.editReply({embeds:[embed], components:[row]})
+			}
+			isTurnedOf = true;
+		},1000 * 60 * 2)
 	}
 }
