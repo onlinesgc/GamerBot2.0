@@ -54,7 +54,7 @@ const fetchProfileFromInteraction = async (interaction) =>{
 
 const fetchAll = async (filter, maxUsers = 100) => {
 	filter = filter || {};
-	let profiles = model.find(filter).sort({level:-1}).limit(maxUsers);
+	let profiles = model.find(filter).sort({level:-1}).sort({xp:-1}).limit(maxUsers);
 	return profiles;
 };
 
