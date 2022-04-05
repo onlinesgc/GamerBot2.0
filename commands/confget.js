@@ -44,7 +44,7 @@ module.exports = {
 		      { name: "Värde:", value: `\`\`\`json\n${JSON.stringify(configDataParsed[args[0]], null, 4)}\`\`\`` }
 		  )
 		  if(!isInteraction) return message.channel.send({embeds:[embed]});
-		  else return message.reply({embeds:[embed]});
+		  else return message.editReply({embeds:[embed]});
 	} else {
 	    var settingsList = "";
 	    Object.keys(configDataParsed).forEach(setting => {
@@ -60,7 +60,7 @@ module.exports = {
 		      { name: "ID:", value: `Den här boten använder konfigurationsdokumentet med id \`${configDataRaw.id}\`.` }
 		  )
 	    if(!isInteraction) return message.channel.send({embeds:[embed]});
-		else return message.reply({embeds:[embed]});
+		else return message.editReply({embeds:[embed]});
 	}
     }
 }

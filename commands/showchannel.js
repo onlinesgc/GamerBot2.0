@@ -14,6 +14,6 @@ module.exports = {
 		});
 
 		if(!isInteraction) message.channel.send("Denna kanal är nu synlig.");
-		else message.reply("Denna kanal är nu synlig.")
+		else message.editReply("Denna kanal är nu synlig.")
 	}
 }

@@ -51,7 +51,7 @@ module.exports = {
 	async do(message, args, profileData,isInteraction) {
 		if (profileData.privateVoiceID !== message.member.voice.channelId) {
 			if(!isInteraction) return message.channel.send("Du måste vara i en privat röstkanal som tillhör dig för att använda det här kommandot.")
-			else return message.reply({content:"Du måste vara i en privat röstkanal som tillhör dig för att använda det här kommandot.",ephemeral:true})
+			else return message.editReply({content:"Du måste vara i en privat röstkanal som tillhör dig för att använda det här kommandot.",ephemeral:true})
 
 		}
 		let channel = message.guild.channels.cache.get(profileData.privateVoiceID);
@@ -65,7 +65,7 @@ module.exports = {
 				.setTimestamp()
 			
 			if(!isInteraction) return message.channel.send({embeds:[embed]});
-			else return message.reply({embeds:[embed]})
+			else return message.editReply({embeds:[embed]})
 		}
 		if(isInteraction){
 			args[0] = message.options._hoistedOptions[0].name;
@@ -91,11 +91,11 @@ module.exports = {
 						"CONNECT": true
 					});
 					if(!isInteraction) return message.channel.send(`Jag bjöd in <@!${args[1]}> till samtalet.`);
-					else message.reply(`Jag bjöd in <@!${member.id}> till samtalet.`)
+					else message.editReply(`Jag bjöd in <@!${member.id}> till samtalet.`)
 				}
 				else{
 					if(!isInteraction) return message.channel.send(`Du förskte bjuda in någon som inte är på denna server!`);
-					else message.reply({content:`Du förskte bjuda in någon som inte är på denna server!`,ephemeral:true})
+					else message.editReply({content:`Du förskte bjuda in någon som inte är på denna server!`,ephemeral:true})
 				}
 			break;
 			case "kick":
@@ -116,17 +116,17 @@ module.exports = {
 						"CONNECT": false
 					});
 					if(!isInteraction) return message.channel.send(`<@!${args[1]}> har inte längre tillgång till samtalet.`);
-					else message.reply(`<@!${member.id}> har inte längre tillgång till samtalet.`)
+					else message.editReply(`<@!${member.id}> har inte längre tillgång till samtalet.`)
 				}
 				else{
 					if(!isInteraction) return message.channel.send(`Du förskte kicka någon som inte är i detta samtal`);
-					else message.reply({content:`Du förskte kicka någon som inte är i detta samtal`,ephemeral:true})
+					else message.editReply({content:`Du förskte kicka någon som inte är i detta samtal`,ephemeral:true})
 				}
 				break;
 			case "name":																											//Change name of voice channel
 				if(isInteraction){
 					channel.setName(message.options._hoistedOptions[0].value);
-					message.reply(`Ändrade namnet på kanalen till ${message.options._hoistedOptions[0].value}`)
+					message.editReply(`Ändrade namnet på kanalen till ${message.options._hoistedOptions[0].value}`)
 				}
 				else{
 					channel.setName(args[1]);
@@ -140,7 +140,7 @@ module.exports = {
 					"CONNECT": false
 				});
 				if(!isInteraction) message.channel.send(`Vi har låst samtalet!`);
-				else message.reply(`Vi har låst samtalet!`)
+				else message.editReply(`Vi har låst samtalet!`)
 				break;
 			case "unlock":																											//Make voice channel public
 				channel.permissionOverwrites.edit(message.guild.roles.everyone, {
@@ -149,7 +149,7 @@ module.exports = {
 					"CONNECT": true
 				});
 				if(!isInteraction) message.channel.send(`Vi har öppnat samtalet!`);
-				else message.reply(`Vi har öppnat samtalet!`)
+				else message.editReply(`Vi har öppnat samtalet!`)
 				break;
 			case "limit":																											//Set user limit
 				let userLimit;
@@ -159,24 +159,24 @@ module.exports = {
 				if (!args[1]) {
 					userLimit = 0;
 					if(!isInteraction) message.channel.send(`Du skrev inte in ett nummer, så stänger av limiten`);
-					else message.reply(`Du skrev inte in ett nummer, så stänger av limiten`)
+					else message.editReply(`Du skrev inte in ett nummer, så stänger av limiten`)
 				} else {
 					if(!isNaN(args[1])){
 						if(args[1] >= 51 || args[1] <= -1){
 							userLimit = 50;
 							if(!isInteraction) message.channel.send(`Du får inte ha ett nummer som är störe en 50`);
-							else message.reply(`Du får inte ha ett nummer som är större än 50`)
+							else message.editReply(`Du får inte ha ett nummer som är större än 50`)
 						}
 						else{
 							userLimit = Math.round(args[1]);
 							if(!isInteraction) message.channel.send("Du ändra limit av kanalen!");
-							else message.reply("Du ändra limit av kanalen!")
+							else message.editReply("Du ändra limit av kanalen!")
 						}
 					}
 					else {
 						userLimit = 0;
 						if(!isInteraction) message.channel.send(`Du skrev inte in ett numer`);
-						else message.reply(`Du skrev inte in ett numer`)
+						else message.editReply(`Du skrev inte in ett numer`)
 					}
 					
 				}
@@ -202,17 +202,17 @@ module.exports = {
 						profileData.privateVoiceThreadID = "";
 						await profileData.save();
 						if(!isInteraction) message.channel.send(`Du har nu get kanalen till <@!${member.id}>`);
-						else message.reply(`Du har nu get kanalen till <@!${member.id}>`)
+						else message.editReply(`Du har nu get kanalen till <@!${member.id}>`)
 					}
 					else{
 						console.log("yes")
 						if(!isInteraction) message.channel.send(`Du förskte ge samtalet till någon som inte är i kanlen!`);
-						else message.reply(`Du förskte ge samtalet till någon som inte är i kanlen!`)
+						else message.editReply(`Du förskte ge samtalet till någon som inte är i kanlen!`)
 					}
 				}
 				else {
 					if(!isInteraction) message.channel.send(`Du förskte ge samtalet till någon som inte är i kanlen!`);
-					else message.reply(`Du förskte ge samtalet till någon som inte är i kanlen!`)
+					else message.editReply(`Du förskte ge samtalet till någon som inte är i kanlen!`)
 				}
 			break;
 			case "inveterole":
@@ -234,7 +234,7 @@ module.exports = {
 						"SPEAK": true,
 						"CONNECT": true
 					});
-					message.reply("I have inveted " + role.name + " role to the voice chat");
+					message.editReply("I have inveted " + role.name + " role to the voice chat");
 				}
 				else{
 					MultipleRoles.forEach(element =>{
@@ -249,7 +249,7 @@ module.exports = {
 							})
 						}
 					})
-					message.reply("Bjöd in alla dem rolerna\n(Om du vill att någon ska kunna se denna threed så måste du bjuda in den personen manuelt!)");
+					message.editReply("Bjöd in alla dem rolerna\n(Om du vill att någon ska kunna se denna threed så måste du bjuda in den personen manuelt!)");
 				}
 
 			break;

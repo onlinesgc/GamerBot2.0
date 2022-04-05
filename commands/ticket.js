@@ -89,7 +89,7 @@ module.exports = {
 				setTimeout(() => msg.delete(), 5000);
 			});	
 		} 
-		else message.reply({content:`Vi har skapat en kanal för dig! ${channel}`, ephemeral: true})
+		else message.editReply({content:`Vi har skapat en kanal för dig! ${channel}`, ephemeral: true})
 	},
 	async removeTicket(Interaction , channel, user, hasTicketCreatorLeft){
 		let profileData = await profileModel.fetchProfile(user.id, channel.guild.id);

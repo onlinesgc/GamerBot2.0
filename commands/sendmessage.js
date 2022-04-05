@@ -18,6 +18,6 @@ module.exports = {
         if(!isInteraction) return;
         let channel = message.options._hoistedOptions[0].channel;
         channel.send(message.options._hoistedOptions[1].value);
-        message.reply("sent message");
+        message.editReply("sent message");
 	}
 }

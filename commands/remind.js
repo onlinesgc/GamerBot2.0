@@ -29,7 +29,7 @@ module.exports = {
 		array.forEach(element => {
 			if (ms(element) == undefined){
 				if(!isInteraction) message.channel.send("Tiden måste kunna omvandlas till millisekunder!");
-				else message.reply("Tiden måste kunna omvandlas till millisekunder!")
+				else message.editReply("Tiden måste kunna omvandlas till millisekunder!")
 				un = true;
 			} 
 			timeout += ms(element);
@@ -54,7 +54,7 @@ module.exports = {
 		await profileData.save();
 
 		if(!isInteraction) message.channel.send(`Jag påminner dig om \`${ms(timeout)}\` eller \`${remindTime}\``);
-		else message.reply(`Jag påminner dig om \`${ms(timeout)}\` eller \`${remindTime}\``)
+		else message.editReply(`Jag påminner dig om \`${ms(timeout)}\` eller \`${remindTime}\``)
 
 		setTimeout(() => {
 			const embed = new Discord.MessageEmbed()

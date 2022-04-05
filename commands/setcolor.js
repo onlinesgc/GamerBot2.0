@@ -23,12 +23,12 @@ module.exports = {
         }else{
             if(!args[0].startsWith("#")){
                 if(!isInteraction) message.channel.send("Du måste skriva en hex-kod, t.ex: #FFF. Glöm inte #");
-                else message.reply("Du måste skriva en hex-kod, t.ex: #FFF. Glöm inte #");
+                else message.editReply("Du måste skriva en hex-kod, t.ex: #FFF. Glöm inte #");
             }else{
                 profileData.colorHexCode = args[0];
                 profileData.save();
                 if(!isInteraction) message.channel.send("Din .me bakrunds färg är nu ändrad");
-                else message.reply("Din .me bakrunds färg är nu ändrad");
+                else message.editReply("Din .me bakrunds färg är nu ändrad");
             }
         }
 	}

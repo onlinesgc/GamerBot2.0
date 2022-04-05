@@ -76,7 +76,7 @@ module.exports = {
 			);
 		var Photo;
 		if (!isInteraction) Photo = await message.channel.send({ embeds: [embed], components: [row] })
-		else Photo = await message.reply({ embeds: [embed], components: [row], fetchReply: true })
+		else Photo = await message.editReply({ embeds: [embed], components: [row], fetchReply: true })
 		let filter = data => {
 			return data;
 		}

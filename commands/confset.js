@@ -34,7 +34,7 @@ module.exports = {
 		configData[args[0]] = JSON.parse(args.slice(1, args.length).join(" "));
 		await configData.save();
 		if(!isInteraction) message.channel.send(`Set "${args[0]}" value to "${configData[args[0]]}"`);
-		else message.reply(`Set "${args[0]}" value to "${configData[args[0]]}"`)
+		else message.editReply(`Set "${args[0]}" value to "${configData[args[0]]}"`)
 
 		functions.applyOptions(message.client, configData);
 	}

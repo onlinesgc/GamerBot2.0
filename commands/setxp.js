@@ -127,7 +127,7 @@ module.exports = {
                                                 if (!isInteraction) message.channel.send("Added role: " + message.guild.roles.cache.get(role.id[id_index]).name + ". To member: " + member.user.username);
                                                 //else message.reply("Added role: " + message.guild.roles.cache.get(role.id[id_index]).name + ". To member: " + member.user.username);
                                             }
-                                            if (isInteraction) message.reply("Added roles to member: " + member.user.username);
+                                            if (isInteraction) message.editReply("Added roles to member: " + member.user.username);
                                         }
                                     }
 
@@ -162,6 +162,6 @@ module.exports = {
                                 fields
                         )
                 if (!isInteraction) message.channel.send({ embeds: [embed] });
-                else message.reply({ embeds: [embed] });
+                else message.editReply({ embeds: [embed] });
         }
 }

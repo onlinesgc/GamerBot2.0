@@ -42,7 +42,7 @@ module.exports = {
 					member = await message.guild.members.fetch(args[0]);
 				}
 				catch(err){
-					if (isInteraction) return message.reply("Det är inte en person. Testa att skriva ID istälet eller använde @");
+					if (isInteraction) return message.editReply("Det är inte en person. Testa att skriva ID istälet eller använde @");
 					else message.channel.send("Det är inte en person. Testa att skriva ID istälet eller använde @")
 				}
 			}
@@ -99,21 +99,21 @@ module.exports = {
 		let xpPercentage = Math.round(profileData.xp / Math.pow(profileData.level + configData.xp.levelBaseOffset, configData.xp.levelExponent) * 100);
 		if (!options) {
 			if (profileData.profileFrame >= 0) {
-				if (isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.member.user.avatarURL({ format: "png" }), message.member.user.username, profileData.profileFrame)] })
+				if (isInteraction) message.editReply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.member.user.avatarURL({ format: "png" }), message.member.user.username, profileData.profileFrame)] })
 				else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({ format: "png" }), message.author.username, profileData.profileFrame)] });
 			}
 			else{
-				if (isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.member.user.avatarURL({ format: "png" }), message.member.user.username, profileData.profileFrame,true)],name:"frame.gif"})
+				if (isInteraction) message.editReply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.member.user.avatarURL({ format: "png" }), message.member.user.username, profileData.profileFrame,true)],name:"frame.gif"})
 				else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, message.author.avatarURL({ format: "png" }), message.author.username, profileData.profileFrame,true)],name:"frame.gif"});
 			}
 		}
 		else {
 			if (profileData.profileFrame >= 0) {
-				if (isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({ format: "png" }), member.user.username, profileData.profileFrame)] })
+				if (isInteraction) message.editReply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({ format: "png" }), member.user.username, profileData.profileFrame)] })
 				else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({ format: "png" }), member.user.username, profileData.profileFrame)] });
 			}
 			else{
-				if (isInteraction) message.reply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({ format: "png" }), member.user.username, profileData.profileFrame,true)], name:"frame.gif"})
+				if (isInteraction) message.editReply({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({ format: "png" }), member.user.username, profileData.profileFrame,true)], name:"frame.gif"})
 				else message.channel.send({ files: [await functions.getProfilePotho(profileData, TimeOut, Xp, xpPercentage, member.user.avatarURL({ format: "png" }), member.user.username, profileData.profileFrame,true)],name:"frame.gif"});
 			}
 		}

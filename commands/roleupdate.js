@@ -45,7 +45,7 @@ module.exports = {
 
                 if (!configData.xp.levels.length) {
                         if (!isInteraction) return message.channel.send("Det finns inga roller i databasen, detta kommer inte göra några ändringar för användaren!");
-                    else message.reply("Det finns inga roller i databasen, detta kommer inte göra några ändringar för användaren!");
+                    else message.editReply("Det finns inga roller i databasen, detta kommer inte göra några ändringar för användaren!");
                 }
                 //Update level
             configData.xp.levels.forEach(element => {               //Remove all level roles
@@ -70,7 +70,7 @@ module.exports = {
                             if (!isInteraction) message.channel.send("Added role: " + message.guild.roles.cache.get(role.id[id_index]).name + ". To member: " + member.user.username);
                             //else message.reply("Added role: " + message.guild.roles.cache.get(role.id[id_index]).name + ". To member: " + member.user.username);
                         }
-                        if (isInteraction) message.reply("Added roles to member: " + member.user.username);
+                        if (isInteraction) message.editReply("Added roles to member: " + member.user.username);
                     }
                 }
         }

@@ -73,7 +73,7 @@ module.exports = {
 			);
 		let msg;	
 		if(!isInteraction) msg = await message.channel.send({embeds:[embed], components:[row]});
-		else msg = await message.reply( { embeds:[embed], components:[row], fetchReply:true} );
+		else msg = await message.editReply( { embeds:[embed], components:[row], fetchReply:true} );
 
 		//Create a collector for page selecting
 		const filter = data => {

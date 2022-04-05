@@ -61,6 +61,7 @@ module.exports = async (Interaction, client) => {
                 if (perms[i].neededPermission != null) {
                     if (Interaction.member.permissions.has("ADMINISTRATOR")) {
                         try{
+                            await Interaction.deferReply();
                             await command.do(Interaction, [], profileData, true);
                             executedCommand = true;
                         }
@@ -87,7 +88,14 @@ module.exports = async (Interaction, client) => {
                 }
             }
         }
-        if (!executedCommand) await command.do(Interaction, [], profileData, true);
+        if (!executedCommand) {
+            try {
+                await Interaction.deferReply();
+                await command.do(Interaction, [], profileData, true);
+            } catch (error) {
+                
+            }
+        }
     } catch (error) {
         console.error(error);
         await Interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });

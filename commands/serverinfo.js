@@ -31,6 +31,6 @@ module.exports = {
 				}
 			)
 		if(!isInteraction) message.channel.send({embeds:[embed]});
-		else message.reply({embeds:[embed]})
+		else message.editReply({embeds:[embed]})
 	}
 }

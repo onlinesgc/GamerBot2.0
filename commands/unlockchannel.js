@@ -14,6 +14,6 @@ module.exports = {
 		});
 
 		if(!isInteraction) message.channel.send("Denna kanal har nu blivit upplåst/meddelanden accepteras.");
-		else message.reply("Denna kanal har nu blivit upplåst/meddelanden accepteras.");
+		else message.editReply("Denna kanal har nu blivit upplåst/meddelanden accepteras.");
 	}
 }

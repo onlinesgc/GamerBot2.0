@@ -11,6 +11,6 @@ module.exports = {
 		.setDescription("Testa att sicka ett kort i någon kanal"),
 	async do(message, args, profileData,isInteraction) {
         cardSendChance(message);
-        if(isInteraction) message.reply("tested");
+        if(isInteraction) message.editReply("tested");
 	}
 }

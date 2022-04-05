@@ -22,7 +22,7 @@ module.exports = {
             .setTitle(`${message.member.user.username} | Matte tal`)
             .setDescription(`Calculating ${"`"}${calcString.trim()}${"`"}`)
         let mathMessage; 
-        if(isInteraction) mathMessage = await message.reply({embeds:[embed],fetchReply:true});
+        if(isInteraction) mathMessage = await message.editReply({embeds:[embed],fetchReply:true});
         else mathMessage = await message.channel.send({embeds:[embed]});
 
         http.get(`http://api.mathjs.org/v4/?expr=${encodeURIComponent(calcString)}`, res=>{

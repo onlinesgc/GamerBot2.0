@@ -36,7 +36,7 @@ module.exports = {
         );
         channel.send({content:"**Boooooo! Vill du ha bus eller godis?** \nVälj noga, du kan bara välja en!", components:[row]});
 
-        if(isInteraction) message.reply("sent message to the channel")
+        if(isInteraction) message.editReply("sent message to the channel")
         
 	}
 }
