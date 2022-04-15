@@ -38,6 +38,10 @@ module.exports = (client) => {
 		});
 		console.log("Resumed reminders!");
 
+		client.guilds.cache.forEach(guild =>{
+			functions.nitrobosterframe(guild);
+		})
+
 		//Retreive options
 		let configData = await configModel.fetchConfig(process.env.config_id);		//Retreive options
 		console.log("Options retrieved!");

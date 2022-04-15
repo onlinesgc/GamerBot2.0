@@ -19,10 +19,10 @@ module.exports = {
 		}
 		if (args[0]) {
 			if(!isInteraction) return await message.channel.send({embeds:[getSpecificCmd(message.client, args[0], message)]});
-			else return message.reply({embeds:[getSpecificCmd(message.client, args[0], message)]});
+			else return message.editReply({embeds:[getSpecificCmd(message.client, args[0], message)]});
 		} else {
 			if(!isInteraction) return await message.channel.send({embeds:[getAllCmds(message.client, message)]});
-			else return message.reply({embeds:[getAllCmds(message.client, message)]})
+			else return message.editReply({embeds:[getAllCmds(message.client, message)]})
 		}
 	}
 }

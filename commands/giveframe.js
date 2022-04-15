@@ -47,14 +47,14 @@ module.exports = {
             if(element == args[1]){
                 y = true;
                 if(!isInteraction) return message.channel.send("Du kan inte ge en frame som personen redan har");
-                else message.reply("Du kan inte ge en frame som personen redan har"); 
+                else message.editReply("Du kan inte ge en frame som personen redan har"); 
             }
         });
         if(!y){
             profileData.exclusiveFrames.push(args[1]);
             profileData.save();
             if(!isInteraction) return message.channel.send("Personen har fått " + args[1] + "!");
-            else return message.reply("Personen har fått " + args[1] + "!");   
+            else return message.editReply("Personen har fått " + args[1] + "!");   
         }
     }
 }

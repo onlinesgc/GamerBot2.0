@@ -14,6 +14,6 @@ module.exports = {
 		});
 
 		if(!isInteraction) message.channel.send("Denna kanal är nu gömd.");
-		else message.reply("Denna kanal är nu gömd.")
+		else message.editReply("Denna kanal är nu gömd.")
 	}
 }

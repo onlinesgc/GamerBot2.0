@@ -1,4 +1,5 @@
 const configModel = require("../models/configSchema");
+const guildConfig = require("../models/guildConfigSchema");
 const { ApiClient } = require("twitch");
 const { ClientCredentialsAuthProvider } = require("twitch-auth");
 const fs = require("fs");
@@ -30,34 +31,41 @@ module.exports = async (client) => {
             fs.readFile("./videos/videos.json", async (err,data) =>{
                 if(err) console.log(err);
                 data = await JSON.parse(data);
-                for(i = 0 ; i < vids.length;i++){
-                    isNotNewVid = false;
-                    data.forEach(element =>{
-                        if(element == vids[i].id) isNotNewVid = true;
-                    })
-                    if(isNotNewVid) continue;
-                    if (vids[i].mentionChannel == true) {
-                        client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`)
+                client.guilds.cache.forEach(async guild =>{
+                    let guildConfigData = await guildConfig.fetchGuildConfig(guild.id);
+                    for(i = 0 ; i < vids.length;i++){
+                        isNotNewVid = false;
+                        data.forEach(element =>{
+                            if(element == vids[i].id) isNotNewVid = true;
+                        })
+                        if(isNotNewVid) continue;
+                        await data.push(vids[i].id);
+                        if(guildConfigData.notificationChannel != ""){
+                            if (vids[i].mentionChannel == true) {
+                                client.guilds.cache.get(guild.id).channels.cache.get(guildConfigData.notificationChannel).send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`)
+                            }
+                            else {
+                                client.guilds.cache.get(guild.id).channels.cache.get(guildConfigData.notificationChannel).send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&955887503829774448>\n http://www.youtube.com/watch?v=${vids[i].id}`)
+                            }
+                        }
                     }
-                    else {
-                        client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]**\n http://www.youtube.com/watch?v=${vids[i].id}`)
-                    }
-                    data.push(vids[i].id);
-                }
-                fs.writeFile("./videos/videos.json",JSON.stringify(data),(err)=>{
-                    if(err) console.log(err);
                 })
+                setTimeout(async function(){
+                    fs.writeFile("./videos/videos.json",JSON.stringify(data),(err)=>{
+                        if(err) console.log(err);
+                    })
+                },2000)
             })
             var twInfo = await executeTwitch();
             if (twInfo != null) {
                 if (twInfo.id != configData.latestLiveStreamId) {
-                    client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`STAMSITE har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite`);
+                    client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`Stamsite har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite`);
                     configData.latestLiveStreamId = twInfo.id;
                     await configData.save();
                 }
             }
         },1000 )
-    }, 1000 * 60*3)
+    }, 1000 * 60 * 3)
 
     function getYoutubeVideoData(channel) {
         const request = require("request");

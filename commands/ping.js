@@ -17,7 +17,7 @@ module.exports = {
 			.setDescription(`Pingar...`);
 		let botMessage;
 		if(!isInteraction) botMessage = await message.channel.send({embeds:[pinging_embed]});
-		else botMessage = await message.reply({embeds:[pinging_embed], ephemeral:false, fetchReply:true} );
+		else botMessage = await message.editReply({embeds:[pinging_embed], ephemeral:false, fetchReply:true} );
 		const pong_embed = new Discord.MessageEmbed()
 			.setColor("#f54242")
 			.setTitle(`:ping_pong:  Pong`)

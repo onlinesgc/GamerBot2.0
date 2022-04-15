@@ -8,7 +8,6 @@ const configSchema = new mongoose.Schema({
 	activity: { type: String },
 	activityType: { type: String },
 	removeLinks: false,
-	latestVideoId : [""],
 	NotisSystemOn: false,
 	sendSupporterMessages: false,
 	latestLiveStreamId : "",

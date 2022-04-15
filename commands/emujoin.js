@@ -11,6 +11,6 @@ module.exports = {
 	async do(message, args, profileData,isInteraction) {
 		message.client.emit("guildMemberAdd", message.member);
 		if(!isInteraction) message.channel.send("Emulerade att någon anslöt till servern!");
-		else message.reply("Emulerade att någon anslöt till servern!");
+		else message.editReply("Emulerade att någon anslöt till servern!");
 	}
 }

@@ -1,5 +1,5 @@
 const profileModel = require("../../models/profileSchema");
-
+const {removeTicket} = require("../../commands/ticket");
 //premisonList
 
 var perms = [
@@ -29,12 +29,27 @@ module.exports = async (Interaction, client) => {
             if(!y){
                 profileData.exclusiveFrames.push(Interaction.customId.split(":")[1])
                 await profileData.save();
-                Interaction.member.send("God jul. Nu ska du ha fått en ny ram. Skriv /setframe i <#822546907007811585> för att se vad du fått!")
+                try{
+                    Interaction.member.send("Nu ska du ha fått en ny ram. Skriv /setframe i <#822546907007811585> för att se vad du fått!")
+                }
+                catch(err){
+                    
+                }
                 return Interaction.deferUpdate();
             }
         }
     }
-    //end of hallowencode
+    //Tar bort tickets om collector har dött
+    if(Interaction.customId != undefined){
+        let customIDTicket = Interaction.customId.split(":")
+        if(customIDTicket[0] == "close_ticket"){
+            let member = await Interaction.guild.members.cache.get(customIDTicket[2]);
+            let channel = await Interaction.guild.channels.cache.get(customIDTicket[1]);
+            removeTicket(Interaction,channel,member,customIDTicket[3]);
+        }
+    }
+
+
     if (!Interaction.isCommand()) return;
     const command = client.commands.get(Interaction.commandName)
     if (!command) return;
@@ -45,8 +60,12 @@ module.exports = async (Interaction, client) => {
             if (command.perms.includes(perms[i].permName)) {
                 if (perms[i].neededPermission != null) {
                     if (Interaction.member.permissions.has("ADMINISTRATOR")) {
-                        await command.do(Interaction, [], profileData, true);
-                        executedCommand = true;
+                        try{
+                            await Interaction.deferReply();
+                            await command.do(Interaction, [], profileData, true);
+                            executedCommand = true;
+                        }
+                        catch(error){}
                     }
                     else {
                         await Interaction.reply({ content: "You don't have prems to use this command" });
@@ -55,8 +74,12 @@ module.exports = async (Interaction, client) => {
                 }
                 else if (perms[i].neededPermission == null) {
                     if (profileData.level - 1 >= perms[i].neededLevel || Interaction.member.permissions.has("ADMINISTRATOR")) {
-                        await command.do(Interaction, [], profileData, true);
-                        executedCommand = true;
+                        try{
+                            await command.do(Interaction, [], profileData, true);
+                            executedCommand = true;
+                        }catch(err){
+
+                        }
                     }
                     else {
                         await Interaction.reply({ content: "You don't have prems to use this command" });
@@ -65,7 +88,14 @@ module.exports = async (Interaction, client) => {
                 }
             }
         }
-        if (!executedCommand) await command.do(Interaction, [], profileData, true);
+        if (!executedCommand) {
+            try {
+                await Interaction.deferReply();
+                await command.do(Interaction, [], profileData, true);
+            } catch (error) {
+                
+            }
+        }
     } catch (error) {
         console.error(error);
         await Interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });

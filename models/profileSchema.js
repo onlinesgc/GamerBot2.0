@@ -10,7 +10,9 @@ const profileSchema = new mongoose.Schema({
     reminders: { type: Array },
     colorHexCode: { type: String },
 	privateVoiceID: { type: String, default: "" },
+	privateVoiceThreadID: { type: String, default: "" },
     profileFrame: {type: String},
+	hasLeftTicket: {type: Boolean},
     xpboost: { type: Object, default: {
 	    multiplier: 1,
 	    stopBoostTimestamp: null}},
@@ -52,7 +54,7 @@ const fetchProfileFromInteraction = async (interaction) =>{
 
 const fetchAll = async (filter, maxUsers = 100) => {
 	filter = filter || {};
-	let profiles = model.find(filter).sort({level:-1}).limit(maxUsers);
+	let profiles = model.find(filter).sort({level:-1}).sort({xp:-1}).limit(maxUsers);
 	return profiles;
 };
 
