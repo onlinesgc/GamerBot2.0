@@ -35,9 +35,11 @@ module.exports = {
 		})
 		.addUserOption((option) =>{
 			return option.setName("give").setDescription("Ge kanalen till en annan användare i samtalet").setRequired(false);
+		})
+		.addStringOption((option)=>{
+			return option.setName("inviterole").setRequired(false).setDescription("Bjud in en role av en förbestämd lista").addChoices([{name:"Alla trusted",value:"GT"},{name:"Alla vip",value:"GV"},{name:"XPTrusted",value:"820403975806386207"},{name:"Twitch Mods",value:""},{name:"Eventsnubbar",value:""},{name:"Twitch Subs",value:""},{name:"YouTube Members",value:""},{name:"Level 30",value:""}])
 		}),
 	async do(message, args, profileData,isInteraction) {
-
 		if (profileData.privateVoiceID !== message.member.voice.channelId) {
 			if(!isInteraction) return message.channel.send("Du måste vara i en privat röstkanal som tillhör dig för att använda det här kommandot.")
 			else return message.reply({content:"Du måste vara i en privat röstkanal som tillhör dig för att använda det här kommandot.",ephemeral:true})
@@ -195,7 +197,10 @@ module.exports = {
 					if(!isInteraction) message.channel.send(`Du förskte ge samtalet till någon som inte är i kanlen!`);
 					else message.reply(`Du förskte ge samtalet till någon som inte är i kanlen!`)
 				}
-			break; 
+			break;
+			case "inviterole":
+				
+			break;
 		}
 		async function getVoiceLobbyMembers(channel){
 			let members = [];
