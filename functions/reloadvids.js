@@ -42,10 +42,14 @@ module.exports = async (client) => {
                         await data.push(vids[i].id);
                         if(guildConfigData.notificationChannel != ""){
                             if (vids[i].mentionChannel == true) {
-                                client.guilds.cache.get(guild.id).channels.cache.get(guildConfigData.notificationChannel).send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`)
+                                await client.guilds.cache.get(guild.id).channels.cache.get(guildConfigData.notificationChannel).send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&813098115934191626>\n http://www.youtube.com/watch?v=${vids[i].id}`).then(msg =>{
+                                    if(msg.channel.type === "GUILD_NEWS") msg.crosspost();
+                                })
                             }
                             else {
-                                client.guilds.cache.get(guild.id).channels.cache.get(guildConfigData.notificationChannel).send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&955887503829774448>\n http://www.youtube.com/watch?v=${vids[i].id}`)
+                                await client.guilds.cache.get(guild.id).channels.cache.get(guildConfigData.notificationChannel).send(`${vids[i].ChannelName} har lagt upp en ny video! <:Marcus_Pog:813821837976535060>\n**[${vids[i].title}]** <@&955887503829774448>\n http://www.youtube.com/watch?v=${vids[i].id}`).then(msg =>{
+                                    if(msg.channel.type === "GUILD_NEWS") msg.crosspost();
+                                })
                             }
                         }
                     }
@@ -59,7 +63,9 @@ module.exports = async (client) => {
             var twInfo = await executeTwitch();
             if (twInfo != null) {
                 if (twInfo.id != configData.latestLiveStreamId) {
-                    client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`Stamsite har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite`);
+                    await client.guilds.cache.get("516605157795037185").channels.cache.get("814163313675730954").send(`Stamsite har gått live!\n**[${twInfo.title}]**<@&813098115934191626>\n https://www.twitch.tv/stamsite`).then(msg =>{
+                        if(msg.channel.type === "GUILD_NEWS") msg.crosspost();
+                    })
                     configData.latestLiveStreamId = twInfo.id;
                     await configData.save();
                 }
