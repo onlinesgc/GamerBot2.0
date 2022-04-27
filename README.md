@@ -12,7 +12,12 @@ STAMSITE is not involved in the development of this bot, do NOT ask him about is
 ## Running your own GamerBot2.0!
 
 ### Installation
-GamerBot2.0 requires node.js, npm and MongoDB to run.
+GamerBot2.0 requires node.js 16.x, and MongoDB to run.
+
+Additional requirements for linux are: 
+```
+libpixman-1-dev libcairo2-dev libpango1.0-dev libjpeg8-dev libgif-dev build-essential
+```
 
 1. Clone this repository (using https) into the directory you want to run the bot in.
 2. Run `npm install` in order to install all the required node.js packages.
