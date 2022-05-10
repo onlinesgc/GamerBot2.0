@@ -38,7 +38,7 @@ module.exports = async (message) => {
         "https://itch.io/",
         "https://docs.google.com/"
     ]; //Panik länkar
-    const channels = ["754298054126993458", "813043346586730506", "521190821668716589","933058996301070336"];
+    const channels = ["754298054126993458", "813043346586730506", "521190821668716589","933058996301070336","973631093569888256"];
     if (channels.find(c => c == message.channel.id)) return;
 
     if(message.channel.id == "897532538447339581" || message.channel.id == "949294374343303198"){ //Politik-hörnan and #dela-din-progress for the content-jam

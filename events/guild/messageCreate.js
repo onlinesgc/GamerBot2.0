@@ -114,7 +114,7 @@ module.exports = async (message, client) => {
                 if (message.channel.id == "834118959053275176") {
                         message.delete();
                 }
-
+                if(message.channel.type == "GUILD_PUBLIC_THREAD" || message.channel.type == "GUILD_PRIVATE_THREAD") return;
                 if (message.createdTimestamp - profileData.lastMessageTimestamp > ms("1w")) {
                         let days = Math.floor((message.createdTimestamp - profileData.lastMessageTimestamp) / 1000 / 86400);
                         let penalty = days * 2;
