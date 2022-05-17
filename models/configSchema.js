@@ -11,6 +11,7 @@ const configSchema = new mongoose.Schema({
 	NotisSystemOn: false,
 	sendSupporterMessages: false,
 	latestLiveStreamId : "",
+	PrefixCommands: {type:Boolean , default: false},
 	NotisChannels: {type: Array, default: {
 		id:"UCOZr_fd45CDuyqQEPQZaqMA",
 		Notis:true

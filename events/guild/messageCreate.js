@@ -41,7 +41,7 @@ module.exports = async (message, client) => {
 
 
 
-        if (command && message.content.startsWith(prefix)) {
+        if ((command && message.content.startsWith(prefix)) && configData.PrefixCommands == true) {
                 if (command.perms.includes("adminCmd")) {
                         if (message.member.permissions.has("ADMINISTRATOR")) {
                                 try {
