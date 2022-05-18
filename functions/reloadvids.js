@@ -71,7 +71,7 @@ module.exports = async (client) => {
                 }
             }
         },1000 )
-    }, 1000 * 10)
+    }, 1000 * 60 * 2)
 
     function getYoutubeVideoData(channel) {
         const request = require("request");
