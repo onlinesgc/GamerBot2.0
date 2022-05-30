@@ -111,5 +111,36 @@ module.exports = {
 			profileData.save();
 		}
 		Interaction.deferUpdate()
+	},
+	async openTicket(Interaction){
+		let channel = await Interaction.guild.channels.create(`ticket - ${Interaction.member.user.username}`);
+
+		if (Interaction.guild.id === "813844220694757447") {		//Test server
+			channel.setParent("821139274589274143");
+		} else if (Interaction.guild.id === "516605157795037185") {	//Production server
+			channel.setParent("822548929052409896");
+		}
+		
+		channel.permissionOverwrites.edit(Interaction.guild.id, {
+			SEND_MESSAGES: false,
+			VIEW_CHANNEL: false,
+			ATTACH_FILES:true
+		});
+		channel.permissionOverwrites.edit(Interaction.member, {
+			SEND_MESSAGES: true,
+			VIEW_CHANNEL: true,
+			ATTACH_FILES:true
+		});
+		const row = new discord.MessageActionRow()
+			.addComponents(
+				[
+					new discord.MessageButton()
+						.setStyle("SECONDARY")
+						.setEmoji("⛔")
+				]
+		);
+		row.components[0].setCustomId(`close_ticket:${channel.id}:${Interaction.user.id}:false`);
+		await channel.send({content:`Tack för att du öppnade en ticket! <@` + Interaction.user.id + `> ! <@&812348382810210314> kommer svara inom kort!\nDu kan lämna ticket:en om du trycker på ⛔`,components:[row],fetchReply: true});
+		Interaction.deferUpdate();	 
 	}
 }

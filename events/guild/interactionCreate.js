@@ -1,5 +1,5 @@
 const profileModel = require("../../models/profileSchema");
-const {removeTicket} = require("../../commands/ticket");
+const {removeTicket, openTicket} = require("../../commands/ticket");
 //premisonList
 
 var perms = [
@@ -48,6 +48,12 @@ module.exports = async (Interaction, client) => {
             removeTicket(Interaction,channel,member,customIDTicket[3]);
         }
     }
+    //Ticket open
+    if(Interaction.customId != undefined){
+        if(Interaction.customId == "open_ticket"){
+            openTicket(Interaction);
+        }
+    } 
 
 
     if (!Interaction.isCommand()) return;
@@ -65,7 +71,9 @@ module.exports = async (Interaction, client) => {
                             await command.do(Interaction, [], profileData, true);
                             executedCommand = true;
                         }
-                        catch(error){}
+                        catch(error){
+                            console.log(error);
+                        }
                     }
                     else {
                         await Interaction.reply({ content: "You don't have prems to use this command" });
@@ -78,7 +86,7 @@ module.exports = async (Interaction, client) => {
                             await command.do(Interaction, [], profileData, true);
                             executedCommand = true;
                         }catch(err){
-
+                            console.log(error);
                         }
                     }
                     else {
