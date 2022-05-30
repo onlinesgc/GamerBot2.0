@@ -21,7 +21,7 @@ module.exports = {
 	async do(message, args, profileData,isInteraction) {
         if(!isInteraction) return;
         let channel = message.options._hoistedOptions[0].channel;
-        if(message.options._hoistedOptions[2].value != undefined){
+        if(message.options._hoistedOptions[2] != undefined){
             const row = new MessageActionRow()
                 .addComponents(
                     [
@@ -31,10 +31,14 @@ module.exports = {
                             .setCustomId(message.options._hoistedOptions[2].value.split(";")[1])
                     ]
                 );
-            channel.send({content:message.options._hoistedOptions[1].value, components:[row]});
+            let mes = message.options._hoistedOptions[1].value;
+            mes.replaceAll("-n-","\n");
+            channel.send({content:mes, components:[row]});
         }
         else {
-            channel.send(message.options._hoistedOptions[1].value);
+            let mes = message.options._hoistedOptions[1].value;
+            mes = await mes.replace(/-n-/g,"\n");
+            channel.send(mes);
         }
         message.editReply("sent message");
 	}
