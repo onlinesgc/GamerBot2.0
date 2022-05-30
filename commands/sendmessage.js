@@ -32,7 +32,7 @@ module.exports = {
                     ]
                 );
             let mes = message.options._hoistedOptions[1].value;
-            mes.replaceAll("-n-","\n");
+            mes = await mes.replace(/-n-/g,"\n");
             channel.send({content:mes, components:[row]});
         }
         else {
