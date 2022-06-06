@@ -41,7 +41,9 @@ module.exports = {
 			{ frameUrl: "https://i.imgur.com/OiIWDvK.png", fileID: 23}, //beta test - 13
 			{ frameUrl: "https://i.imgur.com/8MhBh89.png", fileID:24}, //DinoGang ram, laika111 - 14
 			{ frameUrl: "https://i.imgur.com/UdVq8UI.png", fileID:25}, //April ram, 15
-			{ frameUrl: "https://i.imgur.com/LKWsJpi.png", fileID:26}  //Nova island, 16
+			{ frameUrl: "https://i.imgur.com/LKWsJpi.png", fileID:26},  //Nova island, 16
+			{ frameUrl: "https://i.imgur.com/aPs7iYo.png", fileID:27}, // pride flaga, 17
+			{ frameUrl: "https://i.imgur.com/OKM4sWa.png", fileID:28} //trans, 18
 		]
 		if (profileData.exclusiveFrames == undefined) {
 			profileData.exclusiveFrames = [];
