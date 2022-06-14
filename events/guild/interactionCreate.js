@@ -57,8 +57,11 @@ module.exports = async (Interaction, client) => {
 
 
     if (!Interaction.isCommand()) return;
-    const command = client.commands.get(Interaction.commandName)
-    if (!command) return;
+    let command = client.commands.get(Interaction.commandName)
+    if (!command){
+        command = client.commands.get("me");
+        if(command.extra != Interaction.commandName) return
+    }
     let profileData = await profileModel.fetchProfile(Interaction.user.id, Interaction.guildId, Interaction.createdTimestamp, Interaction.createdTimestamp);
     try {
         let executedCommand = false;

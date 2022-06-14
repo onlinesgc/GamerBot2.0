@@ -10,8 +10,18 @@ module.exports = {
 	description: "Get member information for message author, or specified user",
 	usage: [],
 	perms: [],
+	extra: "lvl",
 	data: new SlashCommandBuilder()
 		.setName("me")
+		.setDescription("Get member information for message author, or specified user")
+		.addUserOption((option) => {
+			return option.setName("user").setDescription("This is used to fetch another user").setRequired(false)
+		})
+		.addBooleanOption((option) => {
+			return option.setName("options").setDescription("This is an admin command").setRequired(false);
+		}),
+	data2: new SlashCommandBuilder()
+		.setName("lvl")
 		.setDescription("Get member information for message author, or specified user")
 		.addUserOption((option) => {
 			return option.setName("user").setDescription("This is used to fetch another user").setRequired(false)

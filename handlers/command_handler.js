@@ -8,6 +8,7 @@ module.exports = (client) => {
 		if (command.name) {
 			client.commands.set(command.name, command);
 			if(command.data != undefined) client.commandArray.push(command.data.toJSON())
+			if(command.data2 != undefined) client.commandArray.push(command.data2.toJSON())
 		} else {
 			console.log("Command Name error!");
 		}
