@@ -5,7 +5,7 @@
   "main": "GamerBot2.0.js",
   "dependencies": {
     "@discordjs/builders": "^1.2.0",
-    "@discordjs/rest": "^1.2.0",
+    "@discordjs/rest": "^1.3.0",
     "canvas": "2.10.1",
     "discord-api-types": "^0.37.17",
     "discord.js": "^13.6.0",
